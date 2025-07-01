@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://pw8uk8er18ei"]
+
+[ext_resource type="Script" uid="uid://dj664c1hhnp7n" path="res://scripts/oscillate.gd" id="1_o5qli"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_sgp6g"]
+
+[node name="Main" type="Node2D"]
+
+[node name="MainCamera" type="Camera2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(50, 50)
+texture = SubResource("CanvasTexture_sgp6g")
+script = ExtResource("1_o5qli")
+amplitude = 100.0
+frequency = 2.0
