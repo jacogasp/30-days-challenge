@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dm8cg5tcgnanr"]
+
+[ext_resource type="Texture2D" uid="uid://h08vv2fba20l" path="res://icon.svg" id="1_dnt7v"]
+[ext_resource type="Script" uid="uid://ugt0r8ubcb50" path="res://scripts/weapons/bullet.gd" id="1_mx1hr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dnt7v"]
+size = Vector2(124, 124)
+
+[node name="Bullet" type="Sprite2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_dnt7v")
+script = ExtResource("1_mx1hr")
+max_range = 2000.0
+speed = 2000.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_dnt7v")

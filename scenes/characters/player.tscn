@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://c34r771lh6okh"]
+
+[ext_resource type="Script" uid="uid://dd4y4wqcm0qws" path="res://scripts/characters/player.gd" id="1_rp718"]
+[ext_resource type="Texture2D" uid="uid://h08vv2fba20l" path="res://icon.svg" id="1_yewv4"]
+[ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="3_76oj4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
+size = Vector2(122, 128)
+
+[node name="Player" type="Sprite2D"]
+texture = ExtResource("1_yewv4")
+script = ExtResource("1_rp718")
+bullet_scene = ExtResource("3_76oj4")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_rp718")

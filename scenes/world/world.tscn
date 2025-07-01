@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwpokr5rvl5aw"]
+
+[ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_dphjl")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(-26, 206, 650, 340, 919, -5, 1259, 351, 1770, 229, 2381, 54, 2706, 107, 3167, 214, 3534, 122, 3625, 161, 4034, 233, 4049, 531, 87, 573)
