@@ -38,9 +38,9 @@ func snap_back():
 func jump_out(direction: Vector2):
 	jumping_out = true
 	var verse = Vector2(direction.normalized().x, 1)
-	var start_pos = position
-	var offset = Vector2(randf_range(-200, 0), 90)
-	var jump_position = position + offset * verse
+	var start_pos = global_position
+	var offset = Vector2(randf_range(-5, 0), 90)
+	var jump_position = global_position + offset * verse
 	var jump_duration = 0.5 + randf_range(0, 0.2)
 	var height = 100  # max height of the arc
 	var random_rotation = deg_to_rad(randf_range(-80, 0) * verse.x)
@@ -51,7 +51,7 @@ func jump_out(direction: Vector2):
 			var x = lerp(start_pos.x, jump_position.x, t)
 			var y = lerp(start_pos.y, jump_position.y, t)
 			var arc = -4 * height * (t - 0.5) * (t - 0.5) + height
-			position = Vector2(x, y - arc)
+			global_position = Vector2(x, y - arc)
 	,
 	0.0, 1.0, jump_duration
 	).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
