@@ -10,15 +10,26 @@ var pool_index: int = 0
 var bullets_to_spawn = 0
 var speed := max_speed
 var initial_scale: Vector2 = Vector2.ONE
+var particle_emitter_orig_pos: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
+  particle_emitter_orig_pos = $GPUParticles2D.position
   for i in bullet_pool_size:
     bullet_pool.append(bullet_scene.instantiate())
   initial_scale = bullet_pool[0].scale
-    
+
 func _process(delta: float) -> void:
   var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
   position += direction * speed * delta
+
+  if direction.x < 0:
+    $GPUParticles2D.position.x = -particle_emitter_orig_pos.x
+  elif direction.x > 0:
+    $GPUParticles2D.position.x = particle_emitter_orig_pos.x
+  if direction != Vector2.ZERO and !$GPUParticles2D.emitting:
+    $GPUParticles2D.emitting = true
+  elif direction == Vector2.ZERO and $GPUParticles2D.emitting:
+    $GPUParticles2D.emitting = false
   
   if Input.is_action_pressed("fire"):
     speed = max_speed / 1.75

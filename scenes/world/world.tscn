@@ -6,4 +6,12 @@
 script = ExtResource("1_dphjl")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(-26, 206, 650, 340, 919, -5, 1259, 351, 1770, 229, 2381, 54, 2706, 107, 3167, 214, 3534, 122, 3625, 161, 4034, 233, 4049, 531, 87, 573)
+position = Vector2(20.5323, 64)
+scale = Vector2(2.36663, 1)
+color = Color(1, 0.886275, 0.356863, 1)
+polygon = PackedVector2Array(-26, 206, 650, 340, 904, 222, 1259, 351, 1770, 229, 2211, 125, 2694, 173, 3167, 214, 3534, 122, 3625, 161, 4034, 233, 4049, 531, 87, 573)
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2(-11.5004, -297)
+scale = Vector2(2.37497, 1)
+polygon = PackedVector2Array(-12, -443, 4055, -468, 4035.91, -219.282, 4022, -38, -3, -3)
