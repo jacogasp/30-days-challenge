@@ -1,19 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=3 format=3 uid="uid://pw8uk8er18ei"]
 
-[ext_resource type="Script" uid="uid://dj664c1hhnp7n" path="res://scripts/oscillate.gd" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://cwpokr5rvl5aw" path="res://scenes/world/world.tscn" id="3_sugp2"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_sgp6g"]
-
 [node name="Main" type="Node2D"]
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(50, 50)
-texture = SubResource("CanvasTexture_sgp6g")
-script = ExtResource("1_o5qli")
-amplitude = 100.0
-frequency = 2.0
 
 [node name="Player" parent="." instance=ExtResource("2_0wfyh")]
 max_speed = 1000.0

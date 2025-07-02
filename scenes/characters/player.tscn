@@ -1,12 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c34r771lh6okh"]
+[gd_scene load_steps=10 format=3 uid="uid://c34r771lh6okh"]
 
+[ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="1_atpat"]
 [ext_resource type="Script" uid="uid://dd4y4wqcm0qws" path="res://scripts/characters/player.gd" id="1_rp718"]
-[ext_resource type="Texture2D" uid="uid://h08vv2fba20l" path="res://icon.svg" id="1_yewv4"]
 [ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="3_76oj4"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_dyp2m"]
+[ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="5_kqtwu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
-size = Vector2(122, 128)
+size = Vector2(233, 75)
 
 [sub_resource type="Curve" id="Curve_dyp2m"]
 _data = [Vector2(0.015411, 0.424978), 0.0, 0.0, 0, 0, Vector2(0.299657, 0.88913), 0.0, 0.0, 0, 0, Vector2(1, 0.0998844), 0.0, 0.0, 0, 0]
@@ -20,24 +21,30 @@ lifetime_randomness = 0.25
 particle_flag_disable_z = true
 emission_shape_offset = Vector3(0, 10, 0)
 gravity = Vector3(0, 98, 0)
-scale_min = 2.0
-scale_max = 3.0
+scale_max = 2.0
 scale_curve = SubResource("CurveTexture_atpat")
 scale_over_velocity_min = 0.5
 scale_over_velocity_max = 1.0
 
 [node name="Player" type="Sprite2D"]
-texture = ExtResource("1_yewv4")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_atpat")
 script = ExtResource("1_rp718")
 bullet_scene = ExtResource("3_76oj4")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-37.5, 10.5)
 shape = SubResource("RectangleShape2D_rp718")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(64, 64)
+position = Vector2(75, 46)
 texture = ExtResource("4_dyp2m")
 lifetime = 0.3
 process_material = SubResource("ParticleProcessMaterial_atpat")
+
+[node name="Sail" type="Sprite2D" parent="."]
+z_index = -35
+position = Vector2(0, -258.745)
+texture = ExtResource("5_kqtwu")

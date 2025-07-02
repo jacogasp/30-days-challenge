@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.1 (1:1.4.1+202503302257+93de688d07)"
+   sodipodi:docname="boat"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.5465208"
+     inkscape:cx="189.45753"
+     inkscape:cy="350.4641"
+     inkscape:window-width="1920"
+     inkscape:window-height="1115"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="path6" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Sail"
+     inkscape:export-filename="boat-sail.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96">
+    <rect
+       style="fill:#808080;stroke:#666666;stroke-width:1.05833;stroke-linejoin:round"
+       id="rect3"
+       width="2.6614261"
+       height="122.90949"
+       x="73.673729"
+       y="13.749515" />
+    <path
+       style="fill:#e6e6e6;stroke:#cccccc;stroke-width:1.05833;stroke-linejoin:round"
+       d="M 72.844398,13.706211 C 36.855886,47.167665 37.602825,122.19055 37.602825,122.19055 c 0,0 28.775875,0.98732 30.378803,13.85636 1.60293,12.86906 4.86277,-122.340699 4.86277,-122.340699 z"
+       id="path3"
+       sodipodi:nodetypes="ccsc" />
+    <path
+       style="fill:#e6e6e6;stroke:#d40000;stroke-width:1.05833;stroke-linejoin:round"
+       d="m 77.302941,37.70235 7.016488,92.90796 59.277211,-6.04869 c 0,0 -16.93635,-64.842019 -66.293699,-86.85927 z"
+       id="path4" />
+    <path
+       style="fill:#ff0000;stroke:#d40000;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;paint-order:normal"
+       d="M 69.466259,111.03283 C 67.972828,102.29107 42.448851,81.553759 40.980445,87.7424 c 0,0 4.040136,-22.122854 7.6183,-32.107528 11.93133,5.112663 17.88644,19.71369 21.695589,30.277565 -0.165615,12.144298 -0.828075,25.120393 -0.828075,25.120393 z"
+       id="path5"
+       sodipodi:nodetypes="ssccs" />
+  </g>
+  <g
+     inkscape:label="Body"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#7366ff;stroke:#1d0066;stroke-width:1.05833;stroke-linejoin:round"
+       d="m 20.87212,136.18203 h 94.43779 c 0,0 21.10448,1.02386 20.87212,13.0023 -0.0381,1.96342 -36.741473,0.4604 -39.644847,3.96864 -2.903374,3.50825 -35.203409,3.02435 -35.203409,3.02435 0,0 -26.170302,0.82442 -29.033739,-0.0605 -2.863437,-0.88491 -6.16967,-9.61743 -11.492522,-10.2223 -5.322852,-0.60487 0.06461,-9.71251 0.06461,-9.71251 z"
+       id="path1"
+       sodipodi:nodetypes="ccssczscc" />
+    <path
+       style="fill:#cccccc;stroke:#666666;stroke-width:1.05833;stroke-linejoin:round"
+       d="m 20.87212,136.18203 h 94.43779 c 0,0 21.10448,1.02386 20.87212,13.0023 -0.0381,1.96342 -36.741473,0.4604 -39.644847,3.96864 -2.903374,3.50825 -35.203409,3.02435 -35.203409,3.02435 0,0 -26.170302,0.82442 -29.033739,-0.0605 -2.863437,-0.88491 -6.16967,-9.61743 -11.492522,-10.2223 -5.322852,-0.60487 0.06461,-9.71251 0.06461,-9.71251 z"
+       id="path2"
+       sodipodi:nodetypes="ccssczscc"
+       inkscape:export-filename="boat-body.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <rect
+       style="fill:#808080;stroke:#666666;stroke-width:1.00741;stroke-linejoin:round"
+       id="rect2"
+       width="3.617888"
+       height="25.169048"
+       x="30.445021"
+       y="128.15355"
+       transform="matrix(0.99604275,0.08887544,-0.11157155,0.9937564,0,0)" />
+    <g
+       id="path6"
+       style="opacity:1"
+       transform="translate(2.6517857,-0.51324885)">
+      <path
+         id="path12"
+         style="baseline-shift:baseline;display:inline;overflow:visible;vector-effect:none;fill:#ffffff;stroke-linecap:round;stroke-linejoin:round;enable-background:accumulate;stop-color:#000000;stop-opacity:1"
+         d="m 26.582022,128.00529 c -0.80442,0 -1.484375,0.62888 -1.484375,1.41992 0,1.85187 2.96875,1.85187 2.96875,0 0,-0.79104 -0.679955,-1.41992 -1.484375,-1.41992 z m -1.433595,2.9824 c -0.780058,0.32258 -1.717507,1.01644 -2.330078,2.40039 -0.07887,0.17743 0.0018,0.38515 0.179688,0.46289 0.176906,0.0776 0.383199,-0.003 0.460937,-0.17969 0.542239,-1.22505 1.314962,-1.77159 1.957031,-2.03711 0.450304,-0.18621 0.607227,-0.15613 0.789063,-0.16406 -0.0036,0.28862 -0.0092,0.70586 -0.02148,1.41211 -0.008,0.45911 -0.0174,0.91764 -0.02734,1.25977 -0.0045,0.15313 -0.0092,0.27332 -0.01367,0.36718 -0.462221,0.08 -0.913562,0.19906 -1.220703,0.48243 -0.390652,0.3604 -0.658022,0.81894 -0.84961,1.26562 -0.383174,0.89336 -0.46875,1.77148 -0.46875,1.77149 -0.01909,0.19191 0.120657,0.36309 0.3125,0.38281 0.19263,0.0202 0.365074,-0.11981 0.384766,-0.3125 0,0 0.08177,-0.78973 0.414063,-1.56446 0.166146,-0.38736 0.39429,-0.76224 0.68164,-1.02734 0.362507,-0.34027 0.786144,-0.45164 1.219758,-0.45208 0.422856,-4.4e-4 0.903048,0.17332 1.190398,0.43843 0.287351,0.2651 0.515495,0.63998 0.681641,1.02734 0.332293,0.77473 0.416016,1.56641 0.416016,1.56641 0.01972,0.19184 0.190905,0.33159 0.382812,0.3125 0.191843,-0.0197 0.331589,-0.1909 0.3125,-0.38281 0,0 -0.08558,-0.87813 -0.46875,-1.77149 -0.191587,-0.44668 -0.458957,-0.90521 -0.849609,-1.26562 -0.307141,-0.28337 -0.758482,-0.40247 -1.220703,-0.48242 -0.0045,-0.0939 -0.0092,-0.21405 -0.01367,-0.36719 -0.0099,-0.34213 -0.01934,-0.80066 -0.02734,-1.25977 -0.01232,-0.70647 -0.01596,-1.12561 -0.01953,-1.41406 0.182274,0.008 0.337807,-0.0198 0.787109,0.16602 0.642069,0.26551 1.414793,0.81205 1.957031,2.0371 0.07774,0.17793 0.285463,0.25856 0.462891,0.17969 0.177169,-0.0785 0.256844,-0.286 0.177734,-0.46289 -0.612571,-1.38395 -1.55002,-2.07781 -2.330078,-2.40039 -0.780058,-0.32258 -2.126209,-0.31091 -2.906267,0.0117 z"
+         inkscape:export-filename="sailor.png"
+         inkscape:export-xdpi="96"
+         inkscape:export-ydpi="96" />
+    </g>
+  </g>
+</svg>
