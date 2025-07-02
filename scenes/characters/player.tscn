@@ -48,3 +48,6 @@ process_material = SubResource("ParticleProcessMaterial_atpat")
 z_index = -35
 position = Vector2(0, -258.745)
 texture = ExtResource("5_kqtwu")
+
+[node name="BulletSpawner" type="Marker2D" parent="."]
+position = Vector2(150, -34)

@@ -6,8 +6,11 @@
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(232, 439)
 max_speed = 1000.0
 
-[node name="MainCamera" type="Camera2D" parent="Player"]
-
 [node name="World" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(-7, 647)
+
+[node name="MainCamera" type="Camera2D" parent="."]
+anchor_mode = 0

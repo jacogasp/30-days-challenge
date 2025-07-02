@@ -5,14 +5,22 @@
 [node name="World" type="Node2D"]
 script = ExtResource("1_dphjl")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="Sea" type="Parallax2D" parent="."]
+repeat_size = Vector2(1425.75, 0)
+repeat_times = 3
+
+[node name="Polygon2D2" type="Polygon2D" parent="Sea"]
+z_index = -99
+position = Vector2(-11.5004, 622.387)
+scale = Vector2(2.37497, 2.46237)
+color = Color(0.278431, 0.501961, 1, 1)
+polygon = PackedVector2Array(-12, -443, 15.3688, -450.131, 45.2639, -445.664, 68.001, -449.319, 100.844, -444.445, 135.791, -451.349, 162.318, -444.445, 199.371, -454.192, 238.951, -443.633, 268.846, -449.319, 307.583, -441.603, 335.373, -448.507, 366.952, -443.633, 400.637, -450.131, 444.427, -446.476, 475.164, -450.131, 516.849, -445.664, 551.797, -449.319, 592.218, -442.821, 598.955, 1.87337, -3, -3)
+
+[node name="Foreground" type="Parallax2D" parent="."]
+repeat_size = Vector2(9614.97, 0)
+
+[node name="Polygon2D" type="Polygon2D" parent="Foreground"]
 position = Vector2(20.5323, 64)
 scale = Vector2(2.36663, 1)
 color = Color(1, 0.886275, 0.356863, 1)
-polygon = PackedVector2Array(-26, 206, 650, 340, 904, 222, 1259, 351, 1770, 229, 2211, 125, 2694, 173, 3167, 214, 3534, 122, 3625, 161, 4034, 233, 4049, 531, 87, 573)
-
-[node name="Polygon2D2" type="Polygon2D" parent="."]
-z_index = -99
-position = Vector2(-11.5004, -297)
-scale = Vector2(2.37497, 1)
-polygon = PackedVector2Array(-12, -443, 4055, -468, 4035.91, -219.282, 4022, -38, -3, -3)
+polygon = PackedVector2Array(-30.6479, 243, 650, 340, 904, 222, 1259, 351, 1770, 229, 2211, 125, 2694, 173, 3167, 214, 3534, 122, 3625, 161, 4043.5, 246, 4037.16, 567, -25.5774, 564)

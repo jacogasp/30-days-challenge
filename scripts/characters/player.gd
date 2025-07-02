@@ -16,6 +16,10 @@ var speed := max_speed
 var initial_scale: Vector2 = Vector2.ONE
 var particle_emitter_orig_pos: Vector2 = Vector2.ZERO
 var boat_lenght:float = 380
+var min_sea_limit: Vector2 = Vector2(45,200)
+var max_sea_limit: Vector2 = Vector2(1800,1000)
+@onready var bullet_spawner: Marker2D = $BulletSpawner
+
 
 func _ready() -> void:
 	particle_emitter_orig_pos = gpu_particles_2d.position
@@ -38,6 +42,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	position += direction * speed * delta
+	position = position.clamp(min_sea_limit, max_sea_limit)
 	
 	if direction != Vector2.ZERO and direction != last_direction:
 		var new_direction: Vector2 = direction - last_direction
@@ -64,7 +69,8 @@ func _process(delta: float) -> void:
 			var bullet = bullet_pool[pool_index]
 			pool_index = wrapi(pool_index + 1, 0, bullet_pool_size)
 			add_child(bullet)
-			var bullet_transform = global_transform
+			var bullet_transform := global_transform
+			bullet_transform.origin = bullet_spawner.global_position
 			bullet.fire(bullet_transform, 0.03)
 			bullet.scale = initial_scale
 		bullets_to_spawn -= round(bullets_to_spawn)
