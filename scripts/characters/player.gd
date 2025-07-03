@@ -4,10 +4,10 @@ extends Sprite2D
 @export var fire_rate: float = 15
 @export var bullet_scene: PackedScene
 @export var bullet_pool_size: int = 5000
+@export var sailor_scene: PackedScene
 @export var starting_sailor_count: int = 5
-
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
-const SAILOR = preload("res://scenes/sailor.tscn")
+
 var last_direction: Vector2 = Vector2.ZERO
 var bullet_pool: Array[Bullet] = []
 var pool_index: int = 0
@@ -28,7 +28,7 @@ func _ready() -> void:
 	initial_scale = bullet_pool[0].scale
 
 	for i in starting_sailor_count:
-		var sailor := SAILOR.instantiate()
+		var sailor := sailor_scene.instantiate()
 		var sailor_offset = Vector2(randf_range(-boat_lenght * 0.5, boat_lenght * 0.5), -35)
 		add_child(sailor)
 		sailor.position = sailor_offset
@@ -76,7 +76,7 @@ func _process(delta: float) -> void:
 		bullets_to_spawn -= round(bullets_to_spawn)
 
 	if Input.is_action_just_pressed("DEBUG_add_sailor"):
-		var sailor := SAILOR.instantiate()
+		var sailor := sailor_scene.instantiate()
 		var boat_half_lenght = 0.5 * boat_lenght
 		add_child(sailor)
 		sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), -35)
