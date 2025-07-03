@@ -8,7 +8,6 @@ extends Sprite2D
 var jumping_out: bool = false
 
 func spawn():
-	var current_pos = position
 	await get_tree().create_timer(delay * randf_range(0.1, 0.4)).timeout
 	var tween = create_tween()
 	tween.tween_property(self, "position", spawn_position, snap_duration)\
@@ -28,19 +27,18 @@ func snap_to(velocity: Vector2):
 func snap_back():
 	if jumping_out:
 		return
-	var current_pos = position
 	await get_tree().create_timer(delay * randf_range(0.1, 0.99)).timeout
 	var tween = create_tween()
 	tween.tween_property(self, "position", spawn_position, snap_duration)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await tween.finished
-	
+
 func jump_out(direction: Vector2):
 	jumping_out = true
 	var verse = Vector2(direction.normalized().x, 1)
 	var start_pos = global_position
-	var offset = Vector2(randf_range(-5, 0), 90)
-	var jump_position = global_position + offset * verse
+	var jump_offset = Vector2(randf_range(-5, 0), 90)
+	var jump_position = global_position + jump_offset * verse
 	var jump_duration = 0.5 + randf_range(0, 0.2)
 	var height = 100  # max height of the arc
 	var random_rotation = deg_to_rad(randf_range(-80, 0) * verse.x)

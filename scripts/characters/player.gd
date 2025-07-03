@@ -26,24 +26,24 @@ func _ready() -> void:
 	for i in bullet_pool_size:
 		bullet_pool.append(bullet_scene.instantiate())
 	initial_scale = bullet_pool[0].scale
-	
+
 	for i in starting_sailor_count:
 		var sailor := SAILOR.instantiate()
-		var offset:Vector2 = Vector2(randf_range(-boat_lenght * 0.5, boat_lenght * 0.5), -35)
+		var sailor_offset = Vector2(randf_range(-boat_lenght * 0.5, boat_lenght * 0.5), -35)
 		add_child(sailor)
-		sailor.position = offset
+		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
 		sailor.modulate = Color.from_hsv(randf(),
 										 randf_range(0.6,0.8),
 										 randf_range(0.9, 1))
-		
-	
+
+
 
 func _process(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	position += direction * speed * delta
 	position = position.clamp(min_sea_limit, max_sea_limit)
-	
+
 	if direction != Vector2.ZERO and direction != last_direction:
 		var new_direction: Vector2 = direction - last_direction
 		for child in get_children():
@@ -60,7 +60,7 @@ func _process(delta: float) -> void:
 		gpu_particles_2d.emitting = true
 	elif direction == Vector2.ZERO and gpu_particles_2d.emitting:
 		gpu_particles_2d.emitting = false
-  
+
 	if Input.is_action_pressed("fire"):
 		bullets_to_spawn += fire_rate * delta
 		if bullets_to_spawn < 1:
@@ -74,22 +74,22 @@ func _process(delta: float) -> void:
 			bullet.fire(bullet_transform, 0.03)
 			bullet.scale = initial_scale
 		bullets_to_spawn -= round(bullets_to_spawn)
-	
+
 	if Input.is_action_just_pressed("DEBUG_add_sailor"):
 		var sailor := SAILOR.instantiate()
-		var offset:Vector2 = Vector2(randf_range(-boat_lenght * 0.5, boat_lenght * 0.5), -35)
+		var boat_half_lenght = 0.5 * boat_lenght
 		add_child(sailor)
-		sailor.spawn_position = offset
+		sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), -35)
 		sailor.position = sailor.spawn_position + Vector2(0,-100)
 		sailor.modulate = Color(randf(),randf(),randf())
 		sailor.spawn()
-	
+
 	if Input.is_action_just_pressed("DEBUG_remove_sailor"):
 		var sailor = get_random_sailor()
 		if sailor:
 			await sailor.jump_out(direction)
 			sailor.queue_free()
-	
+
 func get_random_sailor() -> Sailor:
 	var sailors := []
 	for child in get_children():
