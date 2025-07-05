@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://idkdxkpdu4no"]
+
+[node name="Hud" type="CanvasLayer"]
+
+[node name="SpanwnedEnemiesLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 64
+text = "Spawned Enemies 0"

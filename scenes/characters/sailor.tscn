@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://co0wsux68yvdp"]
 
 [ext_resource type="Texture2D" uid="uid://ce50pebslb83u" path="res://assets/sailor.png" id="1_w17xm"]
-[ext_resource type="Script" uid="uid://bv2bkmy1c0jhr" path="res://scripts/sailor.gd" id="2_t2xx5"]
+[ext_resource type="Script" uid="uid://bv2bkmy1c0jhr" path="res://scripts/characters/sailor.gd" id="2_t2xx5"]
 
 [node name="Sailor" type="Sprite2D"]
 modulate = Color(0.9595, 1, 0.19, 1)
