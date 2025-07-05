@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmuh1ipmewjvf"]
+
+[ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
+[ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
+[ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="3_21x0f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2e6v"]
+size = Vector2(23.75, 25.4529)
+
+[node name="Enemy" type="Sprite2D"]
+texture = ExtResource("1_f2e6v")
+script = ExtResource("1_7jb55")
+speed = 200.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-18, 292)
+texture = ExtResource("3_21x0f")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-33, 61.4)
+scale = Vector2(17.6, 22.52)
+shape = SubResource("RectangleShape2D_f2e6v")

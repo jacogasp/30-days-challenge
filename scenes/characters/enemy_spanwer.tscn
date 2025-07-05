@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd82objmcmblm"]
+
+[ext_resource type="Script" uid="uid://b4lyirh0g8ybf" path="res://scripts/characters/enemy_spanwer.gd" id="1_s1jtr"]
+[ext_resource type="PackedScene" uid="uid://cmuh1ipmewjvf" path="res://scenes/characters/enemy.tscn" id="2_yokgt"]
+
+[sub_resource type="Curve2D" id="Curve2D_yokgt"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -14, 191, 0, 0, 0, 0, 3, 766)
+}
+point_count = 2
+
+[node name="EnemySpanwer" type="Node2D"]
+script = ExtResource("1_s1jtr")
+enemy_scene = ExtResource("2_yokgt")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_yokgt")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(-14, 191)
+rotation = 1.54124
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
