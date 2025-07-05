@@ -63,6 +63,12 @@ DEBUG_remove_sailor={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_5="bullet"
+2d_physics/layer_9="enemy"
+
 [rendering]
 
 environment/defaults/default_clear_color=Color(0.372549, 0.705882, 0.87451, 1)

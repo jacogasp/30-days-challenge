@@ -51,6 +51,7 @@ bullet_scene = ExtResource("3_76oj4")
 sailor_scene = ExtResource("4_kqtwu")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-37.5, 10.5)
@@ -73,3 +74,5 @@ lifetime = 4.88
 speed_scale = 6.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qgnko")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

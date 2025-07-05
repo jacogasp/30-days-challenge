@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=6 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://dd82objmcmblm" path="res://scenes/characters/enemy_spanwer.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cwpokr5rvl5aw" path="res://scenes/world/world.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/hud.tscn" id="4_jyhfs"]
-[ext_resource type="Script" uid="uid://c75onh481bgxf" path="res://scripts/hud.gd" id="6_o6xl0"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tefeu")
@@ -40,4 +39,3 @@ max_scale = 0.5
 scale_factor = 0.5
 
 [node name="Hud" parent="." instance=ExtResource("4_jyhfs")]
-script = ExtResource("6_o6xl0")

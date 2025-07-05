@@ -52,6 +52,8 @@ position = Vector2(-18, 292)
 texture = ExtResource("3_21x0f")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-33, 61.4)
@@ -71,5 +73,14 @@ process_material = SubResource("ParticleProcessMaterial_f2e6v")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
+[node name="Label" type="Label" parent="."]
+offset_left = -126.0
+offset_top = -330.0
+offset_right = 8.0
+offset_bottom = -242.0
+theme_override_font_sizes/font_size = 64
+text = "Text"
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
