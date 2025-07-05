@@ -7,12 +7,14 @@ extends Sprite2D
 
 var jumping_out: bool = false
 
+
 func spawn():
 	await get_tree().create_timer(delay * randf_range(0.1, 0.4)).timeout
 	var tween = create_tween()
 	tween.tween_property(self, "position", spawn_position, snap_duration)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 	await tween.finished
+
 
 func snap_to(velocity: Vector2):
 	if jumping_out:
@@ -24,6 +26,7 @@ func snap_to(velocity: Vector2):
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await tween.finished
 
+
 func snap_back():
 	if jumping_out:
 		return
@@ -32,6 +35,7 @@ func snap_back():
 	tween.tween_property(self, "position", spawn_position, snap_duration)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await tween.finished
+
 
 func jump_out(direction: Vector2):
 	jumping_out = true

@@ -9,4 +9,11 @@ script = ExtResource("1_ahhtf")
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 64
-text = "Spawned Enemies 0"
+text = "Spawned enemies 0"
+
+[node name="DefeatedEnemiesLabel" type="Label" parent="."]
+offset_left = 696.0
+offset_right = 1308.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 64
+text = "Defeated enemies 0"

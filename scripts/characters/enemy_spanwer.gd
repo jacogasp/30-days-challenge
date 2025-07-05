@@ -10,8 +10,10 @@ extends Node2D
 @export var scale_factor: float = 1.0
 
 signal enemy_spawned
+signal enemy_defeated
 
 var bounds = Rect2()
+
 
 func _ready() -> void:
 	var canvas = get_canvas_transform()
@@ -19,6 +21,7 @@ func _ready() -> void:
 	var size = get_viewport_rect().size / canvas.get_scale()
 	bounds = Rect2(top_left, size)
 	$Timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
+
 
 func _on_timer_timeout() -> void:
 	var enemy = enemy_scene.instantiate()
@@ -29,12 +32,14 @@ func _on_timer_timeout() -> void:
 	enemy.scale = Vector2.ONE * clamp(ratio * scale_factor, min_scale, max_scale)
 	enemy.speed = randf_range(enemy_speed * (1 - speed_randomness), enemy_speed * (1 + speed_randomness))
 	enemy.connect("enemy_spawned", _handle_enemy_spawned)
-	enemy.connect("enemy_destroyed", _handle_enemy_destroyed)
+	enemy.connect("enemy_defeated", _handle_enemy_defeated)
 	$Timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
 	add_child(enemy)
+
 
 func _handle_enemy_spawned():
 	enemy_spawned.emit()
 
-func _handle_enemy_destroyed():
-	print("hello?")
+
+func _handle_enemy_defeated():
+	enemy_defeated.emit()
