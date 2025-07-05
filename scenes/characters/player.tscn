@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c34r771lh6okh"]
+[gd_scene load_steps=15 format=3 uid="uid://c34r771lh6okh"]
 
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="1_atpat"]
 [ext_resource type="Script" uid="uid://dd4y4wqcm0qws" path="res://scripts/characters/player.gd" id="1_rp718"]
@@ -10,22 +10,38 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
 size = Vector2(233, 75)
 
-[sub_resource type="Curve" id="Curve_dyp2m"]
-_data = [Vector2(0.015411, 0.424978), 0.0, 0.0, 0, 0, Vector2(0.299657, 0.88913), 0.0, 0.0, 0, 0, Vector2(1, 0.0998844), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_kqtwu"]
+_data = [Vector2(0.520861, 0.976433), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3k4es"]
+curve = SubResource("Curve_kqtwu")
+
+[sub_resource type="Curve" id="Curve_6eyoc"]
+_data = [Vector2(0.0955585, 0.431452), 0.0, 0.0, 0, 0, Vector2(1, 0.0912078), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0ag5d"]
+curve = SubResource("Curve_6eyoc")
+
+[sub_resource type="Curve" id="Curve_eojnx"]
+_data = [Vector2(0.00807537, 0.362225), 0.0, 0.0, 0, 0, Vector2(0.317631, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_atpat"]
-curve = SubResource("Curve_dyp2m")
+[sub_resource type="CurveTexture" id="CurveTexture_jgk6k"]
+curve = SubResource("Curve_eojnx")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_atpat"]
-lifetime_randomness = 0.25
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qgnko"]
 particle_flag_disable_z = true
-emission_shape_offset = Vector3(0, 10, 0)
-gravity = Vector3(0, 98, 0)
-scale_max = 2.0
-scale_curve = SubResource("CurveTexture_atpat")
-scale_over_velocity_min = 0.5
-scale_over_velocity_max = 1.0
+gravity = Vector3(-50, 0, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_jgk6k")
+alpha_curve = SubResource("CurveTexture_3k4es")
+hue_variation_min = -0.04
+hue_variation_max = 0.05
+hue_variation_curve = SubResource("CurveTexture_0ag5d")
 
 [node name="Player" type="Sprite2D"]
 scale = Vector2(0.5, 0.5)
@@ -40,12 +56,6 @@ sailor_scene = ExtResource("4_kqtwu")
 position = Vector2(-37.5, 10.5)
 shape = SubResource("RectangleShape2D_rp718")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(75, 46)
-texture = ExtResource("4_dyp2m")
-lifetime = 0.3
-process_material = SubResource("ParticleProcessMaterial_atpat")
-
 [node name="Sail" type="Sprite2D" parent="."]
 z_index = -35
 position = Vector2(0, -258.745)
@@ -53,3 +63,13 @@ texture = ExtResource("5_kqtwu")
 
 [node name="BulletSpawner" type="Marker2D" parent="."]
 position = Vector2(150, -34)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(198, 36)
+scale = Vector2(1.2, 1.2)
+amount = 32
+texture = ExtResource("4_dyp2m")
+lifetime = 4.88
+speed_scale = 6.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_qgnko")

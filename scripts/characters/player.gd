@@ -38,7 +38,6 @@ func _ready() -> void:
 										 randf_range(0.9, 1))
 
 
-
 func _process(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	position += direction * speed * delta
@@ -51,15 +50,6 @@ func _process(delta: float) -> void:
 				child.snap_to(-new_direction * speed * delta * Vector2(1,0.5))
 				last_direction = direction
 				child.snap_back()
-
-	if direction.x < 0:
-		gpu_particles_2d.position.x = -particle_emitter_orig_pos.x
-	elif direction.x > 0:
-		gpu_particles_2d.position.x = particle_emitter_orig_pos.x
-	if direction != Vector2.ZERO and !gpu_particles_2d.emitting:
-		gpu_particles_2d.emitting = true
-	elif direction == Vector2.ZERO and gpu_particles_2d.emitting:
-		gpu_particles_2d.emitting = false
 
 	if Input.is_action_pressed("fire"):
 		bullets_to_spawn += fire_rate * delta
@@ -89,6 +79,7 @@ func _process(delta: float) -> void:
 		if sailor:
 			await sailor.jump_out(direction)
 			sailor.queue_free()
+
 
 func get_random_sailor() -> Sailor:
 	var sailors := []

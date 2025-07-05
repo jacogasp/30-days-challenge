@@ -16,7 +16,19 @@ position = Vector2(-7, 647)
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
 
-[node name="EnemySpanwer" parent="." instance=ExtResource("3_jyhfs")]
+[node name="LEnemySpanwer" parent="." instance=ExtResource("3_jyhfs")]
+position = Vector2(-154, 0)
+min_spawn_time = 3.0
+max_spawn_time = 8.0
+min_scale = 0.5
+max_scale = 0.5
+scale_factor = 0.5
+
+[node name="REnemySpanwer" parent="." instance=ExtResource("3_jyhfs")]
+position = Vector2(2067, 0)
+enemy_speed = -100.0
+min_spawn_time = 3.0
+max_spawn_time = 8.0
 min_scale = 0.5
 max_scale = 0.5
 scale_factor = 0.5
