@@ -9,11 +9,16 @@ extends Node2D
 @onready var label: Label = $Label
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
 @onready var boat: Node2D = $ClippingContainer/Boat
+@onready var area_2d: Area2D = $Area2D
+@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 
 
 var sailors_count: int
 var boat_length:int  = 100
 var boat_height:int = 200
+
+var is_sinking = false
+
 signal enemy_spawned
 signal enemy_defeated
 signal overboard
@@ -60,6 +65,8 @@ func drop_sailors(drop_direction: Vector2) -> void:
 			sailor.queue_free()
 
 func hit(damage: int) -> void:
+	if is_sinking:
+		return
 	if (label.hidden):
 		label.show()
 	health -= damage
@@ -79,8 +86,17 @@ func get_random_sailor() -> Sailor:
 	return null
 
 func sink() -> void:
+	set_process(false)
+	is_sinking = true
+	area_2d.queue_free()
+	var sinking_angle = randf_range(5,30)
 	var tween = create_tween()
-	tween.tween_property(boat, "rotation", deg_to_rad(15), 2.0)
+	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle * 0.5), 1.0)
+	await tween.finished
+	tween=create_tween()
+	tween.set_parallel()
+	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle), 1.0)
 	tween.tween_property(boat, "position:y", boat_height, 2.0)
+	tween.tween_property(gpu_particles_2d, "scale", Vector2(0,0), 2)
 	await tween.finished
 	queue_free()

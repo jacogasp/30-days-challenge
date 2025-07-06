@@ -29,9 +29,6 @@ position = Vector2(-182, 0)
 speed_randomness = 0.5
 min_spawn_time = 10.0
 max_spawn_time = 15.0
-min_scale = 0.5
-max_scale = 0.5
-scale_factor = 0.5
 
 [node name="REnemySpanwer" parent="GamePlane" instance=ExtResource("3_jyhfs")]
 position = Vector2(2089, 9)
@@ -39,8 +36,5 @@ enemy_speed = -100.0
 speed_randomness = 0.8
 min_spawn_time = 10.0
 max_spawn_time = 15.0
-min_scale = 0.5
-max_scale = 0.5
-scale_factor = 0.5
 
 [node name="OverboardSailors" type="Node2D" parent="GamePlane"]
