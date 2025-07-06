@@ -7,7 +7,6 @@
 size = Vector2(124, 124)
 
 [node name="Bullet" type="Sprite2D"]
-scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_dnt7v")
 script = ExtResource("1_mx1hr")
 max_range = 4000.0

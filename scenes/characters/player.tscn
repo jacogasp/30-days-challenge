@@ -83,3 +83,7 @@ lifetime = 4.88
 speed_scale = 6.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qgnko")
+
+[node name="BulletContainer" type="Node2D" parent="."]
+position = Vector2(49.4, -0.834991)
+scale = Vector2(0.4, 0.4)
