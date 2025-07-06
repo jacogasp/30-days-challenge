@@ -5,9 +5,6 @@ extends Node2D
 @export var speed_randomness: float = 0.0
 @export var min_spawn_time: float = 1.0
 @export var max_spawn_time: float = 5.0
-@export var min_scale: float = 0.9
-@export var max_scale: float = 2
-@export var scale_factor: float = 1.0
 
 signal enemy_spawned
 signal enemy_defeated
@@ -16,10 +13,6 @@ var bounds = Rect2()
 
 
 func _ready() -> void:
-	var canvas = get_canvas_transform()
-	var top_left = -canvas.origin / canvas.get_scale()
-	var size = get_viewport_rect().size / canvas.get_scale()
-	bounds = Rect2(top_left, size)
 	$Timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
 
 
@@ -28,8 +21,6 @@ func _on_timer_timeout() -> void:
 	var enemy_span_location = $Path2D/PathFollow2D
 	enemy_span_location.progress_ratio = randf()
 	enemy.position = enemy_span_location.position + position
-	print(enemy.position)
-	#var ratio = enemy.global_position.y / (bounds.position.y + bounds.size.y)
 	enemy.scale = Vector2.ONE
 	enemy.speed = randf_range(enemy_speed * (1 - speed_randomness), enemy_speed * (1 + speed_randomness))
 	enemy.connect("enemy_spawned", _handle_enemy_spawned)
