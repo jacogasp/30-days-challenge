@@ -1,10 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://co0wsux68yvdp"]
+[gd_scene load_steps=4 format=3 uid="uid://co0wsux68yvdp"]
 
-[ext_resource type="Texture2D" uid="uid://ce50pebslb83u" path="res://assets/sailor.png" id="1_w17xm"]
+[ext_resource type="Texture2D" uid="uid://hirprwvwbj00" path="res://assets/sailor.png" id="1_w17xm"]
 [ext_resource type="Script" uid="uid://bv2bkmy1c0jhr" path="res://scripts/characters/sailor.gd" id="2_t2xx5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rg7sp"]
+radius = 35.7945
 
 [node name="Sailor" type="Sprite2D"]
 modulate = Color(0.9595, 1, 0.19, 1)
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 texture = ExtResource("1_w17xm")
 script = ExtResource("2_t2xx5")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_rg7sp")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

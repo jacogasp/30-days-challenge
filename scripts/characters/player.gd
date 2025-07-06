@@ -1,3 +1,4 @@
+class_name Player
 extends Node2D
 
 @export var max_speed: float = 500.0
@@ -8,7 +9,7 @@ extends Node2D
 @export var starting_sailor_count: int = 5
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
-@onready var sailors: Node2D = $Sailors
+@onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
 @onready var bullet_spawner: Marker2D = $BulletSpawner
 @onready var bullet_container: Node2D = $BulletContainer
 
@@ -64,21 +65,21 @@ func _process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("fire"):
 		fire_bullet()
-
-	if Input.is_action_just_pressed("DEBUG_add_sailor"):
-		var sailor := sailor_scene.instantiate()
-		var boat_half_lenght = 0.5 * boat_lenght
-		sailors.add_child(sailor)
-		sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), 0)
-		sailor.position = sailor.spawn_position + Vector2(0, -100)
-		sailor.modulate = Color(randf(), randf(), randf())
-		sailor.spawn()
-
-	if Input.is_action_just_pressed("DEBUG_remove_sailor"):
-		var sailor = get_random_sailor()
-		if sailor:
-			await sailor.jump_out(direction)
-			sailor.queue_free()
+	
+	if OS.is_debug_build():
+		if Input.is_action_just_pressed("DEBUG_add_sailor"):
+			var sailor := sailor_scene.instantiate()
+			var boat_half_lenght = 0.5 * boat_lenght
+			sailors.add_child(sailor)
+			sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), 0)
+			sailor.position = sailor.spawn_position + Vector2(0, -100)
+			sailor.modulate = Color(randf(), randf(), randf())
+			sailor.spawn()
+		if Input.is_action_just_pressed("DEBUG_remove_sailor"):
+			var sailor = get_random_sailor()
+			if sailor:
+				await sailor.jump_out(direction)
+				sailor.queue_free()
 
 
 func fire_bullet() -> void:
@@ -91,7 +92,6 @@ func fire_bullet() -> void:
 	bullet.scale = Vector2(0.5,0.5)
 	bullet.enable()
 
-
 func get_random_sailor() -> Sailor:
 	var sailors_list: Array[Sailor] = []
 	for sailor in sailors.get_children():
@@ -100,3 +100,12 @@ func get_random_sailor() -> Sailor:
 	if sailors_list.size() > 0:
 		return sailors_list[randi() % sailors_list.size()]
 	return null
+
+func load_sailor(modulation_color: Color) -> void:
+	var sailor := sailor_scene.instantiate()
+	var boat_half_lenght = 0.5 * boat_lenght
+	sailors.add_child(sailor)
+	sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), 0)
+	sailor.position = sailor.spawn_position + Vector2(0, -100)
+	sailor.modulate = modulation_color
+	sailor.spawn()	

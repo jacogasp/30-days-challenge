@@ -6,7 +6,7 @@ var query := PhysicsShapeQueryParameters2D.new()
 
 @export var max_range: float = 1920
 @export var speed: float = 400
-@export var damage: int = 1
+@export var damage: int = 5
 
 var traveled_distance: float = 0
 var active := false

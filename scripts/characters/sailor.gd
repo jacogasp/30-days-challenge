@@ -4,9 +4,17 @@ extends Sprite2D
 @export var delay := 0.2
 @export var snap_duration := 0.25
 @onready var spawn_position: Vector2 = position
+@onready var area_2d: Area2D = $Area2D
 
 var jumping_out: bool = false
+var overboard: bool = false
 
+func _ready() -> void:
+	area_2d.monitoring = false
+
+func _process(delta: float) -> void:
+	if overboard:
+		position.x -= delta * Globals.world_speed * 0.5
 
 func spawn():
 	await get_tree().create_timer(delay * randf_range(0.1, 0.4)).timeout
@@ -41,7 +49,7 @@ func jump_out(direction: Vector2):
 	jumping_out = true
 	var verse = Vector2(direction.normalized().x, 1)
 	var start_pos = global_position
-	var jump_offset = Vector2(randf_range(-5, 0), 90)
+	var jump_offset = Vector2(randf_range(-5, 0), 30 + randf_range(-45, +45))
 	var jump_position = global_position + jump_offset * verse
 	var jump_duration = 0.5 + randf_range(0, 0.2)
 	var height = 100  # max height of the arc
@@ -61,3 +69,18 @@ func jump_out(direction: Vector2):
 	tween.parallel().tween_property(self, "rotation", random_rotation, jump_duration)\
 		.set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
 	await tween.finished
+
+func set_overboard() -> void:
+	overboard = true
+	rotation = 0
+	z_index = 0
+	area_2d.monitoring = true
+	texture = load("res://assets/sailor_drowning.png")
+	
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.get_parent() is Player:
+		var player:Player = area.get_parent()
+		var modulation_color = modulate
+		player.load_sailor(modulation_color)
+		queue_free()

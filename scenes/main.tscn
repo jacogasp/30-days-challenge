@@ -42,3 +42,5 @@ max_spawn_time = 15.0
 min_scale = 0.5
 max_scale = 0.5
 scale_factor = 0.5
+
+[node name="OverboardSailors" type="Node2D" parent="GamePlane"]

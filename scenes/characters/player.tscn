@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c34r771lh6okh"]
+[gd_scene load_steps=17 format=3 uid="uid://c34r771lh6okh"]
 
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="1_atpat"]
 [ext_resource type="Script" uid="uid://dd4y4wqcm0qws" path="res://scripts/characters/player.gd" id="1_rp718"]
@@ -6,9 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_dyp2m"]
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="4_kqtwu"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="5_kqtwu"]
+[ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://scenes/characters/wave.gdshader" id="6_6eyoc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
 size = Vector2(137, 24)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eojnx"]
+shader = ExtResource("6_6eyoc")
+shader_parameter/clip_y = 0.6
 
 [sub_resource type="Curve" id="Curve_kqtwu"]
 _data = [Vector2(0.520861, 0.976433), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -45,20 +50,31 @@ hue_variation_curve = SubResource("CurveTexture_0ag5d")
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_rp718")
+fire_rate = 10.0
 bullet_scene = ExtResource("3_76oj4")
 sailor_scene = ExtResource("4_kqtwu")
 
-[node name="Sail" type="Sprite2D" parent="."]
-position = Vector2(0, -1)
+[node name="ClippingContainer" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -101.0
+offset_top = -167.0
+offset_right = 104.0
+
+[node name="Boat" type="Node2D" parent="ClippingContainer"]
+
+[node name="Sail" type="Sprite2D" parent="ClippingContainer/Boat"]
+position = Vector2(100.7, 166.85)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("5_kqtwu")
 offset = Vector2(-1.99999, -305.333)
 
-[node name="Sailors" type="Node2D" parent="."]
-position = Vector2(0, -25)
+[node name="Sailors" type="Node2D" parent="ClippingContainer/Boat"]
+position = Vector2(100.7, 142.85)
 
-[node name="Body" type="Sprite2D" parent="."]
-position = Vector2(-1, -0.999999)
+[node name="Body" type="Sprite2D" parent="ClippingContainer/Boat"]
+position = Vector2(99.7, 166.85)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_atpat")
 offset = Vector2(1.33334, -42.7833)
@@ -75,7 +91,8 @@ shape = SubResource("RectangleShape2D_rp718")
 position = Vector2(52.4, -25.835)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(49.4, -0.834991)
+material = SubResource("ShaderMaterial_eojnx")
+position = Vector2(49, 1)
 scale = Vector2(0.4, 0.4)
 amount = 32
 texture = ExtResource("4_dyp2m")
