@@ -89,8 +89,7 @@ func fire_bullet() -> void:
 	bullet_transform.origin = bullet_spawner.global_position
 	bullet.fire(bullet_transform, 0.03)
 	bullet.scale = Vector2(0.5,0.5)
-	bullet.visible = true
-	bullet.active = true
+	bullet.enable()
 
 
 func get_random_sailor() -> Sailor:
