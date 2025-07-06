@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 			for i in int(bullets_to_spawn):
 				fire_bullet()
 			bullets_to_spawn -= int(bullets_to_spawn)
-	
+
 	if Input.is_action_just_pressed("fire"):
 		fire_bullet()
 
