@@ -9,18 +9,23 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tefeu")
 
-[node name="Player" parent="." instance=ExtResource("2_0wfyh")]
-position = Vector2(232, 439)
-max_speed = 1000.0
-
 [node name="World" parent="." instance=ExtResource("3_sugp2")]
 position = Vector2(-7, 647)
 
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
 
-[node name="LEnemySpanwer" parent="." instance=ExtResource("3_jyhfs")]
-position = Vector2(-154, 0)
+[node name="Hud" parent="." instance=ExtResource("4_jyhfs")]
+
+[node name="GamePlane" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" parent="GamePlane" instance=ExtResource("2_0wfyh")]
+position = Vector2(232, 439)
+max_speed = 1000.0
+
+[node name="LEnemySpanwer" parent="GamePlane" instance=ExtResource("3_jyhfs")]
+position = Vector2(-182, 0)
 speed_randomness = 0.5
 min_spawn_time = 10.0
 max_spawn_time = 15.0
@@ -28,8 +33,8 @@ min_scale = 0.5
 max_scale = 0.5
 scale_factor = 0.5
 
-[node name="REnemySpanwer" parent="." instance=ExtResource("3_jyhfs")]
-position = Vector2(2067, 0)
+[node name="REnemySpanwer" parent="GamePlane" instance=ExtResource("3_jyhfs")]
+position = Vector2(2089, 9)
 enemy_speed = -100.0
 speed_randomness = 0.8
 min_spawn_time = 10.0
@@ -37,5 +42,3 @@ max_spawn_time = 15.0
 min_scale = 0.5
 max_scale = 0.5
 scale_factor = 0.5
-
-[node name="Hud" parent="." instance=ExtResource("4_jyhfs")]

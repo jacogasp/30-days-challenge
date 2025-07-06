@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="5_kqtwu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
-size = Vector2(233, 75)
+size = Vector2(137, 24)
 
 [sub_resource type="Curve" id="Curve_kqtwu"]
 _data = [Vector2(0.520861, 0.976433), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -43,36 +43,43 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_0ag5d")
 
-[node name="Player" type="Sprite2D"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_atpat")
+[node name="Player" type="Node2D"]
 script = ExtResource("1_rp718")
 bullet_scene = ExtResource("3_76oj4")
 sailor_scene = ExtResource("4_kqtwu")
 
+[node name="Sail" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("5_kqtwu")
+offset = Vector2(-1.99999, -305.333)
+
+[node name="Sailors" type="Node2D" parent="."]
+position = Vector2(0, -25)
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(-1, -0.999999)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_atpat")
+offset = Vector2(1.33334, -42.7833)
+
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-0.599998, -13.835)
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-37.5, 10.5)
+position = Vector2(2.5, 3)
 shape = SubResource("RectangleShape2D_rp718")
 
-[node name="Sail" type="Sprite2D" parent="."]
-z_index = -35
-position = Vector2(0, -258.745)
-texture = ExtResource("5_kqtwu")
-
 [node name="BulletSpawner" type="Marker2D" parent="."]
-position = Vector2(150, -34)
+position = Vector2(52.4, -25.835)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(198, 36)
-scale = Vector2(1.2, 1.2)
+position = Vector2(49.4, -0.834991)
+scale = Vector2(0.4, 0.4)
 amount = 32
 texture = ExtResource("4_dyp2m")
 lifetime = 4.88
 speed_scale = 6.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qgnko")
-
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

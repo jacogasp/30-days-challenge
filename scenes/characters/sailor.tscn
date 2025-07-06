@@ -5,6 +5,6 @@
 
 [node name="Sailor" type="Sprite2D"]
 modulate = Color(0.9595, 1, 0.19, 1)
-z_index = -1
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("1_w17xm")
 script = ExtResource("2_t2xx5")

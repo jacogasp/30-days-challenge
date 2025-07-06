@@ -1,12 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=14 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
+[ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="2_jgk6k"]
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="3_21x0f"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_21x0f"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f2e6v"]
-size = Vector2(23.75, 25.4529)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21x0f"]
+size = Vector2(7.38636, 7.06039)
 
 [sub_resource type="Curve" id="Curve_jgk6k"]
 _data = [Vector2(0.520861, 0.976433), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -41,28 +42,39 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_jgk6k")
 
-[node name="Enemy" type="Sprite2D"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_f2e6v")
+[node name="Enemy" type="Node2D"]
 script = ExtResource("1_7jb55")
 speed = 200.0
+sailor_scene = ExtResource("2_jgk6k")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-18, 292)
+[node name="Sail" type="Sprite2D" parent="."]
+position = Vector2(1, -2)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_f2e6v")
+offset = Vector2(-3.33333, -291.55)
+
+[node name="Sailors" type="Node2D" parent="."]
+position = Vector2(0, -25)
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(-1, 0)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_21x0f")
+offset = Vector2(3.33333, -40)
 
 [node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -12)
 collision_layer = 256
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-33, 61.4)
+position = Vector2(-7, -62.5)
 scale = Vector2(17.6, 22.52)
-shape = SubResource("RectangleShape2D_f2e6v")
+shape = SubResource("RectangleShape2D_21x0f")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(198, 330)
-scale = Vector2(1.2, 1.2)
+position = Vector2(48, 4.76837e-07)
+scale = Vector2(0.4, 0.4)
 amount = 32
 texture = ExtResource("4_21x0f")
 lifetime = 4.88
@@ -72,15 +84,17 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_f2e6v")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0.5, -12)
+scale = Vector2(6.65, 1)
 
 [node name="Label" type="Label" parent="."]
-offset_left = -126.0
-offset_top = -330.0
-offset_right = 8.0
-offset_bottom = -242.0
-theme_override_font_sizes/font_size = 64
+offset_left = -73.0
+offset_top = -194.0
+offset_right = 61.0
+offset_bottom = -106.0
+theme_override_font_sizes/font_size = 26
 text = "Text"
+horizontal_alignment = 1
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
