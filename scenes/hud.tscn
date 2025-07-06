@@ -1,19 +1,66 @@
-[gd_scene load_steps=2 format=3 uid="uid://idkdxkpdu4no"]
+[gd_scene load_steps=3 format=3 uid="uid://idkdxkpdu4no"]
 
 [ext_resource type="Script" uid="uid://c75onh481bgxf" path="res://scripts/hud.gd" id="1_ahhtf"]
+[ext_resource type="Texture2D" uid="uid://hirprwvwbj00" path="res://assets/sailor.png" id="2_oo0fn"]
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_ahhtf")
 
-[node name="SpanwnedEnemiesLabel" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_font_sizes/font_size = 64
-text = "Spawned enemies 0"
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="DefeatedEnemiesLabel" type="Label" parent="."]
-offset_left = 696.0
-offset_right = 1308.0
+[node name="HBoxContainer" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 88.0
+grow_horizontal = 2
+
+[node name="SpanwnedEnemiesLabel" type="Label" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "S: 0"
+
+[node name="DefeatedEnemiesLabel" type="Label" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "D: 0"
+
+[node name="VSeparator" type="VSeparator" parent="Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CurrentScoreLabel" type="Label" parent="Control/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Score: 000000000"
+horizontal_alignment = 2
+
+[node name="HSplitContainer" type="Control" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+offset_right = 81.0
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="Control/HSplitContainer"]
+layout_mode = 2
+offset_right = 32.0
+offset_bottom = 88.0
+texture = ExtResource("2_oo0fn")
+stretch_mode = 3
+
+[node name="CurrentSailorsLabel" type="Label" parent="Control/HSplitContainer"]
+layout_mode = 2
+offset_left = 44.0
+offset_right = 81.0
 offset_bottom = 88.0
 theme_override_font_sizes/font_size = 64
-text = "Defeated enemies 0"
+text = "0"

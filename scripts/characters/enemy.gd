@@ -53,7 +53,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func drop_sailors(drop_direction: Vector2) -> void:
 	var target_sailors: int
 	if health > 0:
-		target_sailors = ceil(starting_sailors * health / health_max) +1
+		target_sailors = ceil(starting_sailors * health / float(health_max)) + 1
 	else:
 		target_sailors = 0
 	for i in (sailors_count - target_sailors):
@@ -69,6 +69,7 @@ func hit(damage: int) -> void:
 		return
 	if (label.hidden):
 		label.show()
+	Globals.current_score += Globals.hit_score * Globals.hit_score_multiplier
 	health -= damage
 	label.text = str(health)
 	drop_sailors(direction)
@@ -86,8 +87,11 @@ func get_random_sailor() -> Sailor:
 	return null
 
 func sink() -> void:
+	if is_sinking:
+		return
 	set_process(false)
 	is_sinking = true
+	Globals.current_score += Globals.sink_score * Globals.sink_score_multiplier
 	area_2d.queue_free()
 	var sinking_angle = randf_range(5,30)
 	var tween = create_tween()

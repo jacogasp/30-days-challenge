@@ -55,11 +55,12 @@ sailor_scene = ExtResource("2_jgk6k")
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
-offset_left = -101.0
+offset_left = -141.0
 offset_top = -167.0
-offset_right = 104.0
+offset_right = 139.0
 
 [node name="Boat" type="Node2D" parent="ClippingContainer"]
+position = Vector2(41, 0)
 
 [node name="Sail" type="Sprite2D" parent="ClippingContainer/Boat"]
 position = Vector2(100.7, 166.85)

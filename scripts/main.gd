@@ -6,8 +6,10 @@ var defeated_enemies: int = 0
 @onready var r_enemy_spanwer: Node2D = $GamePlane/REnemySpanwer
 @onready var hud: CanvasLayer = $Hud
 @onready var overboard_sailors: Node2D = $GamePlane/OverboardSailors
+@onready var player: Player = $GamePlane/Player
 
 func _ready() -> void:
+	player.connect("update_sailors_count", update_sailors_count.bind())
 	l_enemy_spanwer.connect("enemy_spawned", enemy_spawned)
 	r_enemy_spanwer.connect("enemy_spawned", enemy_spawned)
 	l_enemy_spanwer.connect("enemy_defeated", enemy_defeated)
@@ -15,12 +17,9 @@ func _ready() -> void:
 	l_enemy_spanwer.connect("overboard", overboard.bind())
 	r_enemy_spanwer.connect("overboard", overboard.bind())
 	
-
-
 func enemy_spawned():
 	spawned_enemies += 1
 	hud.update_spawned_enemies_label(spawned_enemies)
-
 
 func enemy_defeated():
 	defeated_enemies += 1
@@ -30,3 +29,8 @@ func overboard(sailor:Sailor, g_pos: Vector2):
 	overboard_sailors.add_child(sailor)
 	sailor.set_overboard()
 	sailor.global_position = g_pos
+
+
+func update_sailors_count(count: int) -> void:
+	print(count)
+	hud.update_current_sailors_label(count)

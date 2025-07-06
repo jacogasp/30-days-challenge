@@ -10,7 +10,7 @@ var jumping_out: bool = false
 var overboard: bool = false
 
 func _ready() -> void:
-	area_2d.monitoring = false
+	area_2d.call_deferred("set_monitoring", false)
 
 func _process(delta: float) -> void:
 	if overboard:
@@ -74,7 +74,7 @@ func set_overboard() -> void:
 	overboard = true
 	rotation = 0
 	z_index = 0
-	area_2d.monitoring = true
+	area_2d.call_deferred("set_monitoring", true)
 	texture = load("res://assets/sailor_drowning.png")
 	
 
@@ -82,5 +82,5 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 	if area.get_parent() is Player:
 		var player:Player = area.get_parent()
 		var modulation_color = modulate
-		player.load_sailor(modulation_color)
+		player.call_deferred("load_sailor", modulation_color)
 		queue_free()
