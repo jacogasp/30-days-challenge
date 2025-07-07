@@ -15,7 +15,7 @@ func enable() -> void:
 	show()
 	active = true
 	set_process(true)
-	set_physics_process(true)	
+	set_physics_process(true)
 
 func disable() -> void:
 	hide()

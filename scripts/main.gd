@@ -16,7 +16,7 @@ func _ready() -> void:
 	r_enemy_spanwer.connect("enemy_defeated", enemy_defeated)
 	l_enemy_spanwer.connect("overboard", overboard.bind())
 	r_enemy_spanwer.connect("overboard", overboard.bind())
-	
+
 func enemy_spawned():
 	spawned_enemies += 1
 	hud.update_spawned_enemies_label(spawned_enemies)
@@ -32,5 +32,4 @@ func overboard(sailor:Sailor, g_pos: Vector2):
 
 
 func update_sailors_count(count: int) -> void:
-	print(count)
 	hud.update_current_sailors_label(count)
