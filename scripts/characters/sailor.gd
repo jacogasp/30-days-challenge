@@ -1,16 +1,16 @@
 class_name Sailor
-extends Sprite2D
+extends Area2D
 
 @export var delay := 0.2
 @export var snap_duration := 0.25
 @onready var spawn_position: Vector2 = position
-@onready var area_2d: Area2D = $Area2D
+@onready var sprite: Sprite2D = $Sprite2D
 
 var jumping_out: bool = false
 var overboard: bool = false
 
 func _ready() -> void:
-	area_2d.call_deferred("set_monitoring", false)
+	call_deferred("set_monitoring", false)
 
 func _process(delta: float) -> void:
 	if overboard:
@@ -74,13 +74,12 @@ func set_overboard() -> void:
 	overboard = true
 	rotation = 0
 	z_index = 0
-	area_2d.call_deferred("set_monitoring", true)
-	texture = load("res://assets/sailor_drowning.png")
-	
+	call_deferred("set_monitoring", true)
+	sprite.texture = load("res://assets/sailor_drowning.png")
+
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	if area.get_parent() is Player:
-		var player:Player = area.get_parent()
-		var modulation_color = modulate
-		player.call_deferred("load_sailor", modulation_color)
-		queue_free()
+	var player: Player = area
+	var modulation_color = modulate
+	player.call_deferred("load_sailor", modulation_color)
+	queue_free()

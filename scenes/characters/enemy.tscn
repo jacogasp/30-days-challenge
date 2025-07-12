@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=18 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="3_21x0f"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_21x0f"]
 [ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://scenes/characters/wave.gdshader" id="5_3k4es"]
+[ext_resource type="Script" uid="uid://2wl2e5w5xhue" path="res://scripts/weapons/enemy_gun.gd" id="7_x5khh"]
+[ext_resource type="PackedScene" uid="uid://e8agkwdf57mo" path="res://scenes/weapons/enemy_bullet.tscn" id="8_0ag5d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21x0f"]
 size = Vector2(7.38636, 7.06039)
@@ -47,9 +49,16 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_jgk6k")
 
-[node name="Enemy" type="Node2D"]
+[node name="Enemy" type="Area2D"]
+collision_layer = 256
+collision_mask = 272
 script = ExtResource("1_7jb55")
 sailor_scene = ExtResource("2_jgk6k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7, -74.5)
+scale = Vector2(17.6, 22.52)
+shape = SubResource("RectangleShape2D_21x0f")
 
 [node name="ClippingContainer" type="Control" parent="."]
 clip_contents = true
@@ -77,16 +86,6 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_21x0f")
 offset = Vector2(1.33334, -42.7833)
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(0, -12)
-collision_layer = 256
-collision_mask = 16
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-7, -62.5)
-scale = Vector2(17.6, 22.52)
-shape = SubResource("RectangleShape2D_21x0f")
-
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_x5khh")
 position = Vector2(44, 3)
@@ -112,5 +111,17 @@ theme_override_font_sizes/font_size = 26
 text = "Text"
 horizontal_alignment = 1
 
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="EnemyGun" type="Node2D" parent="."]
+position = Vector2(-9, -72)
+script = ExtResource("7_x5khh")
+bullets_ring_count = 16
+bullets_ring_radius = 100.0
+bullet_scene = ExtResource("8_0ag5d")
+metadata/_custom_type_script = "uid://2wl2e5w5xhue"
+
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

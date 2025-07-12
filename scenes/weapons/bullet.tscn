@@ -6,17 +6,15 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dnt7v"]
 size = Vector2(124, 124)
 
-[node name="Bullet" type="Sprite2D"]
-texture = ExtResource("1_dnt7v")
-script = ExtResource("1_mx1hr")
-max_range = 4000.0
-speed = 2000.0
-
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Bullet" type="Area2D"]
 collision_layer = 16
 collision_mask = 256
+script = ExtResource("1_mx1hr")
+max_range = 40000.0
+speed = 2000.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dnt7v")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_dnt7v")

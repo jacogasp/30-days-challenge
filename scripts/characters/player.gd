@@ -1,5 +1,5 @@
 class_name Player
-extends Node2D
+extends Area2D
 
 @export var max_speed: float = 500.0
 
@@ -9,7 +9,7 @@ extends Node2D
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
-@onready var gun: Gun = $Gun
+@onready var gun: Gun = $PlayerGun
 
 var last_direction: Vector2 = Vector2.ZERO
 var speed := max_speed
@@ -17,7 +17,7 @@ var particle_emitter_orig_pos: Vector2 = Vector2.ZERO
 var boat_lenght: float = 100
 var min_sea_limit: Vector2 = Vector2(45, 200)
 var max_sea_limit: Vector2 = Vector2(1800, 1000)
-var current_number_sailor:int = 0
+var current_number_sailor: int = 0
 
 signal update_sailors_count
 
@@ -86,7 +86,7 @@ func load_sailor(modulation_color: Color) -> void:
 	if current_number_sailor >= max_number_sailor:
 		return
 	current_number_sailor += 1
-	Globals.tick_score_multiplier = ceil(current_number_sailor/5.0)
+	Globals.tick_score_multiplier = ceil(current_number_sailor / 5.0)
 	update_sailors_count.emit(current_number_sailor)
 	var sailor := sailor_scene.instantiate()
 	var boat_half_lenght = 0.5 * boat_lenght
@@ -95,3 +95,7 @@ func load_sailor(modulation_color: Color) -> void:
 	sailor.position = sailor.spawn_position + Vector2(0, -100)
 	sailor.modulate = modulation_color
 	sailor.spawn()
+
+
+func hit(damage: int):
+	print("player hit")

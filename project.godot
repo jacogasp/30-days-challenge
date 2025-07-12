@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Globals="*res://scripts/globals.gd"
-BulletPool="*res://scenes/globals/bullet_pool.tscn"
+PlayerBulletPool="*res://scripts/weapons/player_bullet_pool.gd"
+EnemyBulletPool="*res://scripts/weapons/enemy_bullet_pool.gd"
 
 [display]
 
@@ -72,6 +73,7 @@ DEBUG_remove_sailor={
 [layer_names]
 
 2d_physics/layer_1="player"
+2d_physics/layer_2="sailor"
 2d_physics/layer_5="bullet"
 2d_physics/layer_9="enemy"
 

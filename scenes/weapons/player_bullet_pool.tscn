@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://wlvio1vekfj4"]
+
+[ext_resource type="Script" uid="uid://cxlbrloq0ngfx" path="res://scripts/weapons/bullet_pool.gd" id="1_h7brp"]
+
+[node name="BulletPool" type="Node2D"]
+script = ExtResource("1_h7brp")
+bullet_scene = null

@@ -6,17 +6,17 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_rg7sp"]
 radius = 35.7945
 
-[node name="Sailor" type="Sprite2D"]
+[node name="Sailor" type="Area2D"]
 modulate = Color(0.9595, 1, 0.19, 1)
 scale = Vector2(0.45, 0.45)
-texture = ExtResource("1_w17xm")
+collision_layer = 2
 script = ExtResource("2_t2xx5")
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rg7sp")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.960784, 1, 0.188235, 1)
+texture = ExtResource("1_w17xm")
+
+[connection signal="area_entered" from="." to="." method="_on_area_2d_area_entered"]

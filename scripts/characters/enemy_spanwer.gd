@@ -6,15 +6,13 @@ extends Node2D
 @export var min_spawn_time: float = 1.0
 @export var max_spawn_time: float = 5.0
 
+@onready var timer: Timer = $Timer
+
 signal enemy_spawned
 signal enemy_defeated
 signal overboard
 
 var bounds = Rect2()
-
-
-func _ready() -> void:
-	$Timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
 
 
 func _on_timer_timeout() -> void:
@@ -28,8 +26,12 @@ func _on_timer_timeout() -> void:
 	enemy.connect("enemy_spawned", _handle_enemy_spawned)
 	enemy.connect("enemy_defeated", _handle_enemy_defeated)
 	enemy.connect("overboard", _handle_overboard.bind())
-	$Timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
+	timer.wait_time = random_time()
 	add_sibling(enemy)
+
+
+func random_time() -> float:
+	return randf_range(min_spawn_time, max_spawn_time)
 
 
 func _handle_enemy_spawned():
@@ -39,5 +41,6 @@ func _handle_enemy_spawned():
 func _handle_enemy_defeated():
 	enemy_defeated.emit()
 
-func _handle_overboard(sailor: Sailor, g_pos:Vector2):
+
+func _handle_overboard(sailor: Sailor, g_pos: Vector2):
 	overboard.emit(sailor, g_pos)

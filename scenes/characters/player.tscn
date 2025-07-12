@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://c34r771lh6okh"]
+[gd_scene load_steps=18 format=3 uid="uid://c34r771lh6okh"]
 
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="1_atpat"]
 [ext_resource type="Script" uid="uid://dd4y4wqcm0qws" path="res://scripts/characters/player.gd" id="1_rp718"]
@@ -6,7 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="4_kqtwu"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="5_kqtwu"]
 [ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://scenes/characters/wave.gdshader" id="6_6eyoc"]
-[ext_resource type="PackedScene" uid="uid://kdpg0jnxybid" path="res://scenes/weapons/gun.tscn" id="8_eojnx"]
+[ext_resource type="Script" uid="uid://3lgfige0s5rw" path="res://scripts/weapons/player_gun.gd" id="7_6eyoc"]
+[ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="8_eojnx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
 size = Vector2(137, 24)
@@ -48,9 +49,13 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_0ag5d")
 
-[node name="Player" type="Node2D"]
+[node name="Player" type="Area2D"]
 script = ExtResource("1_rp718")
 sailor_scene = ExtResource("4_kqtwu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.9, -10.835)
+shape = SubResource("RectangleShape2D_rp718")
 
 [node name="ClippingContainer" type="Control" parent="."]
 clip_contents = true
@@ -77,17 +82,6 @@ scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_atpat")
 offset = Vector2(1.33334, -42.7833)
 
-[node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-0.599998, -13.835)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(2.5, 3)
-shape = SubResource("RectangleShape2D_rp718")
-
-[node name="BulletSpawner" type="Marker2D" parent="."]
-position = Vector2(52.4, -25.835)
-
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_eojnx")
 position = Vector2(49, 1)
@@ -99,9 +93,7 @@ speed_scale = 6.0
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qgnko")
 
-[node name="BulletContainer" type="Node2D" parent="."]
-position = Vector2(49.4, -0.834991)
-scale = Vector2(0.4, 0.4)
-
-[node name="Gun" parent="." instance=ExtResource("8_eojnx")]
-position = Vector2(66, -19)
+[node name="PlayerGun" type="Node2D" parent="."]
+position = Vector2(75, -16)
+script = ExtResource("7_6eyoc")
+bullet_scene = ExtResource("8_eojnx")

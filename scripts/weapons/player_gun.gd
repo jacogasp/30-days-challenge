@@ -1,9 +1,19 @@
 class_name Gun
 extends Node2D
 
+@export var bullet_scene: PackedScene
 @export var fire_rate: float = 5.0
+
+
+var bullet_pool: BulletPool
 var bullets_to_spawn := 0.0
 var is_firing = false
+
+
+func _ready() -> void:
+	bullet_pool = PlayerBulletPool
+	bullet_pool.init_pool(bullet_scene)
+
 
 func _process(delta: float):
 	if (is_firing):
@@ -16,11 +26,9 @@ func _process(delta: float):
 
 
 func fire_bullet():
-	var bullet: Bullet = BulletPool.get_bullet()
-	var bullet_transform := global_transform
-	bullet_transform.origin = global_position
-	bullet.fire(bullet_transform, 0.03)
-	bullet.scale = Vector2(0.5,0.5)
+	var bullet = bullet_pool.get_bullet()
+	bullet.fire(global_position, Vector2.RIGHT)
+	bullet.scale = Vector2(0.5, 0.5)
 	bullet.enable()
 
 
