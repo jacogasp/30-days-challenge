@@ -2,7 +2,6 @@ class_name Player
 extends Area2D
 
 @export var max_speed: float = 500.0
-
 @export var sailor_scene: PackedScene
 @export var starting_sailor_count: int = 5
 @export var max_number_sailor: int = 30
@@ -14,12 +13,13 @@ extends Area2D
 var last_direction: Vector2 = Vector2.ZERO
 var speed := max_speed
 var particle_emitter_orig_pos: Vector2 = Vector2.ZERO
-var boat_lenght: float = 100
+var boat_length: float = 100
 var min_sea_limit: Vector2 = Vector2(45, 200)
 var max_sea_limit: Vector2 = Vector2(1800, 1000)
 var current_number_sailor: int = 0
 
 signal update_sailors_count
+
 
 func _ready() -> void:
 	particle_emitter_orig_pos = gpu_particles_2d.position
@@ -27,7 +27,7 @@ func _ready() -> void:
 	# Spawn initial sailors
 	for i in starting_sailor_count:
 		var sailor := sailor_scene.instantiate()
-		var sailor_offset = Vector2(randf_range(-boat_lenght * 0.5, boat_lenght * 0.5), 0)
+		var sailor_offset = Vector2(randf_range(-boat_length * 0.5, boat_length * 0.5), 0)
 		sailors.add_child(sailor)
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
@@ -59,9 +59,9 @@ func _process(delta: float) -> void:
 	if OS.is_debug_build():
 		if Input.is_action_just_pressed("DEBUG_add_sailor"):
 			var sailor := sailor_scene.instantiate()
-			var boat_half_lenght = 0.5 * boat_lenght
+			var boat_half_length = 0.5 * boat_length
 			sailors.add_child(sailor)
-			sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), 0)
+			sailor.spawn_position = Vector2(randf_range(-boat_half_length, boat_half_length), 0)
 			sailor.position = sailor.spawn_position + Vector2(0, -100)
 			sailor.modulate = Color(randf(), randf(), randf())
 			sailor.spawn()
@@ -89,9 +89,9 @@ func load_sailor(modulation_color: Color) -> void:
 	Globals.tick_score_multiplier = ceil(current_number_sailor / 5.0)
 	update_sailors_count.emit(current_number_sailor)
 	var sailor := sailor_scene.instantiate()
-	var boat_half_lenght = 0.5 * boat_lenght
+	var boat_half_length = 0.5 * boat_length
 	sailors.add_child(sailor)
-	sailor.spawn_position = Vector2(randf_range(-boat_half_lenght, boat_half_lenght), 0)
+	sailor.spawn_position = Vector2(randf_range(-boat_half_length, boat_half_length), 0)
 	sailor.position = sailor.spawn_position + Vector2(0, -100)
 	sailor.modulate = modulation_color
 	sailor.spawn()

@@ -21,7 +21,7 @@ anchor_right = 1.0
 offset_bottom = 88.0
 grow_horizontal = 2
 
-[node name="SpanwnedEnemiesLabel" type="Label" parent="Control/HBoxContainer"]
+[node name="SpawnedEnemiesLabel" type="Label" parent="Control/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "S: 0"
@@ -32,6 +32,7 @@ theme_override_font_sizes/font_size = 64
 text = "D: 0"
 
 [node name="VSeparator" type="VSeparator" parent="Control/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 

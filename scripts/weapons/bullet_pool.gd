@@ -19,6 +19,7 @@ func init_pool(bullet_scene: PackedScene) -> void:
 		bullet.visible = false
 		bullet.active = false
 		bullet_pool.append(bullet)
+
 	initialized = true
 
 

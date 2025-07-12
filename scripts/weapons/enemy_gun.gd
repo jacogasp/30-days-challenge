@@ -4,6 +4,7 @@ extends Gun
 @export var bullets_ring_count: int = 4
 @export var bullets_ring_radius: float = 50
 
+
 func _ready() -> void:
 	bullet_pool = EnemyBulletPool
 	bullet_pool.init_pool(bullet_scene)

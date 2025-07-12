@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://dd82objmcmblm" path="res://scenes/characters/enemy_spanwer.tscn" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://dd82objmcmblm" path="res://scenes/characters/enemy_spawner.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cwpokr5rvl5aw" path="res://scenes/world/world.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/hud.tscn" id="4_jyhfs"]
 
@@ -24,13 +24,13 @@ y_sort_enabled = true
 position = Vector2(232, 439)
 max_speed = 1000.0
 
-[node name="LEnemySpanwer" parent="GamePlane" instance=ExtResource("3_jyhfs")]
+[node name="LEnemySpawner" parent="GamePlane" instance=ExtResource("3_jyhfs")]
 position = Vector2(-182, 0)
 speed_randomness = 0.5
 min_spawn_time = 10.0
 max_spawn_time = 15.0
 
-[node name="REnemySpanwer" parent="GamePlane" instance=ExtResource("3_jyhfs")]
+[node name="REnemySpawner" parent="GamePlane" instance=ExtResource("3_jyhfs")]
 position = Vector2(2089, 9)
 enemy_speed = -100.0
 speed_randomness = 0.8

@@ -30,9 +30,7 @@ signal overboard
 func _ready() -> void:
 	label.hide()
 	timer.wait_time = random_time()
-	var sailors_color = Color.from_hsv(randf(),
-									 randf_range(0.6, 0.8),
-									 randf_range(0.9, 1))
+	var sailors_color = Color.from_hsv(randf(), randf_range(0.6, 0.8), randf_range(0.9, 1))
 	sailors_count = starting_sailors
 	for i in starting_sailors:
 		var sailor := sailor_scene.instantiate()
@@ -54,6 +52,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 
+
 func drop_sailors(drop_direction: Vector2) -> void:
 	var target_sailors: int
 	if health > 0:
@@ -68,6 +67,7 @@ func drop_sailors(drop_direction: Vector2) -> void:
 			overboard.emit(sailor.duplicate(), sailor.global_position)
 			sailor.queue_free()
 
+
 func hit(damage: int) -> void:
 	if is_sinking:
 		return
@@ -81,6 +81,7 @@ func hit(damage: int) -> void:
 		enemy_defeated.emit()
 		sink()
 
+
 func get_random_sailor() -> Sailor:
 	var sailors_list: Array[Sailor] = []
 	for sailor in sailors.get_children():
@@ -89,6 +90,7 @@ func get_random_sailor() -> Sailor:
 	if sailors_list.size() > 0:
 		return sailors_list[randi() % sailors_list.size()]
 	return null
+
 
 func sink() -> void:
 	if is_sinking:

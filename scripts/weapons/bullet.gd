@@ -1,8 +1,6 @@
 class_name Bullet
 extends BulletBase
 
-var query := PhysicsShapeQueryParameters2D.new()
-@onready var space_state := get_world_2d().direct_space_state
 
 var traveled_distance: float = 0
 var _direction: Vector2 = Vector2.ZERO
