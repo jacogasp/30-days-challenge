@@ -5,7 +5,7 @@
 
 [sub_resource type="Curve2D" id="Curve2D_yokgt"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 192, 0, 0, 0, 0, 0, 766)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 112, 0, 0, 0, 0, 0, 570)
 }
 point_count = 2
 
@@ -20,7 +20,7 @@ autostart = true
 curve = SubResource("Curve2D_yokgt")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
-position = Vector2(0, 192)
+position = Vector2(0, 112)
 rotation = 1.5708
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

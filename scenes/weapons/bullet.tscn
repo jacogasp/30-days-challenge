@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://bmyiv7tpt6nr8" path="res://assets/water-bullet.png" id="1_dnt7v"]
 [ext_resource type="Script" uid="uid://ugt0r8ubcb50" path="res://scripts/weapons/bullet.gd" id="1_mx1hr"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dnt7v"]
-size = Vector2(124, 124)
+[sub_resource type="CircleShape2D" id="CircleShape2D_dnt7v"]
+radius = 11.0114
 
 [node name="Bullet" type="Area2D"]
 collision_layer = 16
@@ -14,7 +14,8 @@ max_range = 40000.0
 speed = 2000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_dnt7v")
+shape = SubResource("CircleShape2D_dnt7v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-18, 0)
 texture = ExtResource("1_dnt7v")

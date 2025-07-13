@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
 
 [node name="World" type="Node2D"]
+scale = Vector2(0.7, 0.7)
 script = ExtResource("1_dphjl")
 
 [node name="Sea" type="Parallax2D" parent="."]

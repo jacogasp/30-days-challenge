@@ -117,8 +117,6 @@ autostart = true
 [node name="EnemyGun" type="Node2D" parent="."]
 position = Vector2(-9, -72)
 script = ExtResource("7_x5khh")
-bullets_ring_count = 16
-bullets_ring_radius = 100.0
 bullet_scene = ExtResource("8_0ag5d")
 metadata/_custom_type_script = "uid://2wl2e5w5xhue"
 

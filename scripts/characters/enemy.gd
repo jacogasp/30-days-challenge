@@ -13,6 +13,7 @@ extends Area2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
 @onready var boat: Node2D = $ClippingContainer/Boat
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var gun: Gun = $EnemyGun
 @onready var timer: Timer = $Timer
 
@@ -21,6 +22,8 @@ var boat_length: int = 100
 var boat_height: int = 200
 
 var is_sinking = false
+var fully_visible := false
+var screen_offset:int  = 50
 
 signal enemy_spawned
 signal enemy_defeated
@@ -29,7 +32,6 @@ signal overboard
 
 func _ready() -> void:
 	label.hide()
-	timer.wait_time = random_time()
 	var sailors_color = Color.from_hsv(randf(), randf_range(0.6, 0.8), randf_range(0.9, 1))
 	sailors_count = starting_sailors
 	for i in starting_sailors:
@@ -44,6 +46,14 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	position += direction * delta
 
+	if not fully_visible and is_fully_visible():
+		fully_visible = true
+		timer.start()
+
+func is_fully_visible() -> bool:
+	var is_in_left: bool = collision_shape_2d.global_position.x > screen_offset
+	var is_in_right:bool = collision_shape_2d.global_position.x + collision_shape_2d.shape.get_rect().size.x < get_viewport_rect().size.x - screen_offset 
+	return is_in_left and is_in_right
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	enemy_spawned.emit()

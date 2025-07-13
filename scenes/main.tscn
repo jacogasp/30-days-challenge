@@ -10,7 +10,7 @@
 script = ExtResource("1_tefeu")
 
 [node name="World" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(-7, 647)
+position = Vector2(-23, 406)
 
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
@@ -25,13 +25,13 @@ position = Vector2(232, 439)
 max_speed = 1000.0
 
 [node name="LEnemySpawner" parent="GamePlane" instance=ExtResource("3_jyhfs")]
-position = Vector2(-182, 0)
+position = Vector2(-180, 0)
 speed_randomness = 0.5
 min_spawn_time = 10.0
 max_spawn_time = 15.0
 
 [node name="REnemySpawner" parent="GamePlane" instance=ExtResource("3_jyhfs")]
-position = Vector2(2089, 9)
+position = Vector2(1460, 0)
 enemy_speed = -100.0
 speed_randomness = 0.8
 min_spawn_time = 10.0

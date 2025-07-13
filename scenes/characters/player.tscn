@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="8_eojnx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
-size = Vector2(137, 24)
+size = Vector2(59, 24)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eojnx"]
 shader = ExtResource("6_6eyoc")
@@ -54,7 +54,7 @@ script = ExtResource("1_rp718")
 sailor_scene = ExtResource("4_kqtwu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.9, -10.835)
+position = Vector2(-0.500002, -10.835)
 shape = SubResource("RectangleShape2D_rp718")
 
 [node name="ClippingContainer" type="Control" parent="."]
