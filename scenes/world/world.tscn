@@ -1,7 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://cwpokr5rvl5aw"]
 
 [ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
-[ext_resource type="Shader" uid="uid://cbh5f0ef7c2fg" path="res://scenes/world/sun.gdshader" id="2_1yooq"]
 [ext_resource type="Gradient" uid="uid://d3lchl30yi31d" path="res://assets/world/day_sky.tres" id="2_gb53w"]
 [ext_resource type="Texture2D" uid="uid://dmk3btiml88v5" path="res://assets/world/sun.png" id="2_j2gmx"]
 [ext_resource type="Texture2D" uid="uid://b0ue8a0t2os0h" path="res://assets/world/sea1.png" id="2_sl2e5"]
@@ -18,11 +17,49 @@ width = 1280
 height = 720
 fill_to = Vector2(0, 1)
 
+[sub_resource type="Shader" id="Shader_gb53w"]
+code = "shader_type canvas_item;
+
+// Y coordinate (normalized 0.0–1.0) where blur and fade starts
+uniform float blur_start_y : hint_range(0.0, 1.0) = 0.5;
+// How much it fades to transparency at the bottom
+uniform float fade_strength : hint_range(0.0, 1.0) = 1.0;
+// how quickly the blur ends
+uniform float blur_distance : hint_range(0.1, 2.0) = 0.4;
+
+void fragment() {
+	vec2 uv = UV;
+	vec4 col = texture(TEXTURE, uv);
+
+	// Normalize the fade progress (0 at start, 1 at bottom)
+	float fade_factor = smoothstep(blur_start_y, blur_start_y + blur_distance , uv.y);
+
+	// Blur with 9-tap box blur (only applied based on fade_factor)
+	vec4 blurred = vec4(0.0);
+	float offset = fade_factor * TEXTURE_PIXEL_SIZE.y;
+	for (int i = -1; i <= 1; i++) {
+		for (int j = -1; j <= 1; j++) {
+			vec2 sample_uv = uv + vec2(float(i), float(j)) * offset;
+			blurred += texture(TEXTURE, sample_uv);
+		}
+	}
+	blurred /= 9.0;
+
+	// Mix original with blurred based on fade_factor
+	vec4 final_color = mix(col, blurred, fade_factor);
+
+	// Fade alpha as well
+	final_color.a *= mix(1.0, 0.0, fade_factor * fade_strength);
+
+	COLOR = final_color * COLOR;
+}
+"
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlabj"]
-shader = ExtResource("2_1yooq")
-shader_parameter/blur_start_y = 1.0
+shader = SubResource("Shader_gb53w")
+shader_parameter/blur_start_y = 0.5
 shader_parameter/fade_strength = 1.0
-shader_parameter/blur_distance = 2.0
+shader_parameter/blur_distance = 0.4
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bq33v"]
 shader = ExtResource("6_bq33v")

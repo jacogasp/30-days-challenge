@@ -19,11 +19,11 @@ func _ready():
 func _set_sunset() -> void:
 	var sky_texture: GradientTexture2D = sky.texture
 	sky_texture.gradient = load("res://assets/world/sunset_sky.tres")
-	sun.scale = Vector2(0.5,0.5)
-	sun.position = Vector2(580,100)
+	sun.scale = Vector2(0.6,0.6)
+	sun.position = Vector2(580,80)
 	sun.modulate = Color.ORANGE_RED
-	sun.material.set_shader_parameter("blur_start", 0.65)
-	sun.material.set_shader_parameter("fade_strenght", 1)
+	sun.material.set_shader_parameter("blur_start_y", 0.65)
+	sun.material.set_shader_parameter("fade_strength", 1)
 	sun.material.set_shader_parameter("blur_distance", 0.3)
 
 func _set_dawn() -> void:
@@ -32,19 +32,19 @@ func _set_dawn() -> void:
 	sun.scale = Vector2(1,1)
 	sun.position = Vector2(580,120)
 	sun.modulate = Color.WHITE
-	sun.material.set_shader_parameter("blur_start", 0.4)
-	sun.material.set_shader_parameter("fade_strenght", 1)
+	sun.material.set_shader_parameter("blur_start_y", 0.4)
+	sun.material.set_shader_parameter("fade_strength", 1)
 	sun.material.set_shader_parameter("blur_distance", 0.3)		
 
 func _set_day() -> void:
 	var sky_texture: GradientTexture2D = sky.texture
 	sky_texture.gradient = load("res://assets/world/day_sky.tres")
-	sun.scale = Vector2(0.6,0.6)
+	sun.scale = Vector2(0.7,0.7)
 	sun.position = Vector2(580,6)
 	sun.modulate = Color(2,2,2)
-	sun.material.set_shader_parameter("blur_start", 1)
-	sun.material.set_shader_parameter("fade_strenght", 1)
-	sun.material.set_shader_parameter("blur_distance", 1)		
+	sun.material.set_shader_parameter("blur_start_y", 1)
+	sun.material.set_shader_parameter("fade_strength", 1)
+	sun.material.set_shader_parameter("blur_distance", 1)
 
 func _process(delta) -> void:
 	var scrolling_speed = -Globals.world_speed
