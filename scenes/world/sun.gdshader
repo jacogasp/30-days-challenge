@@ -31,5 +31,5 @@ void fragment() {
 	// Fade alpha as well
 	final_color.a *= mix(1.0, 0.0, fade_factor * fade_strength);
 
-	COLOR = final_color;
+	COLOR = final_color * COLOR;
 }

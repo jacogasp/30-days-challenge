@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
 [ext_resource type="Shader" uid="uid://cbh5f0ef7c2fg" path="res://scenes/world/sun.gdshader" id="2_1yooq"]
+[ext_resource type="Gradient" uid="uid://d3lchl30yi31d" path="res://assets/world/day_sky.tres" id="2_gb53w"]
 [ext_resource type="Texture2D" uid="uid://dmk3btiml88v5" path="res://assets/world/sun.png" id="2_j2gmx"]
 [ext_resource type="Texture2D" uid="uid://b0ue8a0t2os0h" path="res://assets/world/sea1.png" id="2_sl2e5"]
 [ext_resource type="Texture2D" uid="uid://cgj05yi1yn43y" path="res://assets/world/sea5.png" id="2_t5ptc"]
@@ -10,21 +11,17 @@
 [ext_resource type="Texture2D" uid="uid://bsu4rxd54u8xs" path="res://assets/world/sea2.png" id="5_1yooq"]
 [ext_resource type="Shader" uid="uid://dssd43ysijc4l" path="res://scenes/world/wave.gdshader" id="6_bq33v"]
 
-[sub_resource type="Gradient" id="Gradient_bq33v"]
-offsets = PackedFloat32Array(0, 0.467532)
-colors = PackedColorArray(0.819991, 0.764669, 1.15514e-06, 1, 0.882353, 0.282353, 0.0901961, 1)
-
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j2gmx"]
-gradient = SubResource("Gradient_bq33v")
+gradient = ExtResource("2_gb53w")
 width = 1280
 height = 720
 fill_to = Vector2(0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dlabj"]
 shader = ExtResource("2_1yooq")
-shader_parameter/blur_start_y = 0.371
+shader_parameter/blur_start_y = 1.0
 shader_parameter/fade_strength = 1.0
-shader_parameter/blur_distance = 0.292
+shader_parameter/blur_distance = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bq33v"]
 shader = ExtResource("6_bq33v")
@@ -110,8 +107,10 @@ texture = SubResource("GradientTexture2D_j2gmx")
 centered = false
 
 [node name="Sun" type="Sprite2D" parent="Sky"]
+modulate = Color(2, 2, 2, 1)
 material = SubResource("ShaderMaterial_dlabj")
-position = Vector2(587, 117)
+position = Vector2(580, 6)
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_j2gmx")
 
 [node name="Sea5" type="Parallax2D" parent="."]
