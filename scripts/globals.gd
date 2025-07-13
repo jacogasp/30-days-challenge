@@ -16,6 +16,12 @@ var sink_score_multiplier: int # Multiplier to be added to sink score
 var sailor_score_multiplier: int # Multiplier to be added to sailor score
 
 var player: Player
+var player_livreaA: int = 1
+var player_livreaB: int = 1
+var player_livreaColor: int = 0
+
+var colors: Array[Color] = [Color.DARK_RED, Color.NAVY_BLUE, Color.DARK_GREEN, Color.HOT_PINK, Color.ORANGE, Color.DIM_GRAY]
+
 var sound_enabled:bool = true
 var music_enabled:bool = true
 

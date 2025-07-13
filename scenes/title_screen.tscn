@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://dw82okxc2ga52"]
+[gd_scene load_steps=9 format=3 uid="uid://dw82okxc2ga52"]
 
 [ext_resource type="Texture2D" uid="uid://2si6vfln8py2" path="res://assets/title_screen.jpeg" id="1_fgkus"]
 [ext_resource type="Script" uid="uid://cj0f3qjy6rfop" path="res://scripts/title_screen.gd" id="1_sa3yf"]
+[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://scenes/characters/hurt.gdshader" id="3_3yumr"]
+[ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="4_cs5ya"]
+[ext_resource type="Texture2D" uid="uid://ekkhbfqotawk" path="res://assets/livrea/livrea_a1.png" id="5_mykxm"]
+[ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_tklts"]
+[ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="7_u26n3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ib7db"]
+shader = ExtResource("3_3yumr")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
 
 [node name="TitleScreen" type="CanvasLayer"]
 script = ExtResource("1_sa3yf")
@@ -70,6 +80,94 @@ button_pressed = true
 text = "Sound: ON
 "
 
+[node name="CustomColorContainer" type="HBoxContainer" parent="Control/Control/Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LivreaAPrevButton" type="Button" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "<"
+
+[node name="LivreaBPrevButton" type="Button" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "<"
+
+[node name="LivreaColorPrevButton" type="Button" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "<"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(150, 175)
+render_target_update_mode = 4
+
+[node name="Boat" type="Node2D" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport"]
+position = Vector2(-22.815, -80)
+
+[node name="Sail" type="Sprite2D" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat"]
+material = SubResource("ShaderMaterial_ib7db")
+position = Vector2(100.7, 166.85)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_cs5ya")
+
+[node name="Livrea" type="Node2D" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail"]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(2, 0)
+
+[node name="LivreaA" type="Sprite2D" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea"]
+texture = ExtResource("5_mykxm")
+
+[node name="LivreaB" type="Sprite2D" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea"]
+texture = ExtResource("6_tklts")
+
+[node name="Body" type="Sprite2D" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat"]
+material = SubResource("ShaderMaterial_ib7db")
+position = Vector2(99.7, 166.85)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_u26n3")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LivreaANextButton" type="Button" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = ">"
+
+[node name="LivreaBNextButton" type="Button" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = ">"
+
+[node name="LivreaColorNextButton" type="Button" parent="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = ">"
+
 [connection signal="pressed" from="Control/Control/Panel/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="toggled" from="Control/Control/Panel/VBoxContainer/MusicButton" to="." method="_on_music_button_toggled"]
 [connection signal="toggled" from="Control/Control/Panel/VBoxContainer/SoundButton" to="." method="_on_sound_button_toggled"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer/LivreaAPrevButton" to="." method="_on_livrea_a_prev_button_pressed"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer/LivreaBPrevButton" to="." method="_on_livrea_b_prev_button_pressed"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer/LivreaColorPrevButton" to="." method="_on_livrea_color_prev_button_pressed"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2/LivreaANextButton" to="." method="_on_livrea_a_next_button_pressed"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2/LivreaBNextButton" to="." method="_on_livrea_b_next_button_pressed"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2/LivreaColorNextButton" to="." method="_on_livrea_color_next_button_pressed"]

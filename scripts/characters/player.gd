@@ -14,6 +14,9 @@ extends Area2D
 @onready var gun: Gun = $PlayerGun
 @onready var boat: Node2D = $ClippingContainer/Boat
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var livrea: Node2D = $ClippingContainer/Boat/Sail/Livrea
+@onready var livrea_a: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaA
+@onready var livrea_b: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaB
 
 var last_direction: Vector2 = Vector2.ZERO
 var speed := max_speed
@@ -37,6 +40,11 @@ signal game_over
 signal overboard
 
 func _ready() -> void:
+	
+	livrea.modulate = Globals.colors[Globals.player_livreaColor]
+	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
+	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
+	
 	min_sea_limit = get_viewport_rect().position + Vector2(0, 90)
 	max_sea_limit = get_viewport_rect().size - Vector2(0,+90)
 	Globals.player = self
@@ -50,7 +58,7 @@ func _ready() -> void:
 		sailors.add_child(sailor)
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
-		sailor.modulate = Color.from_hsv(randf(), randf_range(0.6, 0.8), randf_range(0.9, 1))
+		sailor.modulate = Globals.colors[Globals.player_livreaColor]
 	current_number_sailor = starting_sailor_count
 	update_sailors_count.emit(current_number_sailor)
 

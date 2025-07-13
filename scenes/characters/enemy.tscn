@@ -1,16 +1,24 @@
-[gd_scene load_steps=18 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=22 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="2_jgk6k"]
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="3_21x0f"]
+[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://scenes/characters/hurt.gdshader" id="3_f0ik5"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_21x0f"]
 [ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://scenes/characters/wave.gdshader" id="5_3k4es"]
+[ext_resource type="Texture2D" uid="uid://ekkhbfqotawk" path="res://assets/livrea/livrea_a1.png" id="5_gpyvg"]
+[ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_tjfok"]
 [ext_resource type="Script" uid="uid://2wl2e5w5xhue" path="res://scripts/weapons/enemy_gun.gd" id="7_x5khh"]
 [ext_resource type="PackedScene" uid="uid://e8agkwdf57mo" path="res://scenes/weapons/enemy_bullet.tscn" id="8_0ag5d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21x0f"]
 size = Vector2(7.38636, 7.06039)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rc7n0"]
+shader = ExtResource("3_f0ik5")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x5khh"]
 shader = ExtResource("5_3k4es")
@@ -69,22 +77,32 @@ offset_top = -167.0
 offset_right = 139.0
 
 [node name="Boat" type="Node2D" parent="ClippingContainer"]
-position = Vector2(41, 0)
+position = Vector2(41, -81.995)
 
 [node name="Sail" type="Sprite2D" parent="ClippingContainer/Boat"]
+material = SubResource("ShaderMaterial_rc7n0")
 position = Vector2(100.7, 166.85)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_f2e6v")
-offset = Vector2(-1.99999, -305.333)
+
+[node name="Livrea" type="Node2D" parent="ClippingContainer/Boat/Sail"]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(2, 0)
+
+[node name="LivreaA" type="Sprite2D" parent="ClippingContainer/Boat/Sail/Livrea"]
+texture = ExtResource("5_gpyvg")
+
+[node name="LivreaB" type="Sprite2D" parent="ClippingContainer/Boat/Sail/Livrea"]
+texture = ExtResource("6_tjfok")
 
 [node name="Sailors" type="Node2D" parent="ClippingContainer/Boat"]
-position = Vector2(100.7, 142.85)
+position = Vector2(100.7, 224.555)
 
 [node name="Body" type="Sprite2D" parent="ClippingContainer/Boat"]
+material = SubResource("ShaderMaterial_rc7n0")
 position = Vector2(99.7, 166.85)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_21x0f")
-offset = Vector2(1.33334, -42.7833)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_x5khh")

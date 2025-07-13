@@ -1,6 +1,13 @@
 extends CanvasLayer
 @onready var music_button: Button = $Control/Control/Panel/VBoxContainer/MusicButton
 @onready var sound_button: Button = $Control/Control/Panel/VBoxContainer/SoundButton
+@onready var livrea: Node2D = $Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea
+@onready var livrea_a: Sprite2D = $Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea/LivreaA
+@onready var livrea_b: Sprite2D = $Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea/LivreaB
+
+func _ready() -> void:
+	update_subviewport()
+
 
 func _on_music_button_toggled(toggled_on: bool) -> void:
 	Globals.music_enabled=toggled_on
@@ -23,3 +30,32 @@ func _on_new_game_button_pressed() -> void:
 	EnemyBulletPool.reset()
 	Globals.reset_score()
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func update_subviewport() ->void:
+	livrea.modulate = Globals.colors[Globals.player_livreaColor]
+	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
+	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
+	
+func _on_livrea_a_prev_button_pressed() -> void:
+	Globals.player_livreaA = wrapi(Globals.player_livreaA - 1, 1, 5)
+	update_subviewport()
+
+func _on_livrea_a_next_button_pressed() -> void:
+	Globals.player_livreaA = wrapi(Globals.player_livreaA + 1, 1, 5)
+	update_subviewport()
+
+func _on_livrea_b_prev_button_pressed() -> void:
+	Globals.player_livreaB = wrapi(Globals.player_livreaB - 1, 1, 5)
+	update_subviewport()
+
+func _on_livrea_b_next_button_pressed() -> void:
+	Globals.player_livreaB = wrapi(Globals.player_livreaB + 1, 1, 5)
+	update_subviewport()
+
+func _on_livrea_color_prev_button_pressed() -> void:
+	Globals.player_livreaColor = wrapi(Globals.player_livreaColor -1 , 0, Globals.colors.size())
+	update_subviewport()
+
+func _on_livrea_color_next_button_pressed() -> void:
+	Globals.player_livreaColor = wrapi(Globals.player_livreaColor +1 , 0, Globals.colors.size())
+	update_subviewport()

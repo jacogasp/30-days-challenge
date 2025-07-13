@@ -14,6 +14,9 @@ extends Area2D
 @onready var boat: Node2D = $ClippingContainer/Boat
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var livrea: Node2D = $ClippingContainer/Boat/Sail/Livrea
+@onready var livrea_a: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaA
+@onready var livrea_b: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaB
 @onready var gun: EnemyGun = $EnemyGun
 @onready var timer: Timer = $Timer
 
@@ -32,7 +35,10 @@ signal overboard
 
 func _ready() -> void:
 	label.hide()
-	var sailors_color = Color.from_hsv(randf(), randf_range(0.6, 0.8), randf_range(0.9, 1))
+	var enemy_color = Color.from_hsv(randf(), randf_range(0.5, 0.7), randf_range(0.8, 0.9))
+	livrea.modulate = enemy_color
+	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % randi_range(1,4))
+	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % randi_range(1,4))
 	sailors_count = starting_sailors
 	for i in starting_sailors:
 		var sailor := sailor_scene.instantiate()
@@ -40,7 +46,7 @@ func _ready() -> void:
 		sailors.add_child(sailor)
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
-		sailor.modulate = sailors_color
+		sailor.modulate = enemy_color
 
 
 func _physics_process(delta: float) -> void:

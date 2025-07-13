@@ -7,7 +7,6 @@
 radius = 35.7945
 
 [node name="Sailor" type="Area2D"]
-modulate = Color(0.9595, 1, 0.19, 1)
 scale = Vector2(0.45, 0.45)
 collision_layer = 2
 script = ExtResource("2_t2xx5")
@@ -16,7 +15,6 @@ script = ExtResource("2_t2xx5")
 shape = SubResource("CircleShape2D_rg7sp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.960784, 1, 0.188235, 1)
 texture = ExtResource("1_w17xm")
 
 [connection signal="area_entered" from="." to="." method="_on_area_2d_area_entered"]
