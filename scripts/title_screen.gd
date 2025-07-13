@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func _on_music_button_toggled(toggled_on: bool) -> void:
-	Globals.music_enabled=toggled_on
+	Globals.music_enabled = toggled_on
 	if toggled_on:
 		music_button.text = "Music: ON"
 	else:
@@ -18,7 +18,7 @@ func _on_music_button_toggled(toggled_on: bool) -> void:
 
 
 func _on_sound_button_toggled(toggled_on: bool) -> void:
-	Globals.sound_enabled=toggled_on
+	Globals.sound_enabled = toggled_on
 	if toggled_on:
 		sound_button.text = "Sound: ON"
 	else:
@@ -31,31 +31,38 @@ func _on_new_game_button_pressed() -> void:
 	Globals.reset_score()
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
-func update_subviewport() ->void:
+
+func update_subviewport() -> void:
 	livrea.modulate = Globals.colors[Globals.player_livreaColor]
 	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
 	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
-	
+
+
 func _on_livrea_a_prev_button_pressed() -> void:
 	Globals.player_livreaA = wrapi(Globals.player_livreaA - 1, 1, 5)
 	update_subviewport()
+
 
 func _on_livrea_a_next_button_pressed() -> void:
 	Globals.player_livreaA = wrapi(Globals.player_livreaA + 1, 1, 5)
 	update_subviewport()
 
+
 func _on_livrea_b_prev_button_pressed() -> void:
 	Globals.player_livreaB = wrapi(Globals.player_livreaB - 1, 1, 5)
 	update_subviewport()
+
 
 func _on_livrea_b_next_button_pressed() -> void:
 	Globals.player_livreaB = wrapi(Globals.player_livreaB + 1, 1, 5)
 	update_subviewport()
 
+
 func _on_livrea_color_prev_button_pressed() -> void:
-	Globals.player_livreaColor = wrapi(Globals.player_livreaColor -1 , 0, Globals.colors.size())
+	Globals.player_livreaColor = wrapi(Globals.player_livreaColor - 1, 0, Globals.colors.size())
 	update_subviewport()
 
+
 func _on_livrea_color_next_button_pressed() -> void:
-	Globals.player_livreaColor = wrapi(Globals.player_livreaColor +1 , 0, Globals.colors.size())
+	Globals.player_livreaColor = wrapi(Globals.player_livreaColor + 1, 0, Globals.colors.size())
 	update_subviewport()

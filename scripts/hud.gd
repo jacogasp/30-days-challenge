@@ -11,11 +11,11 @@ func _process(_delta: float) -> void:
 
 
 func update_spawned_enemies_label(count):
-	spawned_enemies_label.text = "S %d:" % count
+	spawned_enemies_label.text = "S: %d" % count
 
 
 func update_defeated_enemies_label(count):
-	defeated_enemies_label.text = "D %d:" % count
+	defeated_enemies_label.text = "D: %d" % count
 
 
 func update_current_score_label():

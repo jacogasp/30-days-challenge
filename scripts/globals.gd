@@ -22,21 +22,21 @@ var player_livreaColor: int = 0
 
 var colors: Array[Color] = [Color.DARK_RED, Color.NAVY_BLUE, Color.DARK_GREEN, Color.HOT_PINK, Color.ORANGE, Color.DIM_GRAY]
 
-var sound_enabled:bool = true
-var music_enabled:bool = true
+var sound_enabled: bool = true
+var music_enabled: bool = true
 
 func _ready() -> void:
 	reset_score()
 
-func reset_score()->void:
+func reset_score() -> void:
 	current_score = 0
 	
-	tick_score = 1 
-	hit_score = 1 
-	sink_score = 50 
-	sailor_score  = 10 
+	tick_score = 1
+	hit_score = 1
+	sink_score = 50
+	sailor_score = 10
 
 	tick_score_multiplier = 1
-	hit_score_multiplier = 1 
-	sink_score_multiplier  = 1
-	sailor_score_multiplier = 1 
+	hit_score_multiplier = 1
+	sink_score_multiplier = 1
+	sailor_score_multiplier = 1

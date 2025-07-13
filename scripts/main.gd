@@ -2,6 +2,7 @@ extends Node
 
 var spawned_enemies: int = 0
 var defeated_enemies: int = 0
+
 @onready var l_enemy_spawner: Node2D = $GamePlane/LEnemySpawner
 @onready var r_enemy_spawner: Node2D = $GamePlane/REnemySpawner
 @onready var hud: CanvasLayer = $Hud
@@ -18,6 +19,7 @@ func _ready() -> void:
 	r_enemy_spawner.connect("enemy_defeated", enemy_defeated)
 	l_enemy_spawner.connect("overboard", overboard.bind())
 	r_enemy_spawner.connect("overboard", overboard.bind())
+
 
 func enemy_spawned():
 	spawned_enemies += 1

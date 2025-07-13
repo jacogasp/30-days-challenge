@@ -9,7 +9,7 @@ func update_labels() -> void:
 	if Globals.current_score > Globals.high_score:
 		high_score_label.text = "NEW HIGH SCORE!"
 		Globals.high_score = Globals.current_score
-	else:	
+	else:
 		high_score_label.text = "High Score: %09d" % Globals.high_score
 
 func _ready() -> void:
