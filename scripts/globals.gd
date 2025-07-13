@@ -14,3 +14,5 @@ var tick_score_multiplier: int = 1 # Multiplier to be added to tick score
 var hit_score_multiplier: int = 1 # Multiplier to be added to hit score
 var sink_score_multiplier: int = 1 # Multiplier to be added to sink score
 var sailor_score_multiplier: int = 1 # Multiplier to be added to sailor score
+
+var player: Player

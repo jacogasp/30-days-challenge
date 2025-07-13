@@ -14,7 +14,7 @@ extends Area2D
 @onready var boat: Node2D = $ClippingContainer/Boat
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
-@onready var gun: Gun = $EnemyGun
+@onready var gun: EnemyGun = $EnemyGun
 @onready var timer: Timer = $Timer
 
 var sailors_count: int
@@ -66,7 +66,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func drop_sailors(drop_direction: Vector2) -> void:
 	var target_sailors: int
 	if health > 0:
-		target_sailors = ceil(starting_sailors * health / float(health_max)) + 1
+		target_sailors = floor(starting_sailors * health / float(health_max)) + 1
 	else:
 		target_sailors = 0
 	for i in (sailors_count - target_sailors):
@@ -122,7 +122,10 @@ func sink() -> void:
 
 
 func _on_timer_timeout() -> void:
-	gun.fire_ring()
+	if is_sinking:
+		return
+	#gun.fire_ring()
+	gun.fire_spread(3, Globals.player.global_position - global_position, 30)
 	timer.wait_time = random_time()
 
 
