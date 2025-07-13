@@ -11,7 +11,6 @@
 script = ExtResource("1_tefeu")
 
 [node name="World" parent="." instance=ExtResource("3_sugp2")]
-position = Vector2(-23, 406)
 
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0

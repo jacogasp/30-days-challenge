@@ -1,24 +1,148 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwpokr5rvl5aw"]
+[gd_scene load_steps=13 format=3 uid="uid://cwpokr5rvl5aw"]
 
 [ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
+[ext_resource type="Texture2D" uid="uid://b0ue8a0t2os0h" path="res://assets/world/sea1.png" id="2_sl2e5"]
+[ext_resource type="Texture2D" uid="uid://cgj05yi1yn43y" path="res://assets/world/sea5.png" id="2_t5ptc"]
+[ext_resource type="Texture2D" uid="uid://d0qo6ucqop61f" path="res://assets/world/sea4.png" id="3_bq33v"]
+[ext_resource type="Texture2D" uid="uid://dh30odqcifb7x" path="res://assets/world/sea3.png" id="4_j2gmx"]
+[ext_resource type="Texture2D" uid="uid://bsu4rxd54u8xs" path="res://assets/world/sea2.png" id="5_1yooq"]
+[ext_resource type="Shader" uid="uid://dssd43ysijc4l" path="res://scenes/world/wave.gdshader" id="6_bq33v"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bq33v"]
+shader = ExtResource("6_bq33v")
+shader_parameter/waveAmplitude = 0.04
+shader_parameter/correctVertex = true
+shader_parameter/waveFrequency = 8.0
+shader_parameter/verticalWave = true
+shader_parameter/keepTransparency = true
+shader_parameter/useTime = true
+shader_parameter/waveSpeed = 0.6
+shader_parameter/progress = 0.0
+shader_parameter/firstHalf = 0.5
+shader_parameter/secondHalf = 0.0
+shader_parameter/freezeFirstHalf = false
+shader_parameter/freezeSecondHalf = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2gmx"]
+shader = ExtResource("6_bq33v")
+shader_parameter/waveAmplitude = 0.05
+shader_parameter/correctVertex = true
+shader_parameter/waveFrequency = 8.0
+shader_parameter/verticalWave = true
+shader_parameter/keepTransparency = true
+shader_parameter/useTime = true
+shader_parameter/waveSpeed = 0.7
+shader_parameter/progress = 0.0
+shader_parameter/firstHalf = 0.5
+shader_parameter/secondHalf = 0.0
+shader_parameter/freezeFirstHalf = false
+shader_parameter/freezeSecondHalf = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1yooq"]
+shader = ExtResource("6_bq33v")
+shader_parameter/waveAmplitude = 0.07
+shader_parameter/correctVertex = false
+shader_parameter/waveFrequency = 6.0
+shader_parameter/verticalWave = true
+shader_parameter/keepTransparency = true
+shader_parameter/useTime = true
+shader_parameter/waveSpeed = 1.0
+shader_parameter/progress = 0.0
+shader_parameter/firstHalf = 0.8
+shader_parameter/secondHalf = 0.0
+shader_parameter/freezeFirstHalf = false
+shader_parameter/freezeSecondHalf = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gb53w"]
+shader = ExtResource("6_bq33v")
+shader_parameter/waveAmplitude = 0.1
+shader_parameter/correctVertex = false
+shader_parameter/waveFrequency = 4.0
+shader_parameter/verticalWave = true
+shader_parameter/keepTransparency = true
+shader_parameter/useTime = true
+shader_parameter/waveSpeed = 0.9
+shader_parameter/progress = 0.0
+shader_parameter/firstHalf = 0.5
+shader_parameter/secondHalf = 0.0
+shader_parameter/freezeFirstHalf = false
+shader_parameter/freezeSecondHalf = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5qq27"]
+shader = ExtResource("6_bq33v")
+shader_parameter/waveAmplitude = 0.12
+shader_parameter/correctVertex = true
+shader_parameter/waveFrequency = 2.0
+shader_parameter/verticalWave = true
+shader_parameter/keepTransparency = true
+shader_parameter/useTime = true
+shader_parameter/waveSpeed = 1.0
+shader_parameter/progress = 0.0
+shader_parameter/firstHalf = 0.5
+shader_parameter/secondHalf = 0.0
+shader_parameter/freezeFirstHalf = false
+shader_parameter/freezeSecondHalf = false
 
 [node name="World" type="Node2D"]
-scale = Vector2(0.7, 0.7)
 script = ExtResource("1_dphjl")
 
-[node name="Sea" type="Parallax2D" parent="."]
-repeat_size = Vector2(1425.75, 0)
+[node name="Sea5" type="Parallax2D" parent="."]
+z_index = -1
+scroll_offset = Vector2(0, 217)
+repeat_size = Vector2(1400, 0)
 repeat_times = 3
 
-[node name="Polygon2D2" type="Polygon2D" parent="Sea"]
-z_index = -99
-position = Vector2(-11.5004, 622.387)
-scale = Vector2(2.37497, 2.46237)
-color = Color(0.278431, 0.501961, 1, 1)
-polygon = PackedVector2Array(-12, -443, 15.3688, -450.131, 45.2639, -445.664, 68.001, -449.319, 100.844, -444.445, 135.791, -451.349, 162.318, -444.445, 199.371, -454.192, 238.951, -443.633, 268.846, -449.319, 307.583, -441.603, 335.373, -448.507, 366.952, -443.633, 400.637, -450.131, 444.427, -446.476, 475.164, -450.131, 516.849, -445.664, 551.797, -449.319, 592.218, -442.821, 598.955, 1.87337, -3, -3)
+[node name="Sprite2D" type="Sprite2D" parent="Sea5"]
+z_index = -1
+material = SubResource("ShaderMaterial_bq33v")
+texture = ExtResource("2_t5ptc")
+
+[node name="Sea4" type="Parallax2D" parent="."]
+z_index = -1
+scroll_offset = Vector2(0, 247)
+repeat_size = Vector2(1400, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Sea4"]
+z_index = -1
+material = SubResource("ShaderMaterial_j2gmx")
+texture = ExtResource("3_bq33v")
+
+[node name="Sea3" type="Parallax2D" parent="."]
+z_index = -1
+scroll_offset = Vector2(0, 277)
+repeat_size = Vector2(1400, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Sea3"]
+z_index = -1
+material = SubResource("ShaderMaterial_1yooq")
+texture = ExtResource("4_j2gmx")
+
+[node name="Sea2" type="Parallax2D" parent="."]
+z_index = -1
+scroll_offset = Vector2(0, 397)
+repeat_size = Vector2(1400, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Sea2"]
+z_index = -1
+material = SubResource("ShaderMaterial_gb53w")
+texture = ExtResource("5_1yooq")
+
+[node name="Sea1" type="Parallax2D" parent="."]
+z_index = -1
+scroll_offset = Vector2(0, 557)
+repeat_size = Vector2(1400, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Sea1"]
+material = SubResource("ShaderMaterial_5qq27")
+texture = ExtResource("2_sl2e5")
 
 [node name="Foreground" type="Parallax2D" parent="."]
 z_index = 1
+scroll_offset = Vector2(0, 250)
 repeat_size = Vector2(9614.97, 0)
 
 [node name="Polygon2D" type="Polygon2D" parent="Foreground"]
