@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cwpokr5rvl5aw"]
+[gd_scene load_steps=19 format=3 uid="uid://cwpokr5rvl5aw"]
 
 [ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
 [ext_resource type="Shader" uid="uid://cbh5f0ef7c2fg" path="res://scenes/world/sun.gdshader" id="2_1yooq"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d0qo6ucqop61f" path="res://assets/world/sea4.png" id="3_bq33v"]
 [ext_resource type="Texture2D" uid="uid://dh30odqcifb7x" path="res://assets/world/sea3.png" id="4_j2gmx"]
 [ext_resource type="Texture2D" uid="uid://bsu4rxd54u8xs" path="res://assets/world/sea2.png" id="5_1yooq"]
+[ext_resource type="Texture2D" uid="uid://rgfcah4afing" path="res://assets/world/skyline.png" id="5_5qq27"]
 [ext_resource type="Shader" uid="uid://dssd43ysijc4l" path="res://scenes/world/wave.gdshader" id="6_bq33v"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j2gmx"]
@@ -113,6 +114,15 @@ position = Vector2(580, 6)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_j2gmx")
 
+[node name="Skyline" type="Parallax2D" parent="."]
+z_index = -2
+scroll_offset = Vector2(0, 60)
+repeat_size = Vector2(2560, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="Skyline"]
+texture = ExtResource("5_5qq27")
+
 [node name="Sea5" type="Parallax2D" parent="."]
 z_index = -1
 scroll_offset = Vector2(0, 217)
@@ -168,6 +178,7 @@ material = SubResource("ShaderMaterial_5qq27")
 texture = ExtResource("2_sl2e5")
 
 [node name="Foreground" type="Parallax2D" parent="."]
+visible = false
 z_index = 1
 scroll_offset = Vector2(0, 250)
 repeat_size = Vector2(9614.97, 0)

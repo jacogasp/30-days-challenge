@@ -1,14 +1,19 @@
 extends Node2D
 
 @onready var foreground: Parallax2D = $Foreground
-@onready var sea1: Parallax2D = $Sea1
+@onready var skyline: Parallax2D = $Skyline
+@onready var sea_1: Parallax2D = $Sea1
+@onready var sea_2: Parallax2D = $Sea2
+@onready var sea_3: Parallax2D = $Sea3
+@onready var sea_4: Parallax2D = $Sea4
+@onready var sea_5: Parallax2D = $Sea5
 @onready var sky: Sprite2D = $Sky
 @onready var sun: Sprite2D = $Sky/Sun
 
 func _ready():
-	
 	var set_sky = [_set_dawn, _set_day, _set_sunset]
 	var index = randi() % set_sky.size()
+	skyline.scroll_offset.x = randf_range(0,2560)
 	set_sky[index].call() # Call the randomly selected function
 
 func _set_sunset() -> void:
@@ -43,5 +48,10 @@ func _set_day() -> void:
 
 func _process(delta) -> void:
 	var scrolling_speed = -Globals.world_speed
-	sea1.scroll_offset.x += scrolling_speed * delta * 0.7
+	sea_1.scroll_offset.x += scrolling_speed * delta * 0.7
+	sea_2.scroll_offset.x += scrolling_speed * delta * 0.4
+	sea_3.scroll_offset.x += scrolling_speed * delta * 0.2
+	sea_4.scroll_offset.x += scrolling_speed * delta * 0.1
+	sea_5.scroll_offset.x += scrolling_speed * delta * 0.05
+	skyline.scroll_offset.x += scrolling_speed * delta * 0.01
 	foreground.scroll_offset.x += scrolling_speed * delta
