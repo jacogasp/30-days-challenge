@@ -12,22 +12,25 @@ extends Area2D
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
 @onready var gun: Gun = $PlayerGun
+@onready var boat: Node2D = $ClippingContainer/Boat
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 
 var last_direction: Vector2 = Vector2.ZERO
 var speed := max_speed
 var particle_emitter_orig_pos: Vector2 = Vector2.ZERO
 var boat_length: float = 100
+var boat_height: float = 200
 var min_sea_limit: Vector2
 var max_sea_limit: Vector2
 var current_number_sailor: int = 5
 var is_sinking
 
-# Invulnerability variables
 var is_invulnerable: bool = false
 var invulnerability_timer: Timer
 var blink_timer: Timer
 var flash_timer: Timer
 @onready var original_modulate: Color = self.modulate
+
 
 signal update_sailors_count
 signal game_over
@@ -38,7 +41,9 @@ func _ready() -> void:
 	max_sea_limit = get_viewport_rect().size - Vector2(0,+90)
 	Globals.player = self
 	particle_emitter_orig_pos = gpu_particles_2d.position
+	
 	setup_invulnerability_timers()
+	
 	for i in starting_sailor_count:
 		var sailor := sailor_scene.instantiate()
 		var sailor_offset = Vector2(randf_range(-boat_length * 0.5, boat_length * 0.5), 0)
@@ -142,7 +147,7 @@ func hit(damage: int) -> void:
 	if is_sinking or is_invulnerable:
 		return
 		
-	modulate = Color(5,5,5)
+	material.set_shader_parameter("flash_value", 1.0)
 	flash_timer.start()
 	start_invulnerability()
 	
@@ -171,7 +176,24 @@ func _on_blink_timeout() -> void:
 	modulate.a = 0.1 if modulate.a == 1.0 else 1.0
 
 func _on_flash_timeout() -> void:
-	modulate = original_modulate
+	material.set_shader_parameter("flash_value", 0.0)
 
 func sink() -> void:
-	pass
+	if is_sinking:
+		return
+	invulnerability_timer.stop()
+	_on_invulnerability_timeout()
+	set_process(false)
+	collision_shape_2d.queue_free()
+	is_sinking = true
+	Globals.current_score += Globals.sink_score * Globals.sink_score_multiplier
+	var sinking_angle = randf_range(5, 30)
+	var tween = create_tween()
+	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle * 0.5), 1.0)
+	await tween.finished
+	tween = create_tween()
+	tween.set_parallel()
+	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle), 1.0)
+	tween.tween_property(boat, "position:y", boat_height, 2.0)
+	tween.tween_property(gpu_particles_2d, "scale", Vector2(0, 0), 2)
+	await tween.finished

@@ -106,6 +106,7 @@ func sink() -> void:
 	if is_sinking:
 		return
 	set_process(false)
+	collision_shape_2d.queue_free()
 	is_sinking = true
 	Globals.current_score += Globals.sink_score * Globals.sink_score_multiplier
 	var sinking_angle = randf_range(5, 30)
