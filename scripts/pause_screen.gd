@@ -1,7 +1,8 @@
 extends Control
 
-@onready var score_label: Label = $VBoxContainer/ScoreLabel
-@onready var high_score_label: Label = $VBoxContainer/HighScoreLabel
+@onready var score_label: Label = %ScoreLabel
+@onready var high_score_label: Label = %HighScoreLabel
+@onready var resume_button: Button = %ResumeButton
 
 
 func update_labels() -> void:
@@ -10,11 +11,13 @@ func update_labels() -> void:
 
 
 func _ready() -> void:
+	resume_button.grab_focus()
 	update_labels()
 
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
+		resume_button.grab_focus()
 		get_tree().paused = !get_tree().paused
 		visible = !visible
 		update_labels()

@@ -1,8 +1,9 @@
 extends Control
 
-@onready var score_label: Label = $VBoxContainer/ScoreLabel
-@onready var high_score_label: Label = $VBoxContainer/HighScoreLabel
-@onready var v_box_container: VBoxContainer = $VBoxContainer
+@onready var score_label: Label = %ScoreLabel
+@onready var high_score_label: Label = %HighScoreLabel
+@onready var restart_button: Button = %RestartButton
+@onready var v_box_container: VBoxContainer = $Panel/MarginContainer/VBoxContainer
 
 func update_labels() -> void:
 	score_label.text = "Score: %09d" % Globals.current_score
@@ -13,6 +14,7 @@ func update_labels() -> void:
 		high_score_label.text = "High Score: %09d" % Globals.high_score
 
 func _ready() -> void:
+	restart_button.grab_focus()
 	update_labels()
 	v_box_container.process_mode = Node.PROCESS_MODE_ALWAYS
 

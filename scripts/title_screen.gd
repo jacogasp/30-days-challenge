@@ -1,11 +1,14 @@
-extends CanvasLayer
-@onready var music_button: Button = $Control/Control/Panel/VBoxContainer/MusicButton
-@onready var sound_button: Button = $Control/Control/Panel/VBoxContainer/SoundButton
-@onready var livrea: Node2D = $Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea
-@onready var livrea_a: Sprite2D = $Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea/LivreaA
-@onready var livrea_b: Sprite2D = $Control/Control/Panel/VBoxContainer/CustomColorContainer/SubViewportContainer/SubViewport/Boat/Sail/Livrea/LivreaB
+extends Control
+
+@onready var new_game_button: Button = %NewGameButton
+@onready var music_button: Button = %MusicButton
+@onready var sound_button: Button = %SoundButton
+@onready var livrea: Node2D = %Livrea
+@onready var livrea_a: Sprite2D = %LivreaA
+@onready var livrea_b: Sprite2D = %LivreaB
 
 func _ready() -> void:
+	new_game_button.grab_focus()
 	update_subviewport()
 
 
