@@ -59,6 +59,7 @@ size = Vector2(59, 24)
 
 [node name="Player" type="Area2D"]
 material = SubResource("ShaderMaterial_7vyk4")
+collision_mask = 0
 script = ExtResource("1_rp718")
 sailor_scene = ExtResource("4_kqtwu")
 

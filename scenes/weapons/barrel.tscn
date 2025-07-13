@@ -1,0 +1,126 @@
+[gd_scene load_steps=17 format=3 uid="uid://qq6f6q77h2af"]
+
+[ext_resource type="Texture2D" uid="uid://brdv4128be2ub" path="res://assets/barrel.png" id="1_51oe7"]
+[ext_resource type="Script" uid="uid://cply5s8gyjlj1" path="res://scripts/weapons/barrel.gd" id="1_i6fpp"]
+[ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://scenes/characters/wave.gdshader" id="2_i0ll5"]
+[ext_resource type="Shader" uid="uid://vd2qr6m0th1u" path="res://scenes/weapons/barrel.gdshader" id="2_pjj8d"]
+[ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_kby3w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6fpp"]
+size = Vector2(108, 84)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lih5u"]
+resource_local_to_scene = true
+shader = ExtResource("2_pjj8d")
+shader_parameter/start_position = 0.0
+shader_parameter/start_angle = 104.0
+shader_parameter/rotation_amplitude = 0.3
+shader_parameter/rotation_freq = 0.5
+shader_parameter/vertical_amplitude = 100.0
+shader_parameter/vertical_freq = 0.5
+shader_parameter/clip_y = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cthek"]
+shader = ExtResource("2_i0ll5")
+shader_parameter/clip_y = 0.4
+
+[sub_resource type="Curve" id="Curve_i0ll5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0358493), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kby3w"]
+curve = SubResource("Curve_i0ll5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7kgum"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(40, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_kby3w")
+
+[sub_resource type="Curve" id="Curve_cthek"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0492064), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7kgum"]
+curve = SubResource("Curve_cthek")
+
+[sub_resource type="Curve" id="Curve_kby3w"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.95942, 0.228571), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cthek"]
+curve = SubResource("Curve_kby3w")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i0ll5"]
+lifetime_randomness = 0.6
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(15, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 445.4
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_cthek")
+alpha_curve = SubResource("CurveTexture_7kgum")
+
+[node name="Barrel" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_i6fpp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_i6fpp")
+
+[node name="ClippingContainer" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -272.0
+offset_top = -112.0
+offset_right = 288.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="ClippingContainer"]
+material = SubResource("ShaderMaterial_lih5u")
+position = Vector2(274, 123)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_51oe7")
+
+[node name="WaveParticles" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_cthek")
+position = Vector2(0, 22)
+amount = 64
+texture = ExtResource("3_kby3w")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_7kgum")
+
+[node name="ExplosionParticles" type="GPUParticles2D" parent="."]
+z_index = 100
+emitting = false
+amount = 32
+texture = ExtResource("3_kby3w")
+lifetime = 4.0
+one_shot = true
+speed_scale = 3.0
+explosiveness = 1.0
+local_coords = true
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_i0ll5")
+
+[node name="QueueFreeTimer" type="Timer" parent="."]
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="timeout" from="QueueFreeTimer" to="." method="_on_queue_free_timer_timeout"]

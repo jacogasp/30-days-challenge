@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=24 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_tjfok"]
 [ext_resource type="Script" uid="uid://2wl2e5w5xhue" path="res://scripts/weapons/enemy_gun.gd" id="7_x5khh"]
 [ext_resource type="PackedScene" uid="uid://e8agkwdf57mo" path="res://scenes/weapons/enemy_bullet.tscn" id="8_0ag5d"]
+[ext_resource type="Script" uid="uid://7odss7vblhi3" path="res://scripts/weapons/barrel_emitter.gd" id="9_f0ik5"]
+[ext_resource type="PackedScene" uid="uid://qq6f6q77h2af" path="res://scenes/weapons/barrel.tscn" id="10_rc7n0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21x0f"]
 size = Vector2(7.38636, 7.06039)
@@ -138,6 +140,16 @@ script = ExtResource("7_x5khh")
 bullet_scene = ExtResource("8_0ag5d")
 metadata/_custom_type_script = "uid://2wl2e5w5xhue"
 
+[node name="BarrelEmitter" type="Node2D" parent="."]
+position = Vector2(-76, -14)
+script = ExtResource("9_f0ik5")
+barrel_scene = ExtResource("10_rc7n0")
+
+[node name="Timer" type="Timer" parent="BarrelEmitter"]
+wait_time = 5.0
+autostart = true
+
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="BarrelEmitter/Timer" to="BarrelEmitter" method="fire"]

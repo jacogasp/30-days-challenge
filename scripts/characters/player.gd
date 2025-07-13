@@ -40,18 +40,18 @@ signal game_over
 signal overboard
 
 func _ready() -> void:
-	
+
 	livrea.modulate = Globals.colors[Globals.player_livreaColor]
 	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
 	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
-	
+
 	min_sea_limit = get_viewport_rect().position + Vector2(0, 90)
 	max_sea_limit = get_viewport_rect().size - Vector2(0,+90)
 	Globals.player = self
 	particle_emitter_orig_pos = gpu_particles_2d.position
-	
+
 	setup_invulnerability_timers()
-	
+
 	for i in starting_sailor_count:
 		var sailor := sailor_scene.instantiate()
 		var sailor_offset = Vector2(randf_range(-boat_length * 0.5, boat_length * 0.5), 0)
@@ -69,13 +69,13 @@ func setup_invulnerability_timers() -> void:
 	invulnerability_timer.one_shot = true
 	invulnerability_timer.timeout.connect(_on_invulnerability_timeout)
 	add_child(invulnerability_timer)
-	
+
 	# Blink effect timer
 	blink_timer = Timer.new()
 	blink_timer.wait_time = blink_interval
 	blink_timer.timeout.connect(_on_blink_timeout)
 	add_child(blink_timer)
-	
+
 	# Flash effect timer
 	flash_timer = Timer.new()
 	flash_timer.wait_time = flash_duration
@@ -156,11 +156,11 @@ func drop_sailor(drop_direction: Vector2) -> void:
 func hit(damage: int) -> void:
 	if is_sinking or is_invulnerable:
 		return
-		
+
 	material.set_shader_parameter("flash_value", 1.0)
 	flash_timer.start()
 	start_invulnerability()
-	
+
 	var target_sailors: int
 	if current_number_sailor > 0:
 		target_sailors = current_number_sailor - damage
