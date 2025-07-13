@@ -41,5 +41,3 @@ min_spawn_time = 10.0
 max_spawn_time = 15.0
 
 [node name="OverboardSailors" type="Node2D" parent="GamePlane"]
-
-[connection signal="game_over" from="GamePlane/Player" to="." method="_on_player_game_over"]

@@ -6,8 +6,8 @@ extends Control
 
 
 func update_labels() -> void:
-	score_label.text = "Score: %09d" % Globals.current_score
-	high_score_label.text = "High Score: %09d" % Globals.high_score
+	score_label.text = "Score: %09d" % GameManager.current_score()
+	high_score_label.text = "High Score: %09d" % GameManager.high_score()
 
 
 func _ready() -> void:
@@ -32,6 +32,7 @@ func _on_restart_button_pressed() -> void:
 	get_tree().paused = false
 	EnemyBulletPool.reset()
 	PlayerBulletPool.reset()
+	GameManager.reset()
 	Globals.reset_score()
 	get_tree().reload_current_scene()
 

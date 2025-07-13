@@ -26,19 +26,15 @@ var boat_height: int = 200
 
 var is_sinking = false
 var fully_visible := false
-var screen_offset:int  = 50
-
-signal enemy_spawned
-signal enemy_defeated
-signal overboard
+var screen_offset: int = 50
 
 
 func _ready() -> void:
 	label.hide()
 	var enemy_color = Color.from_hsv(randf(), randf_range(0.5, 0.7), randf_range(0.8, 0.9))
 	livrea.modulate = enemy_color
-	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % randi_range(1,4))
-	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % randi_range(1,4))
+	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % randi_range(1, 4))
+	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % randi_range(1, 4))
 	sailors_count = starting_sailors
 	for i in starting_sailors:
 		var sailor := sailor_scene.instantiate()
@@ -56,15 +52,17 @@ func _physics_process(delta: float) -> void:
 		fully_visible = true
 		timer.start()
 
+
 func is_fully_visible() -> bool:
 	if is_sinking:
 		return false
 	var is_in_left: bool = collision_shape_2d.global_position.x > screen_offset
-	var is_in_right:bool = collision_shape_2d.global_position.x + collision_shape_2d.shape.get_rect().size.x < get_viewport_rect().size.x - screen_offset 
+	var is_in_right: bool = collision_shape_2d.global_position.x + collision_shape_2d.shape.get_rect().size.x < get_viewport_rect().size.x - screen_offset
 	return is_in_left and is_in_right
 
+
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	enemy_spawned.emit()
+	GameManager.enemy_spawned()
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
@@ -82,22 +80,22 @@ func drop_sailors(drop_direction: Vector2) -> void:
 		if sailor:
 			sailors_count -= 1
 			await sailor.jump_out(drop_direction)
-			overboard.emit(sailor.duplicate(), sailor.global_position)
+			GameManager.overboard_sailor(sailor.duplicate(), sailor.global_position)
 			sailor.queue_free()
 
 
 func hit(damage: int) -> void:
+	GameManager.enemy_hit()
 	if is_sinking:
 		return
 	if (label.hidden):
 		label.show()
-	Globals.current_score += Globals.hit_score * Globals.hit_score_multiplier
 	health -= damage
 	label.text = str(health)
 	drop_sailors(direction)
 	if (health <= 0):
-		enemy_defeated.emit()
 		sink()
+		GameManager.enemy_defeated()
 
 
 func get_random_sailor() -> Sailor:
@@ -116,7 +114,6 @@ func sink() -> void:
 	set_process(false)
 	collision_shape_2d.queue_free()
 	is_sinking = true
-	Globals.current_score += Globals.sink_score * Globals.sink_score_multiplier
 	var sinking_angle = randf_range(5, 30)
 	var tween = create_tween()
 	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle * 0.5), 1.0)
@@ -133,7 +130,6 @@ func sink() -> void:
 func _on_timer_timeout() -> void:
 	if is_sinking:
 		return
-	#gun.fire_ring()
 	gun.fire_spread(3, Globals.player.global_position - global_position, 30)
 	timer.wait_time = random_time()
 

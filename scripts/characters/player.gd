@@ -5,9 +5,9 @@ extends Area2D
 @export var sailor_scene: PackedScene
 @export var starting_sailor_count: int = 5
 @export var max_number_sailor: int = 30
-@export var invulnerability_duration: float = 2.0  # Duration in seconds
-@export var blink_interval: float = 0.1  # How fast the blinking effect
-@export var flash_duration: float = 0.1  # Duration of white flash on hit
+@export var invulnerability_duration: float = 2.0 # Duration in seconds
+@export var blink_interval: float = 0.1 # How fast the blinking effect
+@export var flash_duration: float = 0.1 # Duration of white flash on hit
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
@@ -35,18 +35,16 @@ var flash_timer: Timer
 @onready var original_modulate: Color = self.modulate
 
 
-signal update_sailors_count
-signal game_over
 signal overboard
 
-func _ready() -> void:
 
+func _ready() -> void:
 	livrea.modulate = Globals.colors[Globals.player_livreaColor]
 	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
 	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
 
 	min_sea_limit = get_viewport_rect().position + Vector2(0, 90)
-	max_sea_limit = get_viewport_rect().size - Vector2(0,+90)
+	max_sea_limit = get_viewport_rect().size - Vector2(0, +90)
 	Globals.player = self
 	particle_emitter_orig_pos = gpu_particles_2d.position
 
@@ -60,7 +58,8 @@ func _ready() -> void:
 		sailor.spawn_position = sailor.position
 		sailor.modulate = Globals.colors[Globals.player_livreaColor]
 	current_number_sailor = starting_sailor_count
-	update_sailors_count.emit(current_number_sailor)
+	GameManager.update_sailors_count(current_number_sailor)
+
 
 func setup_invulnerability_timers() -> void:
 	# Main invulnerability timer
@@ -83,12 +82,11 @@ func setup_invulnerability_timers() -> void:
 	flash_timer.timeout.connect(_on_flash_timeout)
 	add_child(flash_timer)
 
+
 func _process(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	position += direction * speed * delta
 	position = position.clamp(min_sea_limit, max_sea_limit)
-
-	Globals.current_score += Globals.tick_score * Globals.tick_score_multiplier * delta
 
 	if direction != Vector2.ZERO and direction != last_direction:
 		var new_direction: Vector2 = direction - last_direction
@@ -116,7 +114,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("DEBUG_remove_sailor"):
 			var sailor = get_random_sailor()
 			if sailor:
-				current_number_sailor -=1
+				current_number_sailor -= 1
 				await sailor.jump_out(direction)
 				sailor.queue_free()
 
@@ -130,12 +128,11 @@ func get_random_sailor() -> Sailor:
 	return null
 
 func load_sailor(modulation_color: Color) -> void:
-	Globals.current_score += Globals.sailor_score * Globals.sailor_score_multiplier
 	if current_number_sailor >= max_number_sailor:
 		return
 	current_number_sailor += 1
 	Globals.tick_score_multiplier = ceil(current_number_sailor / 5.0)
-	update_sailors_count.emit(current_number_sailor)
+	GameManager.update_sailors_count(current_number_sailor)
 	var sailor := sailor_scene.instantiate()
 	var boat_half_length = 0.5 * boat_length
 	sailors.add_child(sailor)
@@ -144,14 +141,16 @@ func load_sailor(modulation_color: Color) -> void:
 	sailor.modulate = modulation_color
 	sailor.spawn()
 
+
 func drop_sailor(drop_direction: Vector2) -> void:
 	var sailor := get_random_sailor()
 	if sailor:
 		current_number_sailor -= 1
-		update_sailors_count.emit(current_number_sailor)
+		GameManager.update_sailors_count(current_number_sailor)
 		await sailor.jump_out(drop_direction)
 		overboard.emit(sailor.duplicate(), sailor.global_position)
 		sailor.queue_free()
+
 
 func hit(damage: int) -> void:
 	if is_sinking or is_invulnerable:
@@ -169,26 +168,31 @@ func hit(damage: int) -> void:
 	for i in current_number_sailor - target_sailors:
 		drop_sailor(last_direction)
 	if (current_number_sailor <= 0):
-		game_over.emit()
 		sink()
+
 
 func start_invulnerability() -> void:
 	is_invulnerable = true
 	invulnerability_timer.start()
 	blink_timer.start()
 
+
 func _on_invulnerability_timeout() -> void:
 	is_invulnerable = false
 	blink_timer.stop()
 	modulate = original_modulate
 
+
 func _on_blink_timeout() -> void:
 	modulate.a = 0.1 if modulate.a == 1.0 else 1.0
+
 
 func _on_flash_timeout() -> void:
 	material.set_shader_parameter("flash_value", 0.0)
 
+
 func sink() -> void:
+	GameManager._game_over()
 	if is_sinking:
 		return
 	invulnerability_timer.stop()
