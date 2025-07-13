@@ -100,6 +100,7 @@ func _process(delta: float) -> void:
 			var sailor := sailor_scene.instantiate()
 			var boat_half_length = 0.5 * boat_length
 			sailors.add_child(sailor)
+			current_number_sailor += 1
 			sailor.spawn_position = Vector2(randf_range(-boat_half_length, boat_half_length), 0)
 			sailor.position = sailor.spawn_position + Vector2(0, -100)
 			sailor.modulate = Color(randf(), randf(), randf())
@@ -107,6 +108,7 @@ func _process(delta: float) -> void:
 		if Input.is_action_just_pressed("DEBUG_remove_sailor"):
 			var sailor = get_random_sailor()
 			if sailor:
+				current_number_sailor -=1
 				await sailor.jump_out(direction)
 				sailor.queue_free()
 
@@ -186,7 +188,6 @@ func sink() -> void:
 	set_process(false)
 	collision_shape_2d.queue_free()
 	is_sinking = true
-	Globals.current_score += Globals.sink_score * Globals.sink_score_multiplier
 	var sinking_angle = randf_range(5, 30)
 	var tween = create_tween()
 	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle * 0.5), 1.0)

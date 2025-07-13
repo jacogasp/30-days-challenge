@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://dw82okxc2ga52"]
+
+[ext_resource type="Texture2D" uid="uid://2si6vfln8py2" path="res://assets/title_screen.jpeg" id="1_fgkus"]
+[ext_resource type="Script" uid="uid://cj0f3qjy6rfop" path="res://scripts/title_screen.gd" id="1_sa3yf"]
+
+[node name="TitleScreen" type="CanvasLayer"]
+script = ExtResource("1_sa3yf")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_fgkus")
+
+[node name="Control" type="Control" parent="Control"]
+custom_minimum_size = Vector2(400, 500)
+anchors_preset = 0
+offset_left = 913.0
+offset_top = 248.0
+offset_right = 1313.0
+offset_bottom = 748.0
+rotation = -0.155865
+
+[node name="Panel" type="Panel" parent="Control/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -40.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewGameButton" type="Button" parent="Control/Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "New Game"
+
+[node name="MusicButton" type="Button" parent="Control/Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+toggle_mode = true
+button_pressed = true
+text = "Music: ON"
+
+[node name="SoundButton" type="Button" parent="Control/Control/Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+toggle_mode = true
+button_pressed = true
+text = "Sound: ON
+"
+
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="toggled" from="Control/Control/Panel/VBoxContainer/MusicButton" to="." method="_on_music_button_toggled"]
+[connection signal="toggled" from="Control/Control/Panel/VBoxContainer/SoundButton" to="." method="_on_sound_button_toggled"]

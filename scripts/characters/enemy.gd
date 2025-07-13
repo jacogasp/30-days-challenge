@@ -51,6 +51,8 @@ func _physics_process(delta: float) -> void:
 		timer.start()
 
 func is_fully_visible() -> bool:
+	if is_sinking:
+		return false
 	var is_in_left: bool = collision_shape_2d.global_position.x > screen_offset
 	var is_in_right:bool = collision_shape_2d.global_position.x + collision_shape_2d.shape.get_rect().size.x < get_viewport_rect().size.x - screen_offset 
 	return is_in_left and is_in_right

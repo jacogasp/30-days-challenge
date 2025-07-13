@@ -1,8 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq5ein4kft5tn"]
+[gd_scene load_steps=2 format=3 uid="uid://cq5ein4kft5tn"]
 
 [ext_resource type="Script" uid="uid://cxlbrloq0ngfx" path="res://scripts/weapons/bullet_pool.gd" id="1_m4pi1"]
-[ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="2_3pvpn"]
 
 [node name="BulletPool" type="Node2D"]
 script = ExtResource("1_m4pi1")
-bullet_scene = ExtResource("2_3pvpn")

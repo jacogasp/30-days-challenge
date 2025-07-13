@@ -34,3 +34,6 @@ func fire_bullet():
 
 func fire():
 	is_firing = true
+
+func reset():
+	bullet_pool.reset()

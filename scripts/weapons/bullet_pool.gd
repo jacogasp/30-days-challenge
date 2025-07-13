@@ -6,7 +6,7 @@ extends Node2D
 var bullet_pool: Array[BulletBase] = []
 var pool_index: int = 0
 var bullets_to_spawn: int = 0
-var initialized: bool = 0
+var initialized: bool = false
 
 
 func init_pool(bullet_scene: PackedScene) -> void:
@@ -22,6 +22,10 @@ func init_pool(bullet_scene: PackedScene) -> void:
 
 	initialized = true
 
+func reset() ->void:
+	for bullet in get_children():
+		bullet.visible = false
+		bullet.active = false
 
 func get_bullet() -> BulletBase:
 	var bullet: BulletBase = bullet_pool[pool_index]

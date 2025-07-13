@@ -7,6 +7,7 @@ var defeated_enemies: int = 0
 @onready var hud: CanvasLayer = $Hud
 @onready var overboard_sailors: Node2D = $GamePlane/OverboardSailors
 @onready var player: Player = $GamePlane/Player
+@onready var pause_screen: Control = $Hud/Pause_Screen
 
 
 func _ready() -> void:
@@ -17,7 +18,6 @@ func _ready() -> void:
 	r_enemy_spawner.connect("enemy_defeated", enemy_defeated)
 	l_enemy_spawner.connect("overboard", overboard.bind())
 	r_enemy_spawner.connect("overboard", overboard.bind())
-
 
 func enemy_spawned():
 	spawned_enemies += 1
@@ -37,3 +37,9 @@ func overboard(sailor: Sailor, g_pos: Vector2):
 
 func update_sailors_count(count: int) -> void:
 	hud.update_current_sailors_label(count)
+
+
+func _on_player_game_over() -> void:
+	const GAME_OVER_SCREEN = preload("res://scenes/game_over_screen.tscn")
+	var game_over_screen = GAME_OVER_SCREEN.instantiate()
+	hud.add_child(game_over_screen)
