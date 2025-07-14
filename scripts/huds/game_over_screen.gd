@@ -24,7 +24,7 @@ func _on_restart_button_pressed() -> void:
 	get_tree().paused = false
 	EnemyBulletPool.reset()
 	PlayerBulletPool.reset()
-	GameManager.reset()
+	GameManager.start()
 	Globals.reset_score()
 	v_box_container.process_mode = Node.PROCESS_MODE_DISABLED
 	get_tree().reload_current_scene()
