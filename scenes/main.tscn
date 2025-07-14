@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=9 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cwpokr5rvl5aw" path="res://scenes/world/world.tscn" id="3_sugp2"]
 [ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/huds/hud.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="4_tefeu"]
+[ext_resource type="Script" uid="uid://btneotr08ba7o" path="res://scripts/characters/spanwer_manager.gd" id="6_tipki"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tefeu")
@@ -23,20 +24,21 @@ anchor_mode = 0
 visible = false
 
 [node name="SpanwerManager" type="Node2D" parent="."]
+script = ExtResource("6_tipki")
 
-[node name="LEnemySpawner" parent="SpanwerManager" instance=ExtResource("3_jyhfs")]
+[node name="Timer" type="Timer" parent="SpanwerManager"]
+
+[node name="LeftSpawner" parent="SpanwerManager" instance=ExtResource("3_jyhfs")]
 position = Vector2(-180, 0)
 speed_randomness = 0.5
-min_spawn_time = 10.0
-max_spawn_time = 15.0
 
-[node name="REnemySpawner" parent="SpanwerManager" instance=ExtResource("3_jyhfs")]
+[node name="RightSpawner" parent="SpanwerManager" instance=ExtResource("3_jyhfs")]
 position = Vector2(1460, 0)
 enemy_speed = -100.0
 speed_randomness = 0.8
-min_spawn_time = 10.0
-max_spawn_time = 15.0
 
 [node name="Player" parent="." instance=ExtResource("2_0wfyh")]
 position = Vector2(232, 439)
 max_speed = 1000.0
+
+[connection signal="timeout" from="SpanwerManager/Timer" to="SpanwerManager" method="spawn"]

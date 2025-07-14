@@ -1,5 +1,7 @@
 extends Control
 
+@export var title_screen_scene: PackedScene
+
 @onready var score_label: Label = %ScoreLabel
 @onready var high_score_label: Label = %HighScoreLabel
 @onready var restart_button: Button = %RestartButton
@@ -31,4 +33,4 @@ func _on_restart_button_pressed() -> void:
 func _on_main_menu_button_pressed() -> void:
 	v_box_container.process_mode = Node.PROCESS_MODE_DISABLED
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
+	get_tree().change_scene_to_packed(title_screen_scene)

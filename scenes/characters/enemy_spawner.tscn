@@ -13,14 +13,9 @@ point_count = 2
 script = ExtResource("1_s1jtr")
 enemy_scene = ExtResource("2_yokgt")
 
-[node name="Timer" type="Timer" parent="."]
-autostart = true
-
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_yokgt")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 position = Vector2(0, 150)
 rotation = 1.5708
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

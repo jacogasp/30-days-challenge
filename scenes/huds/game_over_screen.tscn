@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bxy6q4nuudbeo"]
+[gd_scene load_steps=6 format=3 uid="uid://bxy6q4nuudbeo"]
 
 [ext_resource type="Script" uid="uid://5yb07q2hw4uj" path="res://scripts/huds/game_over_screen.gd" id="1_61w2s"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_jw6e5"]
 [ext_resource type="Shader" uid="uid://e5nwfdykbwsg" path="res://shaders/blur.gdshader" id="2_jw6e5"]
+[ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="3_8xf4c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8yp4"]
 shader = ExtResource("2_jw6e5")
@@ -19,6 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_jw6e5")
 script = ExtResource("1_61w2s")
+title_screen_scene = ExtResource("3_8xf4c")
 
 [node name="Blur" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_r8yp4")
