@@ -22,24 +22,21 @@ anchor_mode = 0
 [node name="Pause_Screen" parent="Hud" instance=ExtResource("4_tefeu")]
 visible = false
 
-[node name="GamePlane" type="Node2D" parent="."]
-y_sort_enabled = true
+[node name="SpanwerManager" type="Node2D" parent="."]
 
-[node name="Player" parent="GamePlane" instance=ExtResource("2_0wfyh")]
-position = Vector2(232, 439)
-max_speed = 1000.0
-
-[node name="LEnemySpawner" parent="GamePlane" instance=ExtResource("3_jyhfs")]
+[node name="LEnemySpawner" parent="SpanwerManager" instance=ExtResource("3_jyhfs")]
 position = Vector2(-180, 0)
 speed_randomness = 0.5
 min_spawn_time = 10.0
 max_spawn_time = 15.0
 
-[node name="REnemySpawner" parent="GamePlane" instance=ExtResource("3_jyhfs")]
+[node name="REnemySpawner" parent="SpanwerManager" instance=ExtResource("3_jyhfs")]
 position = Vector2(1460, 0)
 enemy_speed = -100.0
 speed_randomness = 0.8
 min_spawn_time = 10.0
 max_spawn_time = 15.0
 
-[node name="OverboardSailors" type="Node2D" parent="GamePlane"]
+[node name="Player" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(232, 439)
+max_speed = 1000.0
