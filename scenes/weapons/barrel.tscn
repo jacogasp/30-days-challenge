@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://brdv4128be2ub" path="res://assets/barrel.png" id="1_51oe7"]
 [ext_resource type="Script" uid="uid://cply5s8gyjlj1" path="res://scripts/weapons/barrel.gd" id="1_i6fpp"]
-[ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://scenes/characters/wave.gdshader" id="2_i0ll5"]
-[ext_resource type="Shader" uid="uid://vd2qr6m0th1u" path="res://scenes/weapons/barrel.gdshader" id="2_pjj8d"]
+[ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://shaders/clip_y.gdshader" id="2_i0ll5"]
+[ext_resource type="Shader" uid="uid://vd2qr6m0th1u" path="res://shaders/barrel.gdshader" id="2_pjj8d"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_kby3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i6fpp"]

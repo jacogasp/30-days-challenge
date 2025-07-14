@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://idkdxkpdu4no"]
 
-[ext_resource type="Script" uid="uid://c75onh481bgxf" path="res://scripts/hud.gd" id="1_ahhtf"]
+[ext_resource type="Script" uid="uid://c75onh481bgxf" path="res://scripts/huds/hud.gd" id="1_ahhtf"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="2_5ysmq"]
 [ext_resource type="Texture2D" uid="uid://hirprwvwbj00" path="res://assets/sailor.png" id="2_oo0fn"]
 

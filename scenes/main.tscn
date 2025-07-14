@@ -1,14 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=8 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://bxy6q4nuudbeo" path="res://scenes/huds/game_over_screen.tscn" id="2_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dd82objmcmblm" path="res://scenes/characters/enemy_spawner.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cwpokr5rvl5aw" path="res://scenes/world/world.tscn" id="3_sugp2"]
-[ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/hud.tscn" id="4_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/pause_screen.tscn" id="4_tefeu"]
+[ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/huds/hud.tscn" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="4_tefeu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tefeu")
+game_over_screen_scene = ExtResource("2_o6xl0")
 
 [node name="World" parent="." instance=ExtResource("3_sugp2")]
 
