@@ -26,6 +26,6 @@ func shake(duration: float = 1.0) -> void:
 	_base_position = global_position
 
 
-func _get_noise(seed: int) -> float:
-	_noise.seed = seed
+func _get_noise(noise_seed: int) -> float:
+	_noise.seed = noise_seed
 	return _noise.get_noise_1d(randf() * _shake_time_remaining) * SHAKE_AMOUNT

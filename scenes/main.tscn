@@ -26,6 +26,7 @@ script = ExtResource("4_85g3d")
 visible = false
 
 [node name="SpanwerManager" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("6_tipki")
 
 [node name="Timer" type="Timer" parent="SpanwerManager"]
@@ -39,9 +40,9 @@ position = Vector2(1460, 0)
 enemy_speed = -100.0
 speed_randomness = 0.8
 
-[node name="Player" parent="." instance=ExtResource("2_0wfyh")]
+[node name="Player" parent="SpanwerManager" instance=ExtResource("2_0wfyh")]
 position = Vector2(232, 439)
 max_speed = 1000.0
 
 [connection signal="timeout" from="SpanwerManager/Timer" to="SpanwerManager" method="spawn"]
-[connection signal="player_hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="player_hit" from="SpanwerManager/Player" to="." method="_on_player_hit"]

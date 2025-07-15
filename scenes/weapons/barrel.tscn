@@ -75,7 +75,7 @@ collision_layer = 16
 script = ExtResource("1_i6fpp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1.5, 15.5)
+position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_i6fpp")
 
 [node name="ClippingContainer" type="Control" parent="."]
@@ -86,23 +86,22 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -272.0
-offset_top = -112.0
-offset_right = 288.0
-offset_bottom = 19.0
+offset_left = -267.0
+offset_top = -131.0
+offset_right = 293.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 
 [node name="Sprite2D" type="Sprite2D" parent="ClippingContainer"]
 material = SubResource("ShaderMaterial_lih5u")
-position = Vector2(274, 123)
+position = Vector2(268, 123)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("1_51oe7")
 
 [node name="WaveParticles" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_cthek")
-position = Vector2(0, 22)
+position = Vector2(-1, 7)
 amount = 64
 texture = ExtResource("3_kby3w")
 local_coords = true
@@ -110,6 +109,7 @@ process_material = SubResource("ParticleProcessMaterial_7kgum")
 
 [node name="ExplosionParticles" type="GPUParticles2D" parent="."]
 z_index = 100
+position = Vector2(1, -14)
 emitting = false
 amount = 32
 texture = ExtResource("3_kby3w")

@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var damage: int = 10
+@export var damage: int = 5
 @onready var sprite = $ClippingContainer/Sprite2D
 @onready var wave_particles = $WaveParticles
 @onready var explosion_particles = $ExplosionParticles
