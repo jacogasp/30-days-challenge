@@ -30,21 +30,21 @@ shader_parameter/clip_y = 0.6
 _data = [Vector2(0.520861, 0.976433), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_21x0f"]
+[sub_resource type="CurveTexture" id="CurveTexture_ovt1e"]
 curve = SubResource("Curve_jgk6k")
 
 [sub_resource type="Curve" id="Curve_x5khh"]
 _data = [Vector2(0.0955585, 0.431452), 0.0, 0.0, 0, 0, Vector2(1, 0.0912078), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_jgk6k"]
+[sub_resource type="CurveTexture" id="CurveTexture_hvulg"]
 curve = SubResource("Curve_x5khh")
 
 [sub_resource type="Curve" id="Curve_21x0f"]
 _data = [Vector2(0.00807537, 0.362225), 0.0, 0.0, 0, 0, Vector2(0.317631, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_3k4es"]
+[sub_resource type="CurveTexture" id="CurveTexture_yj4uo"]
 curve = SubResource("Curve_21x0f")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f2e6v"]
@@ -53,11 +53,11 @@ gravity = Vector3(-50, 0, 0)
 linear_accel_min = -2.23517e-06
 linear_accel_max = -2.23517e-06
 scale_max = 3.0
-scale_curve = SubResource("CurveTexture_3k4es")
-alpha_curve = SubResource("CurveTexture_21x0f")
+scale_curve = SubResource("CurveTexture_yj4uo")
+alpha_curve = SubResource("CurveTexture_ovt1e")
 hue_variation_min = -0.04
 hue_variation_max = 0.05
-hue_variation_curve = SubResource("CurveTexture_jgk6k")
+hue_variation_curve = SubResource("CurveTexture_hvulg")
 
 [node name="Enemy" type="Area2D"]
 collision_layer = 256

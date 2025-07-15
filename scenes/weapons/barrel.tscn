@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_kby3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i6fpp"]
-size = Vector2(108, 84)
+size = Vector2(63, 21)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lih5u"]
 resource_local_to_scene = true
@@ -75,6 +75,7 @@ collision_layer = 16
 script = ExtResource("1_i6fpp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.5, 15.5)
 shape = SubResource("RectangleShape2D_i6fpp")
 
 [node name="ClippingContainer" type="Control" parent="."]
