@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=10 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
 [ext_resource type="PackedScene" uid="uid://bxy6q4nuudbeo" path="res://scenes/huds/game_over_screen.tscn" id="2_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://dd82objmcmblm" path="res://scenes/characters/enemy_spawner.tscn" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://cwpokr5rvl5aw" path="res://scenes/world/world.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://d0kjtp66hrd0g" path="res://scripts/main_camera.gd" id="4_85g3d"]
 [ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/huds/hud.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="4_tefeu"]
 [ext_resource type="Script" uid="uid://btneotr08ba7o" path="res://scripts/characters/spanwer_manager.gd" id="6_tipki"]
@@ -17,6 +18,7 @@ game_over_screen_scene = ExtResource("2_o6xl0")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 anchor_mode = 0
+script = ExtResource("4_85g3d")
 
 [node name="Hud" parent="." instance=ExtResource("4_jyhfs")]
 
@@ -42,3 +44,4 @@ position = Vector2(232, 439)
 max_speed = 1000.0
 
 [connection signal="timeout" from="SpanwerManager/Timer" to="SpanwerManager" method="spawn"]
+[connection signal="player_hit" from="Player" to="." method="_on_player_hit"]

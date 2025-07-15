@@ -37,6 +37,7 @@ var flash_timer: Timer
 var boat_rotation_tween: Tween = null
 
 signal overboard
+signal player_hit
 
 
 func _ready() -> void:
@@ -170,7 +171,9 @@ func drop_sailor(drop_direction: Vector2) -> void:
 func hit(damage: int) -> void:
 	if is_sinking or is_invulnerable:
 		return
-
+	
+	player_hit.emit(damage)
+	
 	material.set_shader_parameter("flash_value", 1.0)
 	flash_timer.start()
 	start_invulnerability()
