@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dh30odqcifb7x" path="res://assets/world/sea3.png" id="4_j2gmx"]
 [ext_resource type="Texture2D" uid="uid://bsu4rxd54u8xs" path="res://assets/world/sea2.png" id="5_1yooq"]
 [ext_resource type="Texture2D" uid="uid://rgfcah4afing" path="res://assets/world/skyline.png" id="5_5qq27"]
-[ext_resource type="Shader" uid="uid://dssd43ysijc4l" path="res://wave.gdshader" id="6_bq33v"]
+[ext_resource type="Shader" uid="uid://c7srh8ao1c2mx" path="res://scenes/world/wave.gdshader" id="6_bq33v"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j2gmx"]
 gradient = ExtResource("2_gb53w")

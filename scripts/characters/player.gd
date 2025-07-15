@@ -34,6 +34,7 @@ var blink_timer: Timer
 var flash_timer: Timer
 @onready var original_modulate: Color = self.modulate
 
+var boat_rotation_tween: Tween = null
 
 signal overboard
 
@@ -43,8 +44,8 @@ func _ready() -> void:
 	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
 	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
 
-	min_sea_limit = get_viewport_rect().position + Vector2(0, 90)
-	max_sea_limit = get_viewport_rect().size - Vector2(0, +90)
+	min_sea_limit = get_viewport_rect().position + Vector2(0, 150)
+	max_sea_limit = get_viewport_rect().size - Vector2(0, 50)
 	Globals.player = self
 	particle_emitter_orig_pos = gpu_particles_2d.position
 
@@ -87,6 +88,20 @@ func _process(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	position += direction * speed * delta
 	position = position.clamp(min_sea_limit, max_sea_limit)
+
+	# Boat Rotation Logic
+	var target_rotation: float = 0.0
+	if direction.x < 0:  
+		target_rotation = deg_to_rad(1.5)
+	elif direction.x > 0:  
+		target_rotation = deg_to_rad(-2)
+
+	if boat.rotation != target_rotation:
+		if boat_rotation_tween:
+			boat_rotation_tween.kill() 
+		boat_rotation_tween = create_tween()
+		boat_rotation_tween.tween_property(boat, "rotation", target_rotation, 0.2) 
+
 
 	if direction != Vector2.ZERO and direction != last_direction:
 		var new_direction: Vector2 = direction - last_direction

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=27 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
@@ -59,6 +59,44 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_hvulg")
 
+[sub_resource type="Animation" id="Animation_ovt1e"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClippingContainer/Boat:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0261799, 0.0, -0.0349066]
+}
+
+[sub_resource type="Animation" id="Animation_hvulg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClippingContainer/Boat:rotation")
+tracks/0/interp = 4
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hvulg"]
+_data = {
+&"RESET": SubResource("Animation_hvulg"),
+&"idle": SubResource("Animation_ovt1e")
+}
+
 [node name="Enemy" type="Area2D"]
 collision_layer = 256
 collision_mask = 272
@@ -79,11 +117,11 @@ offset_top = -167.0
 offset_right = 139.0
 
 [node name="Boat" type="Node2D" parent="ClippingContainer"]
-position = Vector2(41, -81.995)
+position = Vector2(141, 167)
 
 [node name="Sail" type="Sprite2D" parent="ClippingContainer/Boat"]
 material = SubResource("ShaderMaterial_rc7n0")
-position = Vector2(100.7, 166.85)
+position = Vector2(2.95, -79)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_f2e6v")
 
@@ -98,11 +136,11 @@ texture = ExtResource("5_gpyvg")
 texture = ExtResource("6_tjfok")
 
 [node name="Sailors" type="Node2D" parent="ClippingContainer/Boat"]
-position = Vector2(100.7, 224.555)
+position = Vector2(1, -21)
 
 [node name="Body" type="Sprite2D" parent="ClippingContainer/Boat"]
 material = SubResource("ShaderMaterial_rc7n0")
-position = Vector2(99.7, 166.85)
+position = Vector2(1.95, -79)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("3_21x0f")
 
@@ -148,6 +186,12 @@ barrel_scene = ExtResource("10_rc7n0")
 [node name="Timer" type="Timer" parent="BarrelEmitter"]
 wait_time = 5.0
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_hvulg")
+}
+autoplay = "idle"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

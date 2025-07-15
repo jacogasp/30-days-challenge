@@ -19,6 +19,7 @@ extends Area2D
 @onready var livrea_b: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaB
 @onready var gun: EnemyGun = $EnemyGun
 @onready var timer: Timer = $Timer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var sailors_count: int
 var boat_length: int = 100
@@ -111,17 +112,19 @@ func get_random_sailor() -> Sailor:
 func sink() -> void:
 	if is_sinking:
 		return
+	animation_player.play("RESET")
 	set_process(false)
 	collision_shape_2d.queue_free()
 	is_sinking = true
 	var sinking_angle = randf_range(5, 30)
+	sinking_angle *=  -1 if randf() < 0.5 else 1
 	var tween = create_tween()
-	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle * 0.5), 1.0)
+	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle), 1.0)
 	await tween.finished
 	tween = create_tween()
 	tween.set_parallel()
 	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle), 1.0)
-	tween.tween_property(boat, "position:y", boat_height, 2.0)
+	tween.tween_property(boat, "position:y", 2*boat_height, 2.0)
 	tween.tween_property(gpu_particles_2d, "scale", Vector2(0, 0), 2)
 	await tween.finished
 	queue_free()
