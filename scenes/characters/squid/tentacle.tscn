@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://ctrh5f2gosnw8" path="res://scripts/tentacle.gd" id="1_ft3dw"]
 [ext_resource type="Texture2D" uid="uid://crdininywr1nk" path="res://assets/squid_tentacle.png" id="1_kh2li"]
-[ext_resource type="Shader" uid="uid://djuuerf104onu" path="res://scenes/characters/wave.gdshader" id="2_nlkkr"]
+[ext_resource type="Shader" uid="uid://djuuerf104onu" path="res://shaders/wave.gdshader" id="2_nlkkr"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_myfbf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_go5yd"]

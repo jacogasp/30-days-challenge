@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://0yqvf4jr75p3" path="res://scripts/squid.gd" id="1_4hv76"]
 [ext_resource type="Texture2D" uid="uid://q7hspp2s3e8c" path="res://assets/squid_body.png" id="1_xaj30"]
-[ext_resource type="Shader" uid="uid://djuuerf104onu" path="res://scenes/characters/wave.gdshader" id="2_x7qcf"]
+[ext_resource type="Shader" uid="uid://djuuerf104onu" path="res://shaders/wave.gdshader" id="2_x7qcf"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_5egnv"]
 
 [sub_resource type="Animation" id="Animation_4hv76"]
