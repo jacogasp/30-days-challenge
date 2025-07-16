@@ -121,6 +121,7 @@ DEBUG_remove_sailor={
 
 2d_physics/layer_1="player"
 2d_physics/layer_2="sailor"
+2d_physics/layer_3="solid"
 2d_physics/layer_5="bullet"
 2d_physics/layer_9="enemy"
 

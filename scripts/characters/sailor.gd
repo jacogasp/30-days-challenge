@@ -5,6 +5,7 @@ extends Area2D
 @export var snap_duration := 0.25
 @onready var spawn_position: Vector2 = position
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var wave_particles: GPUParticles2D = $WaveParticles
 
 var jumping_out: bool = false
 var overboard: bool = false
@@ -17,7 +18,11 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if overboard:
 		position.x -= delta * Globals.world_speed * 0.5
+		if global_position.x < -100:
+			queue_free()
 
+func set_sprite_modulate(new_color:Color)->void:
+	sprite.modulate = new_color
 
 func spawn():
 	await get_tree().create_timer(delay * randf_range(0.1, 0.4)).timeout
@@ -75,6 +80,7 @@ func jump_out(direction: Vector2):
 
 func set_overboard() -> void:
 	overboard = true
+	wave_particles.visible=true
 	rotation = 0
 	z_index = 0
 	call_deferred("set_monitoring", true)
@@ -82,7 +88,7 @@ func set_overboard() -> void:
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	var player: Player = area
-	var modulation_color = modulate
-	player.call_deferred("load_sailor", modulation_color)
-	queue_free()
+	var modulation_color = sprite.modulate
+	if area.get_parent() is Player:
+		Globals.player.call_deferred("load_sailor", modulation_color)
+		queue_free()

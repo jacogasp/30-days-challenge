@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://qq6f6q77h2af" path="res://scenes/weapons/barrel.tscn" id="10_rc7n0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ovt1e"]
+resource_local_to_scene = true
 shader = ExtResource("3_f0ik5")
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_value = 0.0
@@ -110,6 +111,7 @@ scale = Vector2(17.6, 22.52)
 shape = SubResource("RectangleShape2D_21x0f")
 
 [node name="ClippingContainer" type="Control" parent="."]
+use_parent_material = true
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
@@ -118,7 +120,7 @@ offset_top = -167.0
 offset_right = 139.0
 
 [node name="Boat" type="Node2D" parent="ClippingContainer"]
-material = SubResource("ShaderMaterial_ovt1e")
+use_parent_material = true
 position = Vector2(141, 167)
 
 [node name="Sail" type="Sprite2D" parent="ClippingContainer/Boat"]
@@ -174,7 +176,11 @@ theme_override_font_sizes/font_size = 26
 text = "Text"
 horizontal_alignment = 1
 
-[node name="Timer" type="Timer" parent="."]
+[node name="GunTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="BarrelTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="EnemyGun" type="Node2D" parent="."]
@@ -188,10 +194,6 @@ position = Vector2(-76, -14)
 script = ExtResource("9_f0ik5")
 barrel_scene = ExtResource("10_rc7n0")
 
-[node name="Timer" type="Timer" parent="BarrelEmitter"]
-wait_time = 5.0
-autostart = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_hvulg")
@@ -200,5 +202,5 @@ autoplay = "idle"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="BarrelEmitter/Timer" to="BarrelEmitter" method="fire"]
+[connection signal="timeout" from="GunTimer" to="." method="_on_gun_timer_timeout"]
+[connection signal="timeout" from="BarrelTimer" to="." method="_on_barrel_timer_timeout"]

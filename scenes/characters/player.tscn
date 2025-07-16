@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c34r771lh6okh"]
+[gd_scene load_steps=24 format=3 uid="uid://c34r771lh6okh"]
 
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="1_atpat"]
 [ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="1_qgnko"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_jk2m4"]
 [ext_resource type="Script" uid="uid://3lgfige0s5rw" path="res://scripts/weapons/player_gun.gd" id="7_6eyoc"]
 [ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="8_eojnx"]
+[ext_resource type="Script" uid="uid://jpd57vcgfavn" path="res://scripts/characters/area_2d.gd" id="12_jk2m4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7vyk4"]
 shader = ExtResource("1_qgnko")
@@ -57,9 +58,12 @@ hue_variation_curve = SubResource("CurveTexture_0ag5d")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rp718"]
 size = Vector2(59, 24)
 
-[node name="Player" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2l4js"]
+size = Vector2(138, 16)
+
+[node name="Player" type="CharacterBody2D"]
 material = SubResource("ShaderMaterial_7vyk4")
-collision_mask = 0
+collision_mask = 4
 script = ExtResource("1_rp718")
 sailor_scene = ExtResource("4_kqtwu")
 
@@ -116,6 +120,13 @@ position = Vector2(75, -16)
 script = ExtResource("7_6eyoc")
 bullet_scene = ExtResource("8_eojnx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("12_jk2m4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-0.500002, -10.835)
 shape = SubResource("RectangleShape2D_rp718")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-5, -5)
+shape = SubResource("RectangleShape2D_2l4js")

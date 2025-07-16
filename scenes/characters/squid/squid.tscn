@@ -1,9 +1,137 @@
-[gd_scene load_steps=16 format=3 uid="uid://clwtdf1o8lf3u"]
+[gd_scene load_steps=18 format=3 uid="uid://clwtdf1o8lf3u"]
 
 [ext_resource type="Script" uid="uid://0yqvf4jr75p3" path="res://scripts/squid.gd" id="1_4hv76"]
 [ext_resource type="Texture2D" uid="uid://q7hspp2s3e8c" path="res://assets/squid_body.png" id="1_xaj30"]
 [ext_resource type="Shader" uid="uid://djuuerf104onu" path="res://scenes/characters/wave.gdshader" id="2_x7qcf"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_5egnv"]
+
+[sub_resource type="Animation" id="Animation_4hv76"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClippingControl/Body:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(150, 350)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(92, -1)]
+}
+
+[sub_resource type="Animation" id="Animation_rbn36"]
+resource_name = "emerge"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.23333, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.46, 0.47, 2.16667, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(92, -1), Vector2(-1.52588e-05, 1), Vector2(45, 2.98023e-08), Vector2(92, -1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ClippingControl/Body:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 3.01),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 750), Vector2(150, 350)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ClippingControl/Body:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(3.01, 3.2, 3.43333, 3.63333, 3.8, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 0.8), Vector2(1, 1), Vector2(1, 0.8), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_r5k3q"]
+resource_name = "half_submerge"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClippingControl/Body:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(150, 350), Vector2(135, 415)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(92, -1), Vector2(23, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r5k3q"]
+_data = {
+&"RESET": SubResource("Animation_4hv76"),
+&"emerge": SubResource("Animation_rbn36"),
+&"half_submerge": SubResource("Animation_r5k3q")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4hv76"]
+size = Vector2(250, 31)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_go5yd"]
 shader = ExtResource("2_x7qcf")
@@ -42,146 +170,14 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_jgk6k")
 
-[sub_resource type="Animation" id="Animation_4hv76"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body/GPUParticles2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Body/GPUParticles2D2:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Body/GPUParticles2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(92, -1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Body/ClippingControl/Sprite2D:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.785, 0.785)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Body/ClippingControl/Sprite2D:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(150, 348)]
-}
-
-[sub_resource type="Animation" id="Animation_rbn36"]
-resource_name = "squid_emerges"
-length = 4.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Body/GPUParticles2D:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.3, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Body/GPUParticles2D2:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(2.23333, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Body/GPUParticles2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.46, 0.47, 2.16667, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(92, -1), Vector2(-1.52588e-05, 1), Vector2(45, 2.98023e-08), Vector2(92, -1)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Body/ClippingControl/Sprite2D:scale")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(3, 3.21, 3.43333, 3.6, 3.8, 4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0.785, 0.785), Vector2(0.785, 0.785), Vector2(0.785, 0.7), Vector2(0.785, 0.8), Vector2(0.785, 0.7), Vector2(0.785, 0.78)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Body/ClippingControl/Sprite2D:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 750), Vector2(150, 348)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_r5k3q"]
-_data = {
-&"RESET": SubResource("Animation_4hv76"),
-&"squid_emerges": SubResource("Animation_rbn36")
-}
-
-[node name="Squid" type="Node2D"]
+[node name="Squid" type="StaticBody2D"]
 y_sort_enabled = true
+collision_layer = 4
+collision_mask = 0
 script = ExtResource("1_4hv76")
+tentacle_position = Array[Vector2]([Vector2(-200, 50), Vector2(-200, -50), Vector2(-150, 100), Vector2(-150, -100), Vector2(-100, 150), Vector2(-100, -150), Vector2(-50, 200), Vector2(-50, -200)])
 
-[node name="Body" type="Node2D" parent="."]
-
-[node name="ClippingControl" type="Control" parent="Body"]
+[node name="ClippingControl" type="Control" parent="."]
 clip_contents = true
 layout_mode = 3
 anchors_preset = 0
@@ -190,36 +186,20 @@ offset_top = -350.0
 offset_right = 150.0
 pivot_offset = Vector2(150, 350)
 
-[node name="Sprite2D" type="Sprite2D" parent="Body/ClippingControl"]
-position = Vector2(150, 348)
+[node name="Body" type="Node2D" parent="ClippingControl"]
+position = Vector2(150, 350)
+
+[node name="Area2D" type="Area2D" parent="ClippingControl/Body"]
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="ClippingControl/Body/Area2D"]
+position = Vector2(-12.5, -147.5)
+polygon = PackedVector2Array(133.5, -163.5, -24.5, -77.5, -111.5, 142.5, 114.5, 144.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="ClippingControl/Body"]
 scale = Vector2(0.785, 0.785)
 texture = ExtResource("1_xaj30")
 centered = false
-offset = Vector2(-181.503, -391.994)
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Body"]
-material = SubResource("ShaderMaterial_go5yd")
-position = Vector2(92, -1)
-scale = Vector2(1e-05, 1e-05)
-amount = 24
-texture = ExtResource("3_5egnv")
-lifetime = 4.0
-speed_scale = 4.0
-visibility_rect = Rect2(-500, -500, 1000, 1000)
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_tgf1x")
-
-[node name="GPUParticles2D2" type="GPUParticles2D" parent="Body"]
-material = SubResource("ShaderMaterial_go5yd")
-position = Vector2(-12, 6)
-scale = Vector2(1e-05, 1e-05)
-amount = 24
-texture = ExtResource("3_5egnv")
-lifetime = 4.0
-speed_scale = 4.0
-visibility_rect = Rect2(-500, -500, 1000, 1000)
-local_coords = true
-process_material = SubResource("ParticleProcessMaterial_tgf1x")
+offset = Vector2(-175, -385)
 
 [node name="Tentacles" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -228,3 +208,31 @@ y_sort_enabled = true
 libraries = {
 &"": SubResource("AnimationLibrary_r5k3q")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-23, -16.5)
+shape = SubResource("RectangleShape2D_4hv76")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_go5yd")
+position = Vector2(-12, 6)
+scale = Vector2(0.5, 0.5)
+amount = 24
+texture = ExtResource("3_5egnv")
+lifetime = 4.0
+speed_scale = 4.0
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_tgf1x")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+material = SubResource("ShaderMaterial_go5yd")
+position = Vector2(92, -1)
+scale = Vector2(0.5, 0.5)
+amount = 24
+texture = ExtResource("3_5egnv")
+lifetime = 4.0
+speed_scale = 4.0
+visibility_rect = Rect2(-500, -500, 1000, 1000)
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_tgf1x")

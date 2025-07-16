@@ -4,6 +4,7 @@ extends Control
 @onready var high_score_label: Label = %HighScoreLabel
 @onready var resume_button: Button = %ResumeButton
 
+@export var title_screen_path:String = "res://scenes/huds/title_screen.tscn"
 
 func update_labels() -> void:
 	score_label.text = "Score: %09d" % GameManager.current_score()
@@ -32,12 +33,13 @@ func _on_restart_button_pressed() -> void:
 	get_tree().paused = false
 	EnemyBulletPool.reset()
 	PlayerBulletPool.reset()
-	GameManager.start()
+	GameManager.reset()
 	Globals.reset_score()
+	GameManager.start()
 	get_tree().reload_current_scene()
 
 
 func _on_main_menu_button_pressed() -> void:
 	GameManager.stop()
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
+	get_tree().change_scene_to_file(title_screen_path)

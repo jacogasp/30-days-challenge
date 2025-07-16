@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://xxfvjdu4w401"]
+[gd_scene load_steps=14 format=3 uid="uid://xxfvjdu4w401"]
 
 [ext_resource type="Script" uid="uid://ctrh5f2gosnw8" path="res://scripts/tentacle.gd" id="1_ft3dw"]
 [ext_resource type="Texture2D" uid="uid://crdininywr1nk" path="res://assets/squid_tentacle.png" id="1_kh2li"]
@@ -42,7 +42,10 @@ hue_variation_min = -0.04
 hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_jgk6k")
 
-[node name="Tentacle" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ft3dw"]
+size = Vector2(79, 26)
+
+[node name="Tentacle" type="StaticBody2D"]
 script = ExtResource("1_ft3dw")
 
 [node name="ClippingControl" type="Control" parent="."]
@@ -72,3 +75,7 @@ speed_scale = 4.0
 visibility_rect = Rect2(-500, -500, 1000, 1000)
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_tgf1x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -11)
+shape = SubResource("RectangleShape2D_ft3dw")

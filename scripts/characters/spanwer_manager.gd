@@ -18,6 +18,8 @@ func _ready() -> void:
 
 
 func spawn() -> void:
+	if GameManager._game_is_running == false:
+		return
 	var spawner = spawners[randi() % len(spawners)]
 	spawner.spawn()
 	timer.wait_time = random_time()

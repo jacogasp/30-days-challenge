@@ -38,6 +38,10 @@ func stop() -> void:
 
 
 func reset() -> void:
+	if Globals.player != null:
+		for node in Globals.player.get_parent().get_children():
+			if node is Sailor or node is Barrel:
+				node.queue_free()
 	spawned_enemies = 0
 	defeated_enemies = 0
 	_current_score = 0
@@ -88,14 +92,13 @@ func update_sailors_count(count: int) -> void:
 
 
 func overboard_sailor(sailor: Sailor, sailor_position: Vector2) -> void:
-	add_child(sailor)
+	Globals.player.add_sibling(sailor)
 	sailor.set_overboard()
 	sailor.global_position = sailor_position
 
 
 func _game_over() -> void:
 	stop()
-	reset()
 	if current_score() > _high_score:
 		_high_score = current_score()
 	game_over.emit()

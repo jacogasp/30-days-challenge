@@ -1,10 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://co0wsux68yvdp"]
+[gd_scene load_steps=10 format=3 uid="uid://co0wsux68yvdp"]
 
 [ext_resource type="Texture2D" uid="uid://hirprwvwbj00" path="res://assets/sailor.png" id="1_w17xm"]
 [ext_resource type="Script" uid="uid://bv2bkmy1c0jhr" path="res://scripts/characters/sailor.gd" id="2_t2xx5"]
+[ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://shaders/clip_y.gdshader" id="3_g7jnt"]
+[ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_q3h57"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rg7sp"]
 radius = 35.7945
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c74ar"]
+shader = ExtResource("3_g7jnt")
+shader_parameter/clip_y = 0.4
+
+[sub_resource type="Curve" id="Curve_0btnw"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0358493), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_kby3w"]
+curve = SubResource("Curve_0btnw")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ep4st"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(40, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+gravity = Vector3(0, 0, 0)
+scale_min = 0.1
+scale_curve = SubResource("CurveTexture_kby3w")
 
 [node name="Sailor" type="Area2D"]
 scale = Vector2(0.45, 0.45)
@@ -16,5 +38,15 @@ shape = SubResource("CircleShape2D_rg7sp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_w17xm")
+
+[node name="WaveParticles" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_c74ar")
+position = Vector2(0, 15.5556)
+scale = Vector2(0.5, 0.5)
+amount = 64
+texture = ExtResource("4_q3h57")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ep4st")
 
 [connection signal="area_entered" from="." to="." method="_on_area_2d_area_entered"]

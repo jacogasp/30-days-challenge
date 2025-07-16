@@ -6,6 +6,9 @@ extends Control
 @onready var livrea: Node2D = %Livrea
 @onready var livrea_a: Sprite2D = %LivreaA
 @onready var livrea_b: Sprite2D = %LivreaB
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@export var main_path:String = "res://scenes/main.tscn"
 
 func _ready() -> void:
 	new_game_button.grab_focus()
@@ -32,8 +35,9 @@ func _on_new_game_button_pressed() -> void:
 	PlayerBulletPool.reset()
 	EnemyBulletPool.reset()
 	Globals.reset_score()
+	GameManager.reset()
 	GameManager.start()
-	get_tree().change_scene_to_file("res://scenes/main.tscn")
+	get_tree().change_scene_to_file(main_path)
 
 
 func update_subviewport() -> void:

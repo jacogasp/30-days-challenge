@@ -16,7 +16,7 @@ shader_parameter/start_position = 0.0
 shader_parameter/start_angle = 104.0
 shader_parameter/rotation_amplitude = 0.3
 shader_parameter/rotation_freq = 0.5
-shader_parameter/vertical_amplitude = 100.0
+shader_parameter/vertical_amplitude = 70.0
 shader_parameter/vertical_freq = 0.5
 shader_parameter/clip_y = 0.4
 
@@ -28,7 +28,7 @@ shader_parameter/clip_y = 0.4
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0358493), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_kby3w"]
+[sub_resource type="CurveTexture" id="CurveTexture_i0ll5"]
 curve = SubResource("Curve_i0ll5")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7kgum"]
@@ -38,7 +38,7 @@ emission_shape = 3
 emission_box_extents = Vector3(1, 1, 1)
 gravity = Vector3(0, 0, 0)
 scale_min = 0.1
-scale_curve = SubResource("CurveTexture_kby3w")
+scale_curve = SubResource("CurveTexture_i0ll5")
 
 [sub_resource type="Curve" id="Curve_cthek"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0492064), 0.0, 0.0, 0, 0]
@@ -71,6 +71,7 @@ scale_curve = SubResource("CurveTexture_cthek")
 alpha_curve = SubResource("CurveTexture_7kgum")
 
 [node name="Barrel" type="Area2D"]
+scale = Vector2(0.7, 0.7)
 collision_layer = 16
 script = ExtResource("1_i6fpp")
 

@@ -1,14 +1,118 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxy6q4nuudbeo"]
+[gd_scene load_steps=8 format=3 uid="uid://bxy6q4nuudbeo"]
 
 [ext_resource type="Script" uid="uid://5yb07q2hw4uj" path="res://scripts/huds/game_over_screen.gd" id="1_61w2s"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_jw6e5"]
 [ext_resource type="Shader" uid="uid://e5nwfdykbwsg" path="res://shaders/blur.gdshader" id="2_jw6e5"]
-[ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="3_8xf4c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r8yp4"]
 shader = ExtResource("2_jw6e5")
 shader_parameter/strength = 3.3
 shader_parameter/mix_percentage = 0.3
+
+[sub_resource type="Animation" id="Animation_0tdc2"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blur:material:shader_parameter/strength")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.1, 3.3]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1290, -0.25, 0, 0.433333, -1521.9, 340, -0.166667, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(160, -0.25, 0, 0.25, 0, 160, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel:rotation")
+tracks/3/interp = 4
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.15708, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8xf4c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Blur:material:shader_parameter/strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Panel:rotation")
+tracks/1/interp = 4
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Panel:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1290, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Panel:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(160, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rdmwe"]
+_data = {
+&"RESET": SubResource("Animation_8xf4c"),
+&"open": SubResource("Animation_0tdc2")
+}
 
 [node name="GameOverScreen" type="Control"]
 process_mode = 3
@@ -20,7 +124,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_jw6e5")
 script = ExtResource("1_61w2s")
-title_screen_scene = ExtResource("3_8xf4c")
 
 [node name="Blur" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_r8yp4")
@@ -39,6 +142,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -98,6 +205,12 @@ focus_neighbor_top = NodePath("../RestartButton")
 focus_neighbor_bottom = NodePath("../RestartButton")
 theme_override_font_sizes/font_size = 32
 text = "Return to Title Screen"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_rdmwe")
+}
+autoplay = "open"
 
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

@@ -19,8 +19,10 @@ extends Area2D
 @onready var livrea_a: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaA
 @onready var livrea_b: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaB
 @onready var gun: EnemyGun = $EnemyGun
-@onready var timer: Timer = $Timer
+@onready var barrel_emitter: Node2D = $BarrelEmitter
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var barrel_timer: Timer = $BarrelTimer
+@onready var gun_timer: Timer = $GunTimer
 
 var sailors_count: int
 var boat_length: int = 100
@@ -45,7 +47,7 @@ func _ready() -> void:
 		sailors.add_child(sailor)
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
-		sailor.modulate = enemy_color
+		sailor.set_sprite_modulate(enemy_color)
 	_set_up_timer()
 
 func _set_up_timer() -> void:
@@ -60,7 +62,8 @@ func _physics_process(delta: float) -> void:
 
 	if not fully_visible and is_fully_visible():
 		fully_visible = true
-		timer.start()
+		gun_timer.start()
+		barrel_timer.start()
 
 
 func is_fully_visible() -> bool:
@@ -141,15 +144,17 @@ func sink() -> void:
 	queue_free()
 
 
-func _on_timer_timeout() -> void:
-	if is_sinking:
+func _on_barrel_timer_timeout() -> void:
+	if is_sinking or GameManager._game_is_running == false:
 		return
-	gun.fire_spread(3, Globals.player.global_position - global_position, 30)
-	timer.wait_time = random_time()
+	barrel_emitter.fire()
+	barrel_timer.wait_time = randf_range(barrel_emitter.min_fire_time, barrel_emitter.max_fire_time)
 
 func _on_flash_timeout() -> void:
 	material.set_shader_parameter("flash_value", 0.0)
 
-
-func random_time() -> float:
-	return randf_range(min_fire_time, max_fire_time)
+func _on_gun_timer_timeout() -> void:
+	if is_sinking or GameManager._game_is_running == false:
+		return
+	gun.fire_spread(3, Globals.player.global_position - global_position, 30)
+	gun_timer.wait_time = randf_range(min_fire_time, max_fire_time)

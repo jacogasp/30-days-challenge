@@ -1,5 +1,5 @@
 class_name Player
-extends Area2D
+extends CharacterBody2D
 
 @export var max_speed: float = 500.0
 @export var sailor_scene: PackedScene
@@ -13,7 +13,7 @@ extends Area2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
 @onready var gun: Gun = $PlayerGun
 @onready var boat: Node2D = $ClippingContainer/Boat
-@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var area_2d: Area2D = $Area2D
 @onready var livrea: Node2D = $ClippingContainer/Boat/Sail/Livrea
 @onready var livrea_a: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaA
 @onready var livrea_b: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaB
@@ -58,7 +58,7 @@ func _ready() -> void:
 		sailors.add_child(sailor)
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
-		sailor.modulate = Globals.colors[Globals.player_livreaColor]
+		sailor.set_sprite_modulate(Globals.colors[Globals.player_livreaColor])
 	current_number_sailor = starting_sailor_count
 	GameManager.update_sailors_count(current_number_sailor)
 
@@ -85,9 +85,12 @@ func setup_invulnerability_timers() -> void:
 	add_child(flash_timer)
 
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	if is_sinking:
+		return
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
-	position += direction * speed * delta
+	velocity = direction * speed
+	move_and_slide()
 	position = position.clamp(min_sea_limit, max_sea_limit)
 
 	# Boat Rotation Logic
@@ -125,7 +128,7 @@ func _process(delta: float) -> void:
 			current_number_sailor += 1
 			sailor.spawn_position = Vector2(randf_range(-boat_half_length, boat_half_length), 0)
 			sailor.position = sailor.spawn_position + Vector2(0, -100)
-			sailor.modulate = Color(randf(), randf(), randf())
+			sailor.set_sprite_modulate(Color(randf(), randf(), randf()))
 			sailor.spawn()
 		if Input.is_action_just_pressed("DEBUG_remove_sailor"):
 			var sailor = get_random_sailor()
@@ -154,7 +157,7 @@ func load_sailor(modulation_color: Color) -> void:
 	sailors.add_child(sailor)
 	sailor.spawn_position = Vector2(randf_range(-boat_half_length, boat_half_length), 0)
 	sailor.position = sailor.spawn_position + Vector2(0, -100)
-	sailor.modulate = modulation_color
+	sailor.set_sprite_modulate(modulation_color)
 	sailor.spawn()
 
 
@@ -210,13 +213,12 @@ func _on_flash_timeout() -> void:
 
 
 func sink() -> void:
-	GameManager._game_over()
 	if is_sinking:
 		return
 	invulnerability_timer.stop()
 	_on_invulnerability_timeout()
 	set_process(false)
-	collision_shape_2d.queue_free()
+	area_2d.queue_free()
 	is_sinking = true
 	var sinking_angle = randf_range(5, 30)
 	var tween = create_tween()
@@ -228,3 +230,4 @@ func sink() -> void:
 	tween.tween_property(boat, "position:y", boat_height, 2.0)
 	tween.tween_property(gpu_particles_2d, "scale", Vector2(0, 0), 2)
 	await tween.finished
+	GameManager._game_over()
