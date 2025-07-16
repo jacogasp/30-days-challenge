@@ -7,7 +7,7 @@ extends Area2D
 @export var max_number_sailor: int = 30
 @export var invulnerability_duration: float = 2.0 # Duration in seconds
 @export var blink_interval: float = 0.1 # How fast the blinking effect
-@export var flash_duration: float = 0.1 # Duration of white flash on hit
+@export var flash_duration: float = 0.05 # Duration of white flash on hit
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
@@ -174,7 +174,7 @@ func hit(damage: int) -> void:
 	
 	player_hit.emit(damage)
 	
-	material.set_shader_parameter("flash_value", 1.0)
+	create_tween().tween_property(material, "shader_parameter/flash_value", 1.0, flash_duration/2)
 	flash_timer.start()
 	start_invulnerability()
 
@@ -206,7 +206,7 @@ func _on_blink_timeout() -> void:
 
 
 func _on_flash_timeout() -> void:
-	material.set_shader_parameter("flash_value", 0.0)
+	create_tween().tween_property(material, "shader_parameter/flash_value", 0.0, flash_duration/2)
 
 
 func sink() -> void:

@@ -7,6 +7,7 @@ extends Area2D
 @export var sailor_scene: PackedScene
 @export var min_fire_time: float = 1.0
 @export var max_fire_time: float = 5.0
+@export var flash_duration: float = 0.1
 
 @onready var health = health_max
 @onready var label: Label = $Label
@@ -28,6 +29,7 @@ var boat_height: int = 200
 var is_sinking = false
 var fully_visible := false
 var screen_offset: int = 50
+var flash_timer: Timer
 
 
 func _ready() -> void:
@@ -44,7 +46,14 @@ func _ready() -> void:
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
 		sailor.modulate = enemy_color
+	_set_up_timer()
 
+func _set_up_timer() -> void:
+	flash_timer = Timer.new()
+	flash_timer.wait_time = flash_duration
+	flash_timer.one_shot = true
+	flash_timer.timeout.connect(_on_flash_timeout)
+	add_child(flash_timer)
 
 func _physics_process(delta: float) -> void:
 	position += direction * delta
@@ -86,11 +95,13 @@ func drop_sailors(drop_direction: Vector2) -> void:
 
 
 func hit(damage: int) -> void:
-	GameManager.enemy_hit()
 	if is_sinking:
 		return
+	GameManager.enemy_hit()
 	if (label.hidden):
 		label.show()
+	material.set_shader_parameter("flash_value", 1.0)
+	flash_timer.start()
 	health -= damage
 	label.text = str(health)
 	drop_sailors(direction)
@@ -135,6 +146,9 @@ func _on_timer_timeout() -> void:
 		return
 	gun.fire_spread(3, Globals.player.global_position - global_position, 30)
 	timer.wait_time = random_time()
+
+func _on_flash_timeout() -> void:
+	material.set_shader_parameter("flash_value", 0.0)
 
 
 func random_time() -> float:
