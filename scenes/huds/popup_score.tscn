@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsmn4dh3hjee2"]
+
+[ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_ccjfk"]
+[ext_resource type="Script" uid="uid://cinyqghgpajut" path="res://scripts/huds/popup_score.gd" id="1_qye6t"]
+
+[node name="PopupScore" type="Label"]
+z_index = 3
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("1_ccjfk")
+theme_override_constants/outline_size = 4
+text = "100"
+script = ExtResource("1_qye6t")

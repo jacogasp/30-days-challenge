@@ -167,7 +167,8 @@ process_material = SubResource("ParticleProcessMaterial_f2e6v")
 position = Vector2(0.5, -12)
 scale = Vector2(6.65, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="DEBUGLabel" type="Label" parent="."]
+visible = false
 offset_left = -73.0
 offset_top = -194.0
 offset_right = 61.0

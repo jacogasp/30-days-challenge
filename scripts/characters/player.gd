@@ -150,8 +150,9 @@ func load_sailor(modulation_color: Color) -> void:
 	if current_number_sailor >= max_number_sailor:
 		return
 	current_number_sailor += 1
-	Globals.tick_score_multiplier = ceil(current_number_sailor / 5.0)
 	GameManager.update_sailors_count(current_number_sailor)
+	GameManager.get_sailor_score()
+	GameManager.spawn_sailor_loaded_score(global_position)
 	var sailor := sailor_scene.instantiate()
 	var boat_half_length = 0.5 * boat_length
 	sailors.add_child(sailor)

@@ -34,7 +34,6 @@ func _on_sound_button_toggled(toggled_on: bool) -> void:
 func _on_new_game_button_pressed() -> void:
 	PlayerBulletPool.reset()
 	EnemyBulletPool.reset()
-	Globals.reset_score()
 	GameManager.reset()
 	GameManager.start()
 	get_tree().change_scene_to_file(main_path)

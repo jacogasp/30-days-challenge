@@ -2,9 +2,10 @@ extends Node
 
 var world_speed: float = 500
 
-var hit_score: int # Score per successful hit
-var sink_score: int # Score per sinked ship
-var sailor_score: int # Score per collected sailor
+var tick_score: int = 5 # Score per tick
+var hit_score: int = 10 # Score per successful hit
+var sink_score: int = 100 # Score per sinked ship
+var sailor_score: int = 50 # Score per collected sailor
 
 var tick_score_multiplier: int # Multiplier to be added to tick score
 var hit_score_multiplier: int # Multiplier to be added to hit score
@@ -22,14 +23,10 @@ var sound_enabled: bool = true
 var music_enabled: bool = true
 
 func _ready() -> void:
-	reset_score()
+	reset_score_multipliers()
 
 
-func reset_score() -> void:
-	hit_score = 1
-	sink_score = 50
-	sailor_score = 10
-
+func reset_score_multipliers() -> void:
 	tick_score_multiplier = 1
 	hit_score_multiplier = 1
 	sink_score_multiplier = 1

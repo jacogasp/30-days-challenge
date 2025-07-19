@@ -7,9 +7,11 @@ extends Control
 @onready var restart_button: Button = %RestartButton
 @onready var v_box_container: VBoxContainer = $Panel/MarginContainer/VBoxContainer
 
+var is_new_high_score:bool
+
 func update_labels() -> void:
 	score_label.text = "Score: %09d" % GameManager.current_score()
-	if GameManager.current_score() > GameManager.high_score():
+	if is_new_high_score:
 		high_score_label.text = "NEW HIGH SCORE!"
 	else:
 		high_score_label.text = "High Score: %09d" % GameManager.high_score()
@@ -26,7 +28,6 @@ func _on_restart_button_pressed() -> void:
 	EnemyBulletPool.reset()
 	PlayerBulletPool.reset()
 	GameManager.reset()
-	Globals.reset_score()
 	GameManager.start()
 	v_box_container.process_mode = Node.PROCESS_MODE_DISABLED
 	get_tree().reload_current_scene()

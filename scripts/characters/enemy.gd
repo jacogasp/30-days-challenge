@@ -10,7 +10,7 @@ extends Area2D
 @export var flash_duration: float = 0.1
 
 @onready var health = health_max
-@onready var label: Label = $Label
+@onready var debug_label: Label = $DEBUGLabel
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
 @onready var boat: Node2D = $ClippingContainer/Boat
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
@@ -35,7 +35,6 @@ var flash_timer: Timer
 
 
 func _ready() -> void:
-	label.hide()
 	var enemy_color = Color.from_hsv(randf(), randf_range(0.5, 0.7), randf_range(0.8, 0.9))
 	livrea.modulate = enemy_color
 	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % randi_range(1, 4))
@@ -101,12 +100,10 @@ func hit(damage: int) -> void:
 	if is_sinking:
 		return
 	GameManager.enemy_hit()
-	if (label.hidden):
-		label.show()
 	material.set_shader_parameter("flash_value", 1.0)
 	flash_timer.start()
 	health -= damage
-	label.text = str(health)
+	debug_label.text = str(health)
 	drop_sailors(direction)
 	if (health <= 0):
 		sink()
@@ -128,6 +125,7 @@ func sink() -> void:
 		return
 	animation_player.play("RESET")
 	set_process(false)
+	GameManager.spawn_enemy_defeated_score(global_position)
 	collision_shape_2d.queue_free()
 	is_sinking = true
 	var sinking_angle = randf_range(5, 30)

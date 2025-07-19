@@ -142,9 +142,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -300.0
+offset_left = 650.0
 offset_top = -200.0
-offset_right = 300.0
+offset_right = 1250.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -165,10 +165,10 @@ theme_override_constants/margin_bottom = 48
 process_mode = 4
 layout_mode = 2
 
-[node name="PauseLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+[node name="GameOverLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
-text = "GAME OVER!"
+text = "GAME OVER"
 horizontal_alignment = 1
 
 [node name="ScoreLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
