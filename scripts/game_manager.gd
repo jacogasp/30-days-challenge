@@ -11,7 +11,9 @@ var _current_score: int = 0
 var _difficulty_growth_base: float = 0.11
 var _difficulty: int = 1
 var _hit_count_decrease_rate: float = 10
-@onready var last_hit_timer:Timer
+
+@onready var last_hit_timer: Timer
+
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
 
 signal enemy_just_spawned
@@ -22,16 +24,18 @@ signal score_updated
 signal difficulty_changed
 signal game_over
 
+
 func _ready() -> void:
 	last_hit_timer = Timer.new()
 	last_hit_timer.wait_time = 3
 	last_hit_timer.one_shot = true
 	add_child(last_hit_timer)
-	
+
+
 func _process(delta: float) -> void:
 	if not _game_is_running:
 		return
-	if last_hit_timer.time_left == 0 && _hit_count>0:
+	if last_hit_timer.time_left == 0 && _hit_count > 0:
 		_hit_count -= _hit_count_decrease_rate * delta
 		hit_count_updated.emit(hit_count(), false)
 			
@@ -44,9 +48,9 @@ func _process(delta: float) -> void:
 		_update_difficulty()
 
 
+
 func start() -> void:
 	_game_is_running = true
-	
 
 
 func stop() -> void:
@@ -74,15 +78,16 @@ func current_score() -> int:
 func high_score() -> int:
 	return _high_score
 
+
 func hit_count() -> int:
 	return ceil(_hit_count)
 
+
 func _update_difficulty() -> void:
-	var difficulty :int = ceil(_difficulty_growth_base * sqrt(_score))
+	var difficulty: int = ceil(_difficulty_growth_base * sqrt(_score))
 	if difficulty > _difficulty:
 		_difficulty = difficulty
 		difficulty_changed.emit(current_difficulty())
-
 
 
 func current_difficulty() -> int:
@@ -101,6 +106,7 @@ func enemy_hit() -> void:
 	last_hit_timer.start()
 	score_updated.emit(current_score())
 
+
 func player_hit() -> void:
 	_hit_count = 0
 	_consecutive_kill_count = 0
@@ -115,37 +121,44 @@ func enemy_defeated() -> void:
 	score_updated.emit(current_score())
 	enemy_just_defeated.emit(defeated_enemies)
 
+
 func get_sailor_score() -> void:
 	_score += Globals.sailor_score * Globals.sailor_score_multiplier
 	score_updated.emit(current_score())
-	
+
+
 func update_sailors_count(count: int) -> void:
 	Globals.tick_score_multiplier = ceil(count / 5.0)
-	Globals.world_speed = 500 + ((count -5) * 40)
+	Globals.world_speed = 500 + ((count - 5) * 40)
 	sailor_count_updated.emit(count)
+
 
 func overboard_sailor(sailor: Sailor, sailor_position: Vector2) -> void:
 	Globals.player.add_sibling(sailor)
 	sailor.set_overboard()
 	sailor.global_position = sailor_position
 
+
 func update_all_hud() -> void:
 	difficulty_changed.emit(current_difficulty())
 	hit_count_updated.emit(hit_count())
 	score_updated.emit(current_score())
 
-func spawn_enemy_defeated_score(pos:Vector2) -> void:
+
+func spawn_enemy_defeated_score(pos: Vector2) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
 	popup_score.value = Globals.sink_score * Globals.sink_score_multiplier * _consecutive_kill_count
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 
-func spawn_sailor_loaded_score(pos:Vector2) -> void:
+
+func spawn_sailor_loaded_score(pos: Vector2) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
 	popup_score.value = Globals.sailor_score * Globals.sailor_score_multiplier
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
-	
+
+
 func _game_over() -> void:
 	stop()
 	var is_new_high_score = false
