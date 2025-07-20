@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://cwpokr5rvl5aw"]
+[gd_scene load_steps=21 format=3 uid="uid://cwpokr5rvl5aw"]
 
 [ext_resource type="Script" uid="uid://b55fci1bg066f" path="res://scripts/world/world.gd" id="1_dphjl"]
+[ext_resource type="Shader" uid="uid://c4h75cbhytv2y" path="res://shaders/wind.gdshader" id="2_5qq27"]
 [ext_resource type="Gradient" uid="uid://d3lchl30yi31d" path="res://assets/world/day_sky.tres" id="2_gb53w"]
 [ext_resource type="Texture2D" uid="uid://dmk3btiml88v5" path="res://assets/world/sun.png" id="2_j2gmx"]
 [ext_resource type="Texture2D" uid="uid://b0ue8a0t2os0h" path="res://assets/world/sea1.png" id="2_sl2e5"]
@@ -11,10 +12,15 @@
 [ext_resource type="Texture2D" uid="uid://rgfcah4afing" path="res://assets/world/skyline.png" id="5_5qq27"]
 [ext_resource type="Shader" uid="uid://c7srh8ao1c2mx" path="res://scenes/world/wave.gdshader" id="6_bq33v"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_srmg5"]
+shader = ExtResource("2_5qq27")
+shader_parameter/red_boost = 1.2
+shader_parameter/green_boost = 1.1
+
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_j2gmx"]
 gradient = ExtResource("2_gb53w")
-width = 1280
-height = 720
+width = 1380
+height = 820
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Shader" id="Shader_gb53w"]
@@ -139,15 +145,23 @@ shader_parameter/freezeSecondHalf = false
 [node name="World" type="Node2D"]
 script = ExtResource("1_dphjl")
 
+[node name="Wind" type="Node2D" parent="."]
+
+[node name="Line2D" type="Line2D" parent="Wind"]
+material = SubResource("ShaderMaterial_srmg5")
+position = Vector2(569, 217)
+points = PackedVector2Array(100, 100, 53, 104, 0, 100, -72, 105, -155, 94)
+
 [node name="Sky" type="Sprite2D" parent="."]
 z_index = -2
+position = Vector2(-50, -100)
 texture = SubResource("GradientTexture2D_j2gmx")
 centered = false
 
 [node name="Sun" type="Sprite2D" parent="Sky"]
 modulate = Color(2, 2, 2, 1)
 material = SubResource("ShaderMaterial_dlabj")
-position = Vector2(580, 6)
+position = Vector2(580, 106)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_j2gmx")
 

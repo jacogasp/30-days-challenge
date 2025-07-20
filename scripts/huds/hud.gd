@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-@onready var current_score_label: Label = $Control/HBoxContainer/VBoxContainer/CurrentScoreLabel
-@onready var current_sailors_label: Label = $Control/HSplitContainer/CurrentSailorsLabel
-@onready var high_score_label: Label = $Control/HBoxContainer/VBoxContainer/HighScoreLabel
+@onready var current_sailors_label: Label = %CurrentSailorsLabel
+@onready var high_score_label: Label = %HighScoreLabel
+@onready var current_score_label: Label = %CurrentScoreLabel
 
 @onready var hit_count: Control = %HitCount
 @onready var hit_count_number_label: Label =%HitCount/NumberLabel
