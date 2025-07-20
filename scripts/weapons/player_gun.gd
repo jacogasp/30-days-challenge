@@ -9,7 +9,6 @@ var bullet_pool: BulletPool
 var bullets_to_spawn := 0.0
 var is_firing = false
 
-
 func _ready() -> void:
 	bullet_pool = PlayerBulletPool
 	bullet_pool.init_pool(bullet_scene)

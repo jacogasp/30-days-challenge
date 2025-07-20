@@ -2,6 +2,7 @@ extends Node2D
 
 var spawned_enemies: int = 0
 var defeated_enemies: int = 0
+var _consecutive_kill_count: int = 0
 var _hit_count: float = 0
 var _game_is_running: bool = false
 var _high_score: int = 0
@@ -102,13 +103,15 @@ func enemy_hit() -> void:
 
 func player_hit() -> void:
 	_hit_count = 0
+	_consecutive_kill_count = 0
 	hit_count_updated.emit(_hit_count, false)
 	last_hit_timer.stop()
 
 
 func enemy_defeated() -> void:
 	defeated_enemies += 1
-	_score += Globals.sink_score * Globals.sink_score_multiplier
+	_consecutive_kill_count += 1
+	_score += Globals.sink_score * Globals.sink_score_multiplier * _consecutive_kill_count
 	score_updated.emit(current_score())
 	enemy_just_defeated.emit(defeated_enemies)
 
@@ -133,7 +136,7 @@ func update_all_hud() -> void:
 
 func spawn_enemy_defeated_score(pos:Vector2) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
-	popup_score.value = Globals.sink_score * Globals.sink_score_multiplier
+	popup_score.value = Globals.sink_score * Globals.sink_score_multiplier * _consecutive_kill_count
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 

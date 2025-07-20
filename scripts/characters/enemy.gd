@@ -108,6 +108,8 @@ func hit(damage: int) -> void:
 	if (health <= 0):
 		sink()
 		GameManager.enemy_defeated()
+		GameManager.spawn_enemy_defeated_score(global_position)
+
 
 
 func get_random_sailor() -> Sailor:
@@ -125,7 +127,6 @@ func sink() -> void:
 		return
 	animation_player.play("RESET")
 	set_process(false)
-	GameManager.spawn_enemy_defeated_score(global_position)
 	collision_shape_2d.queue_free()
 	is_sinking = true
 	var sinking_angle = randf_range(5, 30)

@@ -103,6 +103,7 @@ material = SubResource("ShaderMaterial_ovt1e")
 collision_layer = 256
 collision_mask = 272
 script = ExtResource("1_7jb55")
+health_max = 75
 sailor_scene = ExtResource("2_jgk6k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

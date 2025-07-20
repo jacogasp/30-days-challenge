@@ -14,7 +14,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	position +=  Globals.world_speed * Vector2.LEFT * delta * 0.7
+	position +=  Globals.world_speed * Vector2.LEFT * delta * 0.5
 	if global_position.x < 0:
 		queue_free_timer.start()
 
