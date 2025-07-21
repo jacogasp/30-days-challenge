@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dlvrwud6mikxs"
-path="res://.godot/imported/SometypeMono-SemiBoldItalic.ttf-79ee5c7bd80f9dbc6758f94bf416c06a.fontdata"
+uid="uid://cdjavsspjn18r"
+path="res://.godot/imported/Bungee-Regular.ttf-58cdcdfae0aef1a05fd8c473aa98fdbe.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Sometype_Mono/static/SometypeMono-SemiBoldItalic.ttf"
-dest_files=["res://.godot/imported/SometypeMono-SemiBoldItalic.ttf-79ee5c7bd80f9dbc6758f94bf416c06a.fontdata"]
+source_file="res://assets/fonts/Bungee-Regular.ttf"
+dest_files=["res://.godot/imported/Bungee-Regular.ttf-58cdcdfae0aef1a05fd8c473aa98fdbe.fontdata"]
 
 [params]
 

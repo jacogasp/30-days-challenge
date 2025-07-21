@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://cohunafqg543"
-path="res://.godot/imported/SometypeMono-Medium.ttf-266472e9e46603431687659127861f95.fontdata"
+uid="uid://hsdb0q5ujxo"
+path="res://.godot/imported/SometypeMono-VariableFont_wght.ttf-dad707c4409e6739f5ba0efe56854898.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Sometype_Mono/static/SometypeMono-Medium.ttf"
-dest_files=["res://.godot/imported/SometypeMono-Medium.ttf-266472e9e46603431687659127861f95.fontdata"]
+source_file="res://assets/fonts/SometypeMono-VariableFont_wght.ttf"
+dest_files=["res://.godot/imported/SometypeMono-VariableFont_wght.ttf-dad707c4409e6739f5ba0efe56854898.fontdata"]
 
 [params]
 

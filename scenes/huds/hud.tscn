@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c75onh481bgxf" path="res://scripts/huds/hud.gd" id="1_ahhtf"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="2_5ysmq"]
 [ext_resource type="Texture2D" uid="uid://hirprwvwbj00" path="res://assets/sailor.png" id="2_oo0fn"]
-[ext_resource type="FontFile" uid="uid://cdjavsspjn18r" path="res://assets/fonts/Bungee/Bungee-Regular.ttf" id="3_gpbci"]
+[ext_resource type="FontFile" uid="uid://cdjavsspjn18r" path="res://assets/fonts/Bungee-Regular.ttf" id="3_gpbci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e7rj4"]
 bg_color = Color(0.6, 0.6, 0.6, 0.243137)

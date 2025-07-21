@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://2si6vfln8py2" path="res://assets/title_screen.jpeg" id="1_fgkus"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_mykxm"]
 [ext_resource type="Script" uid="uid://egcmcr77xjo8" path="res://scripts/huds/title_screen.gd" id="1_sa3yf"]
-[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="3_3yumr"]
+[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="3_3yumr"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="4_cs5ya"]
 [ext_resource type="Texture2D" uid="uid://ekkhbfqotawk" path="res://assets/livrea/livrea_a1.png" id="5_mykxm"]
 [ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_tklts"]

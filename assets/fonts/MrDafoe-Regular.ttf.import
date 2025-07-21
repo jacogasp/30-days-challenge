@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bwtr30hu0vfyd"
-path="res://.godot/imported/SometypeMono-Regular.ttf-e35d06e245b4b9f9cb1ba6e910350e23.fontdata"
+uid="uid://drg1khqts8aw4"
+path="res://.godot/imported/MrDafoe-Regular.ttf-531ae088ab6d8ebba7502add4b2b0a6f.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/Sometype_Mono/static/SometypeMono-Regular.ttf"
-dest_files=["res://.godot/imported/SometypeMono-Regular.ttf-e35d06e245b4b9f9cb1ba6e910350e23.fontdata"]
+source_file="res://assets/fonts/MrDafoe-Regular.ttf"
+dest_files=["res://.godot/imported/MrDafoe-Regular.ttf-531ae088ab6d8ebba7502add4b2b0a6f.fontdata"]
 
 [params]
 
