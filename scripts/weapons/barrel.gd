@@ -2,10 +2,13 @@ class_name Barrel
 extends Area2D
 
 @export var damage: int = 5
+@export var audio_samples: Array[AudioStreamMP3] = []
+
 @onready var sprite = $ClippingContainer/Sprite2D
 @onready var wave_particles = $WaveParticles
 @onready var explosion_particles = $ExplosionParticles
 @onready var queue_free_timer = $QueueFreeTimer
+@onready var audio_streamer = $AudioStreamPlayer2D
 
 var exploding: bool = false
 
@@ -42,6 +45,8 @@ func _explode() -> void:
 	set_physics_process(false)
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
+	audio_streamer.stream = audio_samples[randi() % 2]
+	audio_streamer.play()
 	queue_free_timer.start()
 	exploding = true
 
