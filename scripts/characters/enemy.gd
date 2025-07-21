@@ -8,6 +8,7 @@ extends Area2D
 @export var min_fire_time: float = 1.0
 @export var max_fire_time: float = 5.0
 @export var flash_duration: float = 0.1
+@export var splash_samples: Array[AudioStreamMP3] = []
 
 @onready var health = health_max
 @onready var debug_label: Label = $DEBUGLabel
@@ -23,6 +24,7 @@ extends Area2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var barrel_timer: Timer = $BarrelTimer
 @onready var gun_timer: Timer = $GunTimer
+@onready var audio_streamer: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var sailors_count: int
 var boat_length: int = 100
@@ -104,12 +106,13 @@ func hit(damage: int) -> void:
 	flash_timer.start()
 	health -= damage
 	debug_label.text = str(health)
+	audio_streamer.stream = splash_samples[randi() % len(splash_samples)]
+	audio_streamer.play()
 	drop_sailors(direction)
 	if (health <= 0):
 		sink()
 		GameManager.enemy_defeated()
 		GameManager.spawn_enemy_defeated_score(global_position)
-
 
 
 func get_random_sailor() -> Sailor:
@@ -130,14 +133,14 @@ func sink() -> void:
 	collision_shape_2d.queue_free()
 	is_sinking = true
 	var sinking_angle = randf_range(5, 30)
-	sinking_angle *=  -1 if randf() < 0.5 else 1
+	sinking_angle *= -1 if randf() < 0.5 else 1
 	var tween = create_tween()
 	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle), 1.0)
 	await tween.finished
 	tween = create_tween()
 	tween.set_parallel()
 	tween.tween_property(boat, "rotation", deg_to_rad(sinking_angle), 1.0)
-	tween.tween_property(boat, "position:y", 2*boat_height, 2.0)
+	tween.tween_property(boat, "position:y", 2 * boat_height, 2.0)
 	tween.tween_property(gpu_particles_2d, "scale", Vector2(0, 0), 2)
 	await tween.finished
 	queue_free()

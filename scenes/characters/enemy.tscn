@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=28 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="3_21x0f"]
 [ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="3_f0ik5"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_21x0f"]
+[ext_resource type="AudioStream" uid="uid://bdvtddvqp3tbp" path="res://assets/sounds/water-splash-03.mp3" id="4_hvulg"]
 [ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://shaders/clip_y.gdshader" id="5_3k4es"]
 [ext_resource type="Texture2D" uid="uid://ekkhbfqotawk" path="res://assets/livrea/livrea_a1.png" id="5_gpyvg"]
 [ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_tjfok"]
@@ -104,6 +105,7 @@ collision_layer = 256
 collision_mask = 272
 script = ExtResource("1_7jb55")
 sailor_scene = ExtResource("2_jgk6k")
+splash_samples = Array[AudioStreamMP3]([ExtResource("4_hvulg")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, -74.5)
@@ -200,6 +202,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_hvulg")
 }
 autoplay = "idle"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = -5.0
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

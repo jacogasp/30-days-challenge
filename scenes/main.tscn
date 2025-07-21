@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=11 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/huds/hud.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="4_tefeu"]
 [ext_resource type="Script" uid="uid://btneotr08ba7o" path="res://scripts/characters/spanwer_manager.gd" id="6_tipki"]
+[ext_resource type="AudioStream" uid="uid://bigheqb1lnvu1" path="res://assets/sounds/waves.mp3" id="10_choun"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tefeu")
@@ -43,6 +44,16 @@ speed_randomness = 0.8
 [node name="Player" parent="SpanwerManager" instance=ExtResource("2_0wfyh")]
 position = Vector2(232, 439)
 max_speed = 1000.0
+starting_sailor_count = 5
+max_number_sailor = 30
+invulnerability_duration = 2.0
+blink_interval = 0.1
+flash_duration = 0.05
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_choun")
+autoplay = true
+parameters/looping = true
 
 [connection signal="timeout" from="SpanwerManager/Timer" to="SpanwerManager" method="spawn"]
 [connection signal="player_hit" from="SpanwerManager/Player" to="." method="_on_player_hit"]

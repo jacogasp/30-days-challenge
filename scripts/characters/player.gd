@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var invulnerability_duration: float = 2.0 # Duration in seconds
 @export var blink_interval: float = 0.1 # How fast the blinking effect
 @export var flash_duration: float = 0.05 # Duration of white flash on hit
+@export var splash_samples: Array[AudioStreamMP3] = []
 
 @onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 @onready var sailors: Node2D = $ClippingContainer/Boat/Sailors
@@ -17,6 +18,7 @@ extends CharacterBody2D
 @onready var livrea: Node2D = $ClippingContainer/Boat/Sail/Livrea
 @onready var livrea_a: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaA
 @onready var livrea_b: Sprite2D = $ClippingContainer/Boat/Sail/Livrea/LivreaB
+@onready var audio_streamer: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 var last_direction: Vector2 = Vector2.ZERO
 var speed := max_speed
@@ -95,16 +97,16 @@ func _physics_process(delta: float) -> void:
 
 	# Boat Rotation Logic
 	var target_rotation: float = 0.0
-	if direction.x < 0:  
+	if direction.x < 0:
 		target_rotation = deg_to_rad(1.5)
-	elif direction.x > 0:  
+	elif direction.x > 0:
 		target_rotation = deg_to_rad(-2)
 
 	if boat.rotation != target_rotation:
 		if boat_rotation_tween:
-			boat_rotation_tween.kill() 
+			boat_rotation_tween.kill()
 		boat_rotation_tween = create_tween()
-		boat_rotation_tween.tween_property(boat, "rotation", target_rotation, 0.2) 
+		boat_rotation_tween.tween_property(boat, "rotation", target_rotation, 0.2)
 
 
 	if direction != Vector2.ZERO and direction != last_direction:
@@ -175,10 +177,12 @@ func drop_sailor(drop_direction: Vector2) -> void:
 func hit(damage: int) -> void:
 	if is_sinking or is_invulnerable:
 		return
-	
+
 	player_hit.emit(damage)
-	
-	create_tween().tween_property(material, "shader_parameter/flash_value", 1.0, flash_duration/2)
+	audio_streamer.stream = splash_samples[randi() % len(splash_samples)]
+	audio_streamer.play()
+
+	create_tween().tween_property(material, "shader_parameter/flash_value", 1.0, flash_duration / 2)
 	flash_timer.start()
 	start_invulnerability()
 
@@ -210,7 +214,7 @@ func _on_blink_timeout() -> void:
 
 
 func _on_flash_timeout() -> void:
-	create_tween().tween_property(material, "shader_parameter/flash_value", 0.0, flash_duration/2)
+	create_tween().tween_property(material, "shader_parameter/flash_value", 0.0, flash_duration / 2)
 
 
 func sink() -> void:
