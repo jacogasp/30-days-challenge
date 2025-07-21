@@ -24,4 +24,3 @@ void vertex() {
 	VERTEX = rotate(VERTEX, PI / 2. + rotation_amplitude * rotation_angle);
 	VERTEX.y += vertical_amplitude * sin(2. * PI * TIME * vertical_freq);
 }
-

@@ -19,12 +19,13 @@ func _on_music_button_toggled(toggled_on: bool) -> void:
 	Globals.music_enabled = toggled_on
 	if toggled_on:
 		music_button.text = "Music: ON"
+		GameManager.play_music()
 	else:
 		music_button.text = "Music: OFF"
+		GameManager.stop_music()
 
 
 func _on_sound_button_toggled(toggled_on: bool) -> void:
-	Globals.sound_enabled = toggled_on
 	if toggled_on:
 		sound_button.text = "Sound: ON"
 	else:

@@ -13,6 +13,7 @@ var _difficulty: int = 1
 var _hit_count_decrease_rate: float = 10
 
 @onready var last_hit_timer: Timer
+@onready var soundtrack: AudioStreamPlayer = $Soundtrack
 
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
 
@@ -38,15 +39,14 @@ func _process(delta: float) -> void:
 	if last_hit_timer.time_left == 0 && _hit_count > 0:
 		_hit_count -= _hit_count_decrease_rate * delta
 		hit_count_updated.emit(hit_count(), false)
-			
-		
+
+
 	_score += Globals.tick_score * Globals.tick_score_multiplier * delta
 	var score = ceil(_score)
 	if score > current_score():
 		_current_score = score
 		score_updated.emit(current_score())
 		_update_difficulty()
-
 
 
 func start() -> void:
@@ -166,3 +166,10 @@ func _game_over() -> void:
 		_high_score = current_score()
 		is_new_high_score = true
 	game_over.emit(is_new_high_score)
+
+
+func stop_music() -> void:
+	soundtrack.stop()
+
+func play_music() -> void:
+	soundtrack.play()
