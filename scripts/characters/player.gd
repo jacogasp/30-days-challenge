@@ -122,6 +122,9 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("fire"):
 		gun.fire_bullet()
 
+	if Input.is_action_just_pressed("secondary_fire"):
+		GameManager.deploy_bomb()
+
 	if OS.is_debug_build():
 		if Input.is_action_just_pressed("DEBUG_add_sailor"):
 			var sailor := sailor_scene.instantiate()

@@ -11,8 +11,10 @@ var _current_score: int = 0
 var _difficulty_growth_base: float = 0.11
 var _difficulty: int = 1
 var _hit_count_decrease_rate: float = 10
+var bomb_count: int = 2
 
 @onready var last_hit_timer: Timer
+@onready var bomb_timer: Timer
 @onready var soundtrack: AudioStreamPlayer = $Soundtrack
 
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
@@ -24,13 +26,19 @@ signal sailor_count_updated
 signal score_updated
 signal difficulty_changed
 signal game_over
-
+signal bomb_deployed
+signal bomb_count_updated
 
 func _ready() -> void:
 	last_hit_timer = Timer.new()
 	last_hit_timer.wait_time = 3
 	last_hit_timer.one_shot = true
 	add_child(last_hit_timer)
+	
+	bomb_timer = Timer.new()
+	bomb_timer.wait_time = 5
+	bomb_timer.one_shot = true
+	add_child(bomb_timer)
 
 
 func _process(delta: float) -> void:
@@ -39,6 +47,7 @@ func _process(delta: float) -> void:
 	if last_hit_timer.time_left == 0 && _hit_count > 0:
 		_hit_count -= _hit_count_decrease_rate * delta
 		hit_count_updated.emit(hit_count(), false)
+		
 
 
 	_score += Globals.tick_score * Globals.tick_score_multiplier * delta
@@ -143,6 +152,7 @@ func update_all_hud() -> void:
 	difficulty_changed.emit(current_difficulty())
 	hit_count_updated.emit(hit_count())
 	score_updated.emit(current_score())
+	bomb_count_updated.emit(bomb_count)
 
 
 func spawn_enemy_defeated_score(pos: Vector2) -> void:
@@ -158,6 +168,16 @@ func spawn_sailor_loaded_score(pos: Vector2) -> void:
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 
+func deploy_bomb() -> void:
+	if bomb_timer.time_left > 0:
+		return
+	if bomb_count <= 0:
+		bomb_count = 0
+		return
+	bomb_count -= 1
+	bomb_timer.start()
+	bomb_count_updated.emit(bomb_count)
+	bomb_deployed.emit()
 
 func _game_over() -> void:
 	stop()
