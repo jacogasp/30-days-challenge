@@ -83,7 +83,6 @@ audio_samples = Array[AudioStreamMP3]([ExtResource("3_7kgum"), ExtResource("2_ct
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
 position = Vector2(0.5, -9.50001)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_i6fpp")
 
 [node name="ClippingContainer" type="Control" parent="."]

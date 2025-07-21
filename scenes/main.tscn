@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=16 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="4_tefeu"]
 [ext_resource type="Script" uid="uid://btneotr08ba7o" path="res://scripts/characters/spanwer_manager.gd" id="6_tipki"]
 [ext_resource type="Script" uid="uid://s12lmaleoxo0" path="res://scripts/weapons/bomb.gd" id="10_choun"]
+[ext_resource type="PackedScene" uid="uid://dtoj7nquclhut" path="res://scenes/huds/tutorial_container.tscn" id="10_ya4ey"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_85g3d"]
 
@@ -59,6 +60,8 @@ speed_randomness = 0.8
 [node name="Player" parent="SpanwerManager" instance=ExtResource("2_0wfyh")]
 position = Vector2(232, 439)
 max_speed = 1000.0
+
+[node name="TutorialContainer" parent="SpanwerManager/Player" instance=ExtResource("10_ya4ey")]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 autoplay = true
