@@ -7,6 +7,7 @@ extends Area2D
 @onready var explosion_particles = $ExplosionParticles
 @onready var queue_free_timer = $QueueFreeTimer
 
+var has_hit: bool = false
 
 func _ready() -> void:
 	var mat: ShaderMaterial = sprite.material
@@ -14,19 +15,22 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	position +=  Globals.world_speed * Vector2.LEFT * delta * 0.5
+	position += Globals.world_speed * Vector2.LEFT * delta * 0.5
 	if global_position.x < 0:
 		queue_free_timer.start()
 
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.has_method("hit"):
-		area.call("hit", damage)
+	# Interact only with player and its bullets
+	if area.is_in_group("player") && not has_hit:
+		if area.has_method("hit"):
+			area.call("hit", damage)
 		explosion_particles.emitting = true
 		wave_particles.visible = false
 		wave_particles.emitting = false
 		sprite.visible = false
 		queue_free_timer.start()
+		has_hit = true
 
 
 func _on_queue_free_timer_timeout() -> void:

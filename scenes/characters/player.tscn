@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://c34r771lh6okh"]
 
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="1_atpat"]
-[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="1_qgnko"]
+[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="1_qgnko"]
 [ext_resource type="Script" uid="uid://dd4y4wqcm0qws" path="res://scripts/characters/player.gd" id="1_rp718"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="4_dyp2m"]
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="4_kqtwu"]
@@ -61,7 +61,7 @@ size = Vector2(59, 24)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2l4js"]
 size = Vector2(138, 16)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 material = SubResource("ShaderMaterial_7vyk4")
 collision_mask = 4
 script = ExtResource("1_rp718")
@@ -120,7 +120,7 @@ position = Vector2(75, -16)
 script = ExtResource("7_6eyoc")
 bullet_scene = ExtResource("8_eojnx")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="." groups=["player"]]
 script = ExtResource("12_jk2m4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
