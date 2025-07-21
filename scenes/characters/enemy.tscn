@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cmuh1ipmewjvf"]
+[gd_scene load_steps=30 format=3 uid="uid://cmuh1ipmewjvf"]
 
 [ext_resource type="Script" uid="uid://bshixo6t7rnjy" path="res://scripts/characters/enemy.gd" id="1_7jb55"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="1_f2e6v"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://e8agkwdf57mo" path="res://scenes/weapons/enemy_bullet.tscn" id="8_0ag5d"]
 [ext_resource type="Script" uid="uid://7odss7vblhi3" path="res://scripts/weapons/barrel_emitter.gd" id="9_f0ik5"]
 [ext_resource type="PackedScene" uid="uid://qq6f6q77h2af" path="res://scenes/weapons/barrel.tscn" id="10_rc7n0"]
+[ext_resource type="PackedScene" uid="uid://crk13ogv4r8r" path="res://scenes/weapons/barrel_primary.tscn" id="15_dtiis"]
 [ext_resource type="PackedScene" uid="uid://dmhkg7iv7dwsv" path="res://scenes/weapons/barrel_secondary.tscn" id="15_yj4uo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ovt1e"]
@@ -197,6 +198,7 @@ metadata/_custom_type_script = "uid://2wl2e5w5xhue"
 position = Vector2(-76, -14)
 script = ExtResource("9_f0ik5")
 barrel_scene = ExtResource("10_rc7n0")
+barrel_primary_scene = ExtResource("15_dtiis")
 barrel_secondary_scene = ExtResource("15_yj4uo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

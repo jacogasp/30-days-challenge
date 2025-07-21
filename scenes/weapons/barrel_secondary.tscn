@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="7_pfnuu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i6fpp"]
-size = Vector2(63, 33.8571)
+size = Vector2(63, 41)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7kgum"]
 resource_local_to_scene = true

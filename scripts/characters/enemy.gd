@@ -35,7 +35,8 @@ var fully_visible := false
 var screen_offset: int = 50
 var flash_timer: Timer
 
-var barrel_secondary_chance: float = 0.5
+var barrel_primary_chance: float = 0.3
+var barrel_secondary_chance: float = 0.3
 
 func _ready() -> void:
 	var enemy_color = Color.from_hsv(randf(), randf_range(0.5, 0.7), randf_range(0.8, 0.9))
@@ -50,7 +51,8 @@ func _ready() -> void:
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
 		sailor.set_sprite_modulate(enemy_color)
-	barrel_secondary_chance = barrel_secondary_chance - (max(GameManager.bomb_count - 1, 0)) * 0.1
+	barrel_secondary_chance = barrel_secondary_chance - (max(GameManager.bomb_count - 1, 0)) * 0.05
+	barrel_primary_chance = barrel_primary_chance - (max(GameManager.power_level - 1, 0)) * 0.05
 	_set_up_timer()
 
 func _set_up_timer() -> void:
@@ -151,8 +153,11 @@ func sink() -> void:
 func _on_barrel_timer_timeout() -> void:
 	if is_sinking or GameManager._game_is_running == false:
 		return
-	if randf() < barrel_secondary_chance:
-		barrel_emitter.drop_barrel_secondary()
+	if randf() < barrel_primary_chance:
+		if randf() < barrel_secondary_chance:
+			barrel_emitter.drop_barrel_secondary()
+		else:
+			barrel_emitter.drop_barrel_primary()
 	else:
 		barrel_emitter.fire()
 	barrel_timer.wait_time = randf_range(barrel_emitter.min_fire_time, barrel_emitter.max_fire_time)

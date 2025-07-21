@@ -165,6 +165,7 @@ focus_neighbor_top = NodePath("../NewGameButton")
 focus_neighbor_bottom = NodePath("../SoundButton")
 theme_override_font_sizes/font_size = 32
 toggle_mode = true
+button_pressed = true
 text = "Music: ON"
 
 [node name="SoundButton" type="Button" parent="Control/Control/Panel/VBoxContainer"]

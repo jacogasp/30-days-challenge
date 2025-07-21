@@ -12,8 +12,9 @@ var _difficulty_growth_base: float = 0.11
 var _difficulty: int = 1
 var _hit_count_decrease_rate: float = 10
 var bomb_count: int = 0
+var power_level: int = 1
 const MAX_BOMB_COUNT:int = 5
-
+const MAX_POWER_LEVEL:int = 4
 @onready var last_hit_timer: Timer = $LastHitTimer
 @onready var bomb_timer: Timer = $BombTimer
 @onready var soundtrack: AudioStreamPlayer = $Soundtrack
@@ -29,7 +30,7 @@ signal difficulty_changed
 signal game_over
 signal bomb_deployed
 signal bomb_count_updated
-
+signal power_level_updated
 
 func _process(delta: float) -> void:
 	if not _game_is_running:
@@ -65,6 +66,8 @@ func reset() -> void:
 	last_hit_timer.stop()
 	spawned_enemies = 0
 	defeated_enemies = 0
+	bomb_count = 0
+	power_level = 1
 	_current_score = 0
 	_score = 0
 	_difficulty = 1
@@ -107,6 +110,10 @@ func enemy_hit() -> void:
 
 
 func player_hit() -> void:
+	if power_level > 1:
+		power_level -= 1
+		spaw_pickup_label(Globals.player.global_position, "-P")
+		power_level_updated.emit(power_level)
 	_hit_count = 0
 	_consecutive_kill_count = 0
 	hit_count_updated.emit(_hit_count, false)
@@ -143,6 +150,7 @@ func update_all_hud() -> void:
 	hit_count_updated.emit(hit_count())
 	score_updated.emit(current_score())
 	bomb_count_updated.emit(bomb_count)
+	power_level_updated.emit(power_level)
 
 
 func spawn_enemy_defeated_score(pos: Vector2) -> void:
@@ -158,11 +166,11 @@ func spawn_sailor_loaded_score(pos: Vector2) -> void:
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 
-func spaw_bomb_gained_label(pos: Vector2) -> void:
+func spaw_pickup_label(pos: Vector2, text: String) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)	
-	popup_score.text = "S"
+	popup_score.text = text
 	popup_score.add_theme_font_override("font", load("res://assets/fonts/Bungee-Regular.ttf"))
 
 func deploy_bomb() -> void:
@@ -182,7 +190,13 @@ func gain_bomb() -> bool:
 		bomb_count_updated.emit(bomb_count)
 		return true
 	return false
-		
+
+func powerup() -> bool:
+	if power_level < MAX_POWER_LEVEL:
+		power_level += 1
+		power_level_updated.emit(power_level)
+		return true
+	return false	
 
 func _game_over() -> void:
 	stop()

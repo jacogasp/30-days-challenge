@@ -5,14 +5,14 @@ func _on_area_entered(area: Area2D) -> void:
 	if not exploding:
 		var success:bool = false
 		if area.get_parent() is Player:
-			success = GameManager.gain_bomb()
+			success = GameManager.powerup()
 		if success:
 			_pickup()
 		else:
 			_explode()	
 
 func _pickup():
-	GameManager.spaw_pickup_label(global_position, "S")
+	GameManager.spaw_pickup_label(global_position, "P")
 	wave_particles.visible = false
 	wave_particles.emitting = false
 	sprite.visible = false

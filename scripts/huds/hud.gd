@@ -17,6 +17,8 @@ extends CanvasLayer
 @onready var current_secondary_label: Label = %CurrentSecondaryLabel
 @onready var progress_bar: ProgressBar = %SecondaryLabel/ProgressBar
 
+@onready var primary_texture: TextureRect = %PrimaryTexture
+
 func _ready() -> void:
 	GameManager.score_updated.connect(update_current_score_label)
 	GameManager.sailor_count_updated.connect(update_current_sailors_label)
@@ -26,6 +28,7 @@ func _ready() -> void:
 	GameManager.difficulty_changed.connect(update_difficulty)
 	GameManager.bomb_count_updated.connect(update_secondary_label)
 	GameManager.bomb_timer.timeout.connect(secondary_reset)
+	GameManager.power_level_updated.connect(update_primary_label)
 	progress_bar.max_value = GameManager.bomb_timer.wait_time
 	progress_bar.value = 0
 	GameManager.update_all_hud()
@@ -95,6 +98,21 @@ func update_hit_count_label(count: int, increasing:bool = true):
 	hit_count_text_label.add_theme_font_size_override("font_size", int(text_font_size))
 	if increasing:
 		bounce_control(hit_count)
+
+func update_primary_label(level) -> void:
+	match level:
+		1:
+			primary_texture.visible = false
+		2:
+			primary_texture.texture = load("res://assets/power_1.png")
+			primary_texture.visible = true
+		3:
+			primary_texture.texture = load("res://assets/power_2.png")
+			primary_texture.visible = true
+		4:	
+			primary_texture.texture = load("res://assets/power_3.png")
+			primary_texture.visible = true
+	bounce_control(primary_texture)
 
 func bounce_control(control:Control):
 	var bounce_tween = create_tween()
