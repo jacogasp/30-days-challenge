@@ -9,3 +9,4 @@ script = ExtResource("1_hwd4i")
 [node name="Soundtrack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_glms7")
 autoplay = true
+parameters/looping = true
