@@ -116,7 +116,7 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_qgnko")
 
 [node name="PlayerGun" type="Node2D" parent="."]
-position = Vector2(75, -16)
+position = Vector2(84, -20)
 script = ExtResource("7_6eyoc")
 bullet_scene = ExtResource("8_eojnx")
 

@@ -19,7 +19,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		return
 	if area.has_method("hit"):
 		area.call("hit", damage)
-		disable()
+	disable()
 
 
 func fire(_from: Vector2, _direction: Vector2) -> void:

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_kby3w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i6fpp"]
-size = Vector2(63, 21)
+size = Vector2(63, 33.8571)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lih5u"]
 resource_local_to_scene = true
@@ -72,12 +72,12 @@ alpha_curve = SubResource("CurveTexture_7kgum")
 
 [node name="Barrel" type="Area2D"]
 scale = Vector2(0.7, 0.7)
-collision_layer = 16
-collision_mask = 17
+collision_layer = 48
 script = ExtResource("1_i6fpp")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["enemy"]]
+position = Vector2(0.5, -5.92857)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_i6fpp")
 
 [node name="ClippingContainer" type="Control" parent="."]
@@ -115,9 +115,9 @@ position = Vector2(1, -14)
 emitting = false
 amount = 32
 texture = ExtResource("3_kby3w")
-lifetime = 4.0
+lifetime = 2.0
 one_shot = true
-speed_scale = 3.0
+speed_scale = 2.0
 explosiveness = 1.0
 local_coords = true
 trail_enabled = true
