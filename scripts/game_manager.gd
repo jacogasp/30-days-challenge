@@ -11,10 +11,11 @@ var _current_score: int = 0
 var _difficulty_growth_base: float = 0.11
 var _difficulty: int = 1
 var _hit_count_decrease_rate: float = 10
-var bomb_count: int = 2
+var bomb_count: int = 0
+const MAX_BOMB_COUNT:int = 5
 
-@onready var last_hit_timer: Timer
-@onready var bomb_timer: Timer
+@onready var last_hit_timer: Timer = $LastHitTimer
+@onready var bomb_timer: Timer = $BombTimer
 @onready var soundtrack: AudioStreamPlayer = $Soundtrack
 
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
@@ -28,17 +29,6 @@ signal difficulty_changed
 signal game_over
 signal bomb_deployed
 signal bomb_count_updated
-
-func _ready() -> void:
-	last_hit_timer = Timer.new()
-	last_hit_timer.wait_time = 3
-	last_hit_timer.one_shot = true
-	add_child(last_hit_timer)
-	
-	bomb_timer = Timer.new()
-	bomb_timer.wait_time = 5
-	bomb_timer.one_shot = true
-	add_child(bomb_timer)
 
 
 func _process(delta: float) -> void:
@@ -168,6 +158,13 @@ func spawn_sailor_loaded_score(pos: Vector2) -> void:
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 
+func spaw_bomb_gained_label(pos: Vector2) -> void:
+	var popup_score = POPUP_SCORE.instantiate()
+	popup_score.global_position = pos
+	Globals.player.add_sibling(popup_score)	
+	popup_score.text = "S"
+	popup_score.add_theme_font_override("font", load("res://assets/fonts/Bungee-Regular.ttf"))
+
 func deploy_bomb() -> void:
 	if bomb_timer.time_left > 0:
 		return
@@ -178,6 +175,14 @@ func deploy_bomb() -> void:
 	bomb_timer.start()
 	bomb_count_updated.emit(bomb_count)
 	bomb_deployed.emit()
+
+func gain_bomb() -> bool:
+	if bomb_count < MAX_BOMB_COUNT:
+		bomb_count += 1
+		bomb_count_updated.emit(bomb_count)
+		return true
+	return false
+		
 
 func _game_over() -> void:
 	stop()

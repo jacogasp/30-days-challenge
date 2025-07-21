@@ -10,3 +10,11 @@ script = ExtResource("1_hwd4i")
 stream = ExtResource("2_glms7")
 autoplay = true
 parameters/looping = true
+
+[node name="BombTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="LastHitTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
