@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dd82objmcmblm"]
 
 [ext_resource type="Script" uid="uid://b4lyirh0g8ybf" path="res://scripts/characters/enemy_spawner.gd" id="1_s1jtr"]
-[ext_resource type="PackedScene" uid="uid://cmuh1ipmewjvf" path="res://scenes/characters/enemy.tscn" id="2_yokgt"]
+[ext_resource type="PackedScene" uid="uid://cmuh1ipmewjvf" path="res://scenes/characters/enemy_boat.tscn" id="2_yokgt"]
 
 [sub_resource type="Curve2D" id="Curve2D_yokgt"]
 _data = {
@@ -11,7 +11,7 @@ point_count = 2
 
 [node name="EnemySpanwer" type="Node2D"]
 script = ExtResource("1_s1jtr")
-enemy_scene = ExtResource("2_yokgt")
+default_enemy_scene = ExtResource("2_yokgt")
 
 [node name="Path2D" type="Path2D" parent="."]
 curve = SubResource("Curve2D_yokgt")

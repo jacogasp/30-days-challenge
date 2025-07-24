@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyType" load_steps=3 format=3 uid="uid://bqvlmkuhdniph"]
+
+[ext_resource type="Script" uid="uid://dvka58f4gcxla" path="res://resources/enemy_type.gd" id="1_b6lbr"]
+[ext_resource type="PackedScene" uid="uid://cmuh1ipmewjvf" path="res://scenes/characters/enemy_boat.tscn" id="1_xi8dv"]
+
+[resource]
+script = ExtResource("1_b6lbr")
+chance = 0.8
+scene = ExtResource("1_xi8dv")
+metadata/_custom_type_script = "uid://dvka58f4gcxla"

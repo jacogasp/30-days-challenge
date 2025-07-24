@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://pw8uk8er18ei"]
+[gd_scene load_steps=22 format=3 uid="uid://pw8uk8er18ei"]
 
 [ext_resource type="Script" uid="uid://kl0fi7s8jj03" path="res://scripts/main.gd" id="1_tefeu"]
 [ext_resource type="PackedScene" uid="uid://c34r771lh6okh" path="res://scenes/characters/player.tscn" id="2_0wfyh"]
@@ -9,8 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://idkdxkpdu4no" path="res://scenes/huds/hud.tscn" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://c7n046c58mhcr" path="res://scenes/huds/pause_screen.tscn" id="4_tefeu"]
 [ext_resource type="Script" uid="uid://btneotr08ba7o" path="res://scripts/characters/spanwer_manager.gd" id="6_tipki"]
+[ext_resource type="Script" uid="uid://dvka58f4gcxla" path="res://resources/enemy_type.gd" id="8_jbj1t"]
+[ext_resource type="Resource" uid="uid://c3bgau0a1gll6" path="res://resources/jetsky.tres" id="9_muem4"]
 [ext_resource type="Script" uid="uid://s12lmaleoxo0" path="res://scripts/weapons/bomb.gd" id="10_choun"]
+[ext_resource type="Resource" uid="uid://bqvlmkuhdniph" path="res://resources/boat.tres" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://dtoj7nquclhut" path="res://scenes/huds/tutorial_container.tscn" id="10_ya4ey"]
+[ext_resource type="PackedScene" uid="uid://bhoyouxleboe5" path="res://scenes/characters/enemy_jetsky.tscn" id="12_trceg"]
+[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="13_a8y0u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_85g3d"]
 
@@ -26,6 +31,12 @@ colors = PackedColorArray(0.831373, 0.282353, 0, 0.392157)
 gradient = SubResource("Gradient_ya4ey")
 fill = 1
 fill_from = Vector2(0.490826, 0.527523)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jkv2x"]
+resource_local_to_scene = true
+shader = ExtResource("13_a8y0u")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_tefeu")
@@ -45,6 +56,7 @@ visible = false
 [node name="SpanwerManager" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("6_tipki")
+enemy_types = Array[ExtResource("8_jbj1t")]([ExtResource("9_muem4"), ExtResource("10_dp3eg")])
 
 [node name="Timer" type="Timer" parent="SpanwerManager"]
 
@@ -84,6 +96,10 @@ texture = SubResource("GradientTexture2D_eb6dy")
 [node name="Timer" type="Timer" parent="Bomb"]
 wait_time = 5.0
 one_shot = true
+
+[node name="EnemyJetsky" parent="." instance=ExtResource("12_trceg")]
+material = SubResource("ShaderMaterial_jkv2x")
+position = Vector2(187, 550)
 
 [connection signal="timeout" from="SpanwerManager/Timer" to="SpanwerManager" method="spawn"]
 [connection signal="player_hit" from="SpanwerManager/Player" to="." method="_on_player_hit"]
