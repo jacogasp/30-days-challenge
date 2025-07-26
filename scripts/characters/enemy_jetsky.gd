@@ -15,6 +15,9 @@ func _ready() -> void:
 	_set_up_timer()
 
 func _physics_process(delta: float) -> void:
+	if is_sinking:
+		direction.x -= (Globals.world_speed * 0.5 * delta)
+		direction.x = max(direction.x, -Globals.world_speed * 0.5)
 	position += direction * delta
 
 	if not fully_visible and is_fully_visible():
