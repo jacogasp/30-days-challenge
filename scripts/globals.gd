@@ -22,7 +22,10 @@ var colors: Array[Color] = [Color.DARK_RED, Color.NAVY_BLUE, Color.DARK_GREEN, C
 var sound_enabled: bool = true
 var music_enabled: bool = true
 
+var api_key = ""
+
 func _ready() -> void:
+	load_env()
 	reset_score_multipliers()
 
 
@@ -31,3 +34,12 @@ func reset_score_multipliers() -> void:
 	hit_score_multiplier = 1
 	sink_score_multiplier = 1
 	sailor_score_multiplier = 1
+
+
+func load_env() -> void:
+	var config = ConfigFile.new()
+	var err = config.load("res://.env")
+	if err != OK:
+		print("Failed to load secrets.cfg file")
+		return
+	api_key = config.get_value("", "api_key")

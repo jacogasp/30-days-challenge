@@ -135,7 +135,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(600, 400)
+custom_minimum_size = Vector2(600, 500)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -145,7 +145,7 @@ anchor_bottom = 0.5
 offset_left = 650.0
 offset_top = -200.0
 offset_right = 1250.0
-offset_bottom = 200.0
+offset_bottom = 300.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -190,6 +190,18 @@ vertical_alignment = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="Username" type="LineEdit" parent="Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter your name"
+
+[node name="SubmitButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
+theme_override_font_sizes/font_size = 32
+text = "Submit your score"
+
 [node name="RestartButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -201,8 +213,8 @@ text = "Retry"
 [node name="MainMenuButton" type="Button" parent="Panel/MarginContainer/VBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_top = NodePath("../RestartButton")
-focus_neighbor_bottom = NodePath("../RestartButton")
+focus_neighbor_top = NodePath("../SubmitButton")
+focus_neighbor_bottom = NodePath("../SubmitButton")
 theme_override_font_sizes/font_size = 32
 text = "Return to Title Screen"
 
@@ -212,5 +224,6 @@ libraries = {
 }
 autoplay = "open"
 
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/SubmitButton" to="." method="_on_submit_button_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

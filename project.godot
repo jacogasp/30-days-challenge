@@ -22,12 +22,17 @@ GameManager="*res://scenes/game_manager.tscn"
 PlayerBulletPool="*res://scripts/weapons/player_bullet_pool.gd"
 EnemyBulletPool="*res://scripts/weapons/enemy_bullet_pool.gd"
 PostProcessingLayer="*res://scenes/huds/post_processing_layer.tscn"
+Talo="*res://addons/talo/talo_manager.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/talo/plugin.cfg")
 
 [global_group]
 
