@@ -52,8 +52,10 @@ layout_mode = 2
 size_flags_vertical = 3
 follow_focus = true
 
-[node name="Entries" type="VBoxContainer" parent="MarginContainer/VBoxContainer/ScrollContainer"]
+[node name="Entries" type="ItemList" parent="MarginContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="ReturnButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

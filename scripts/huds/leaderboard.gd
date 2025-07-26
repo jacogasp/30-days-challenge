@@ -4,7 +4,7 @@ extends Panel
 @export var score: int = 42
 
 @onready var score_label: Label = $MarginContainer/VBoxContainer/Score;
-@onready var entries_container: VBoxContainer = $MarginContainer/VBoxContainer/ScrollContainer/Entries;
+@onready var entries: ItemList = $MarginContainer/VBoxContainer/ScrollContainer/Entries
 
 @onready var entry_label: PackedScene = preload("res://addons/talo/samples/leaderboards/entry.tscn")
 @onready var return_button: Button = $MarginContainer/VBoxContainer/ReturnButton
@@ -18,17 +18,13 @@ func _ready() -> void:
 	await _load_entries()
 
 func _create_entry(entry: TaloLeaderboardEntry) -> void:
-	# var label = entry_label.instantiate();
-	var label = Label.new()
-	label.text = "%d. %s %d" % [entry.position, entry.player_alias.identifier, entry.score]
-	label.focus_mode=Control.FOCUS_ALL
-	entries_container.add_child(label)
+	var item_text = "%d. %s %d" % [entry.position, entry.player_alias.identifier, entry.score]
+	entries.add_item(item_text)
+	print(entries.item_count)
 
 
 func _build_entries() -> void:
-	for child in entries_container.get_children():
-		child.queue_free()
-
+	entries.clear()
 	for entry in Talo.leaderboards.get_cached_entries(LEADERBOARD):
 		_create_entry(entry)
 
