@@ -71,7 +71,8 @@ max_speed = 1000.0
 [node name="TutorialContainer" parent="SpanwerManager/Player" instance=ExtResource("13_1dqgb")]
 
 [node name="Squid" parent="SpanwerManager" instance=ExtResource("10_44saj")]
-position = Vector2(1098, 451)
+position = Vector2(1098, 453)
+tentacle_position = Array[Vector2]([Vector2(898, 503), Vector2(898, 403), Vector2(948, 553), Vector2(948, 353), Vector2(998, 603), Vector2(998, 303), Vector2(1048, 653), Vector2(1048, 253)])
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 autoplay = true

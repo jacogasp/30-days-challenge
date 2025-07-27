@@ -398,7 +398,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(92, -1), Vector2(23, 1)]
+"values": [Vector2(92, -1), Vector2(51.3198, 0.179136)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -569,12 +569,11 @@ hue_variation_max = 0.05
 hue_variation_curve = SubResource("CurveTexture_jgk6k")
 
 [node name="Squid" type="StaticBody2D"]
-y_sort_enabled = true
 material = SubResource("ShaderMaterial_cctv2")
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_4hv76")
-tentacle_position = Array[Vector2]([Vector2(-200, 50), Vector2(-200, -50), Vector2(-150, 100), Vector2(-150, -100), Vector2(-100, 150), Vector2(-100, -150), Vector2(-50, 200), Vector2(-50, -200)])
+tentacle_position = Array[Vector2]([Vector2(898, 503), Vector2(898, 403), Vector2(948, 553), Vector2(948, 353), Vector2(998, 603), Vector2(998, 303), Vector2(1048, 653), Vector2(1048, 253)])
 
 [node name="ClippingControl" type="Control" parent="."]
 use_parent_material = true
@@ -657,9 +656,6 @@ visible = false
 position = Vector2(-50, 0)
 texture = ExtResource("4_gnmmx")
 
-[node name="Tentacles" type="Node2D" parent="."]
-y_sort_enabled = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_r5k3q")
@@ -672,7 +668,7 @@ shape = SubResource("RectangleShape2D_4hv76")
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_go5yd")
 position = Vector2(-12, 6)
-scale = Vector2(1e-05, 1e-05)
+scale = Vector2(0.5, 0.5)
 amount = 24
 texture = ExtResource("3_5egnv")
 lifetime = 4.0
@@ -684,7 +680,7 @@ process_material = SubResource("ParticleProcessMaterial_tgf1x")
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_go5yd")
 position = Vector2(92, -1)
-scale = Vector2(1e-05, 1e-05)
+scale = Vector2(0.5, 0.5)
 amount = 24
 texture = ExtResource("3_5egnv")
 lifetime = 4.0

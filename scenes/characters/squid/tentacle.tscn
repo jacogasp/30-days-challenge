@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://xxfvjdu4w401"]
+[gd_scene load_steps=31 format=3 uid="uid://xxfvjdu4w401"]
 
 [ext_resource type="Script" uid="uid://ctrh5f2gosnw8" path="res://scripts/characters/squid/tentacle.gd" id="1_ft3dw"]
 [ext_resource type="Texture2D" uid="uid://crdininywr1nk" path="res://assets/squid_tentacle.png" id="1_kh2li"]
@@ -122,7 +122,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_klpos"]
 resource_name = "emerge"
-length = 3.0
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -130,10 +130,10 @@ tracks/0/path = NodePath(".:sprite_position_y")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 3),
+"times": PackedFloat32Array(0, 1.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [540.0, 0.0]
+"values": [540.0, 300.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -142,10 +142,24 @@ tracks/1/path = NodePath("GPUParticles2D:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.68, 3),
+"times": PackedFloat32Array(0, 0.366667, 1.5),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(0.5, 0.5)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"emerged"],
+"method": &"emit_signal"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_6obsa"]
@@ -175,6 +189,20 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
 }
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [&"submerged"],
+"method": &"emit_signal"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yruek"]
 _data = {
@@ -182,6 +210,9 @@ _data = {
 &"emerge": SubResource("Animation_klpos"),
 &"submerge": SubResource("Animation_6obsa")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_klpos"]
+size = Vector2(104, 111)
 
 [node name="Tentacle" type="StaticBody2D"]
 script = ExtResource("1_ft3dw")
@@ -257,3 +288,14 @@ shape = SubResource("RectangleShape2D_ft3dw")
 libraries = {
 &"": SubResource("AnimationLibrary_yruek")
 }
+
+[node name="HurtArea2D" type="Area2D" parent="."]
+collision_layer = 0
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea2D"]
+position = Vector2(-7, -56.5)
+shape = SubResource("RectangleShape2D_klpos")
+
+[connection signal="area_entered" from="HurtArea2D" to="." method="_on_hurt_area_entered"]
