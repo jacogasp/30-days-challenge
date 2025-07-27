@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=16 format=4 uid="uid://ck8mc8bdt2ucf"]
+[gd_resource type="Theme" load_steps=17 format=4 uid="uid://ck8mc8bdt2ucf"]
 
 [ext_resource type="FontFile" uid="uid://hsdb0q5ujxo" path="res://assets/fonts/SometypeMono-VariableFont_wght.ttf" id="2_j6cuv"]
 [ext_resource type="Texture2D" uid="uid://8xymrp3150r5" path="res://assets/panel_texture.png" id="2_s1n0q"]
@@ -677,6 +677,8 @@ shadow_color = Color(0.14, 0.0233333, 0, 0.490196)
 shadow_size = 2
 shadow_offset = Vector2(-1, -1)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j6cuv"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s1n0q"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 border_width_bottom = 2
@@ -1005,7 +1007,7 @@ ItemList/styles/focus = null
 ItemList/styles/hovered = null
 ItemList/styles/hovered_selected = null
 ItemList/styles/hovered_selected_focus = null
-ItemList/styles/panel = null
+ItemList/styles/panel = SubResource("StyleBoxEmpty_j6cuv")
 ItemList/styles/selected = null
 ItemList/styles/selected_focus = null
 Label/colors/font_color = Color(1, 1, 1, 1)

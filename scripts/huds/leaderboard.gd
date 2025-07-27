@@ -13,7 +13,10 @@ var LEADERBOARD = "30 Days Challenge"
 signal return_pressed
 
 func _ready() -> void:
-	score_label.text = "Your score: %d" % GameManager.current_score()
+	if GameManager.current_score() == 0:
+		score_label.text = "High Score: %d" % GameManager.high_score()
+	else:
+		score_label.text = "Current Score: %d" % GameManager.current_score()
 	return_button.grab_focus()
 	await _load_entries()
 

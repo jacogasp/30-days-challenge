@@ -52,6 +52,7 @@ func _on_submit_button_pressed(username: String = username_box.text) -> void:
 	await Talo.players.identify("username", username)
 	var result := await Talo.leaderboards.add_entry(LEADERBOARD, GameManager.current_score())
 	if is_instance_valid(result):
+		await leaderboard_panel._load_entries() 
 		submit_button.text = "Added!"
 	else:
 		submit_button.disabled = false
