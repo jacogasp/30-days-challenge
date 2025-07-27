@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://baxxi07n6ueq"]
+
+[ext_resource type="Script" uid="uid://2wl2e5w5xhue" path="res://scripts/weapons/enemy_gun.gd" id="1_me4q0"]
+[ext_resource type="PackedScene" uid="uid://e8agkwdf57mo" path="res://scenes/weapons/enemy_bullet.tscn" id="2_h4yn1"]
+[ext_resource type="AudioStream" uid="uid://c0mv1to8rxw5e" path="res://assets/sounds/water-splash-04.mp3" id="3_qb5tl"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_u07no"]
+random_pitch = 1.5
+streams_count = 1
+stream_0/stream = ExtResource("3_qb5tl")
+
+[node name="EnemyGun" type="Node2D"]
+script = ExtResource("1_me4q0")
+bullet_scene = ExtResource("2_h4yn1")
+metadata/_custom_type_script = "uid://2wl2e5w5xhue"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_u07no")
+bus = &"Effects"

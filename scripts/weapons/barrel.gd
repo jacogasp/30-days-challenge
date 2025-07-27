@@ -2,13 +2,13 @@ class_name Barrel
 extends Area2D
 
 @export var damage: int = 5
-@export var audio_samples: Array[AudioStreamMP3] = []
 
 @onready var sprite = $ClippingContainer/Sprite2D
 @onready var wave_particles = $WaveParticles
 @onready var explosion_particles = $ExplosionParticles
 @onready var queue_free_timer = $QueueFreeTimer
-@onready var audio_streamer = $AudioStreamPlayer2D
+@onready var hit_audio_player = $HitAudioStreamPlayer2D
+@onready var explode_audio_player = $ExplodeAudioStreamPlayer2D
 
 var exploding: bool = false
 
@@ -25,18 +25,19 @@ func _process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	# Interact only with player and its bullets
+	print("heloo")
 	if not exploding:
 		if area.has_method("hit"):
 			area.call("hit", damage)
-		_explode()
+		_explode(false)
 
 
 func hit(_damage: float) -> void:
 	if not exploding:
-		_explode()
+		_explode(true)
 
 
-func _explode() -> void:
+func _explode(by_bullet: bool) -> void:
 	explosion_particles.emitting = true
 	wave_particles.visible = false
 	wave_particles.emitting = false
@@ -45,8 +46,10 @@ func _explode() -> void:
 	set_physics_process(false)
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
-	audio_streamer.stream = audio_samples[randi() % 2]
-	audio_streamer.play()
+	if by_bullet:
+		hit_audio_player.play()
+	else:
+		explode_audio_player.play()
 	queue_free_timer.start()
 	exploding = true
 

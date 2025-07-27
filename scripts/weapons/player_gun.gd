@@ -4,6 +4,8 @@ extends Node2D
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 4
 
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 enum FireMode {Single, Double, Triple}
 
 var bullet_pool: BulletPool
@@ -36,7 +38,7 @@ func fire_bullet():
 			bullet.enable()
 		FireMode.Double:
 			var bullet1 = bullet_pool.get_bullet()
-			var offset = Vector2(0,6)
+			var offset = Vector2(0, 6)
 			bullet1.fire(global_position - offset, Vector2.RIGHT)
 			bullet1.scale = Vector2(0.5, 0.5)
 			bullet1.enable()
@@ -46,7 +48,7 @@ func fire_bullet():
 			bullet2.enable()
 		FireMode.Triple:
 			var bullet1 = bullet_pool.get_bullet()
-			var offset = Vector2(0,12)
+			var offset = Vector2(0, 12)
 			bullet1.fire(global_position - offset, Vector2.RIGHT)
 			bullet1.scale = Vector2(0.5, 0.5)
 			bullet1.enable()
@@ -58,6 +60,7 @@ func fire_bullet():
 			bullet3.fire(global_position + offset, Vector2.RIGHT)
 			bullet3.scale = Vector2(0.5, 0.5)
 			bullet3.enable()
+	audio_player.play()
 
 
 func fire():

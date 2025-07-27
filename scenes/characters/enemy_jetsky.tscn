@@ -1,15 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://bhoyouxleboe5"]
+[gd_scene load_steps=25 format=3 uid="uid://bhoyouxleboe5"]
 
-[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="1_gp8bm"]
+[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="1_gp8bm"]
 [ext_resource type="Script" uid="uid://ch1pwdx0r0oif" path="res://scripts/characters/enemy_jetsky.gd" id="2_evihf"]
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="3_vrxba"]
 [ext_resource type="Texture2D" uid="uid://bbommvrw07r16" path="res://assets/jetsky-body.png" id="4_520sm"]
 [ext_resource type="AudioStream" uid="uid://bdvtddvqp3tbp" path="res://assets/sounds/water-splash-03.mp3" id="4_ex4mq"]
 [ext_resource type="Texture2D" uid="uid://b5do4dky6hy86" path="res://assets/jetsky-livrea.png" id="5_ex4mq"]
+[ext_resource type="PackedScene" uid="uid://baxxi07n6ueq" path="res://scenes/weapons/enemy_gun.tscn" id="9_71f66"]
 [ext_resource type="Shader" uid="uid://baiui31kxvioe" path="res://shaders/clip_y.gdshader" id="9_ibc4h"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="10_m2esv"]
-[ext_resource type="Script" uid="uid://2wl2e5w5xhue" path="res://scripts/weapons/enemy_gun.gd" id="11_2d7sa"]
-[ext_resource type="PackedScene" uid="uid://e8agkwdf57mo" path="res://scenes/weapons/enemy_bullet.tscn" id="12_2kxwq"]
+[ext_resource type="AudioStream" uid="uid://u0ploi5nj0e6" path="res://assets/sounds/water-splash-01.mp3" id="10_vjctw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ovt1e"]
 resource_local_to_scene = true
@@ -95,6 +95,11 @@ _data = {
 &"idle": SubResource("Animation_ovt1e")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vjctw"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("4_ex4mq")
+
 [node name="EnemyJetsky" type="Area2D" groups=["enemy"]]
 material = SubResource("ShaderMaterial_ovt1e")
 collision_layer = 320
@@ -105,7 +110,6 @@ starting_sailors = 1
 sailor_scene = ExtResource("3_vrxba")
 min_fire_time = 0.3
 max_fire_time = 3.0
-splash_samples = Array[AudioStreamMP3]([ExtResource("4_ex4mq")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, -8)
@@ -170,20 +174,23 @@ horizontal_alignment = 1
 wait_time = 3.0
 autostart = true
 
-[node name="EnemyGun" type="Node2D" parent="."]
-position = Vector2(1, -10)
-script = ExtResource("11_2d7sa")
-bullet_scene = ExtResource("12_2kxwq")
-metadata/_custom_type_script = "uid://2wl2e5w5xhue"
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_hvulg")
 }
 autoplay = "idle"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-volume_db = -5.0
+[node name="EnemyGun" parent="." instance=ExtResource("9_71f66")]
+position = Vector2(2, -9)
+
+[node name="HitAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_vjctw")
+bus = &"Effects"
+
+[node name="SinkAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, 1)
+stream = ExtResource("10_vjctw")
+bus = &"Effects"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

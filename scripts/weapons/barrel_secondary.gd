@@ -9,7 +9,7 @@ func _on_area_entered(area: Area2D) -> void:
 		if success:
 			_pickup()
 		else:
-			_explode()	
+			_explode(area.is_in_group("bullet"))
 
 func _pickup():
 	GameManager.spaw_pickup_label(global_position, "S")
@@ -20,7 +20,6 @@ func _pickup():
 	set_physics_process(false)
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
-	audio_streamer.play()
+	hit_audio_player.play()
 	queue_free_timer.start()
 	exploding = true
-	

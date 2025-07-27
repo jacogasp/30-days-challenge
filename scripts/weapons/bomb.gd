@@ -14,6 +14,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if area is Bullet:
 		area.disable()
 	if area is Barrel:
-		area._explode()
+		area._explode(true)
 	if area is Enemy:
 		area.hit(50)
