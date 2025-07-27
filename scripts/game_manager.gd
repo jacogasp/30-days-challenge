@@ -13,11 +13,14 @@ var _difficulty: int = 1
 var _hit_count_decrease_rate: float = 10
 var bomb_count: int = 0
 var power_level: int = 1
-const MAX_BOMB_COUNT:int = 5
-const MAX_POWER_LEVEL:int = 4
+var playback: AudioStreamPlaybackInteractive
+const MAX_BOMB_COUNT: int = 5
+const MAX_POWER_LEVEL: int = 4
+
 @onready var last_hit_timer: Timer = $LastHitTimer
 @onready var bomb_timer: Timer = $BombTimer
-@onready var soundtrack: AudioStreamPlayer = $Soundtrack
+@onready var audio_player: AudioStreamPlayer = $Soundtrack
+
 
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
 
@@ -32,13 +35,17 @@ signal bomb_deployed
 signal bomb_count_updated
 signal power_level_updated
 
+
+func _ready() -> void:
+	playback = audio_player.get_stream_playback()
+
+
 func _process(delta: float) -> void:
 	if not _game_is_running:
 		return
 	if last_hit_timer.time_left == 0 && _hit_count > 0:
 		_hit_count -= _hit_count_decrease_rate * delta
 		hit_count_updated.emit(hit_count(), false)
-		
 
 
 	_score += Globals.tick_score * Globals.tick_score_multiplier * delta
@@ -51,10 +58,12 @@ func _process(delta: float) -> void:
 
 func start() -> void:
 	_game_is_running = true
+	playback.switch_to_clip_by_name("Soundtrack")
 
 
 func stop() -> void:
 	_game_is_running = false
+	playback.switch_to_clip_by_name("Intro")
 
 
 func reset() -> void:
@@ -166,12 +175,14 @@ func spawn_sailor_loaded_score(pos: Vector2) -> void:
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 
+
 func spaw_pickup_label(pos: Vector2, text: String) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
 	popup_score.global_position = pos
-	Globals.player.add_sibling(popup_score)	
+	Globals.player.add_sibling(popup_score)
 	popup_score.text = text
 	popup_score.add_theme_font_override("font", load("res://assets/fonts/Bungee-Regular.ttf"))
+
 
 func deploy_bomb() -> void:
 	if bomb_timer.time_left > 0:
@@ -184,6 +195,7 @@ func deploy_bomb() -> void:
 	bomb_count_updated.emit(bomb_count)
 	bomb_deployed.emit()
 
+
 func gain_bomb() -> bool:
 	if bomb_count < MAX_BOMB_COUNT:
 		bomb_count += 1
@@ -191,12 +203,14 @@ func gain_bomb() -> bool:
 		return true
 	return false
 
+
 func powerup() -> bool:
 	if power_level < MAX_POWER_LEVEL:
 		power_level += 1
 		power_level_updated.emit(power_level)
 		return true
-	return false	
+	return false
+
 
 func _game_over() -> void:
 	stop()
@@ -208,7 +222,8 @@ func _game_over() -> void:
 
 
 func stop_music() -> void:
-	soundtrack.stop()
+	audio_player.stop()
+
 
 func play_music() -> void:
-	soundtrack.play()
+	audio_player.play()

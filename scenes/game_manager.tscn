@@ -1,15 +1,71 @@
-[gd_scene load_steps=3 format=3 uid="uid://c73hg2hv4xcav"]
+[gd_scene load_steps=6 format=3 uid="uid://c73hg2hv4xcav"]
 
 [ext_resource type="Script" uid="uid://dpxvg3lhg3jry" path="res://scripts/game_manager.gd" id="1_hwd4i"]
-[ext_resource type="AudioStream" uid="uid://c7iaopdj28m5m" path="res://assets/sounds/soundtrack.mp3" id="2_glms7"]
+[ext_resource type="AudioStream" uid="uid://3ufgpojuwaq6" path="res://assets/sounds/intro.wav" id="2_eaq8r"]
+[ext_resource type="AudioStream" uid="uid://dfxnr3hooyacg" path="res://assets/sounds/intro_loop.wav" id="4_ternb"]
+[ext_resource type="AudioStream" uid="uid://ml5qlx061vl" path="res://assets/sounds/soundtrack.wav" id="5_q8mjp"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_q8mjp"]
+clip_count = 5
+clip_0/name = &"Intro"
+clip_0/stream = ExtResource("2_eaq8r")
+clip_0/auto_advance = 1
+clip_0/next_clip = 1
+clip_1/name = &"Intro Loop"
+clip_1/stream = ExtResource("4_ternb")
+clip_1/auto_advance = 1
+clip_1/next_clip = 2
+clip_2/name = &"Intro Loop 2"
+clip_2/stream = ExtResource("4_ternb")
+clip_2/auto_advance = 1
+clip_2/next_clip = 1
+clip_3/name = &"Soundtrack"
+clip_3/stream = ExtResource("5_q8mjp")
+clip_3/auto_advance = 1
+clip_3/next_clip = 4
+clip_4/name = &"Sountrack 2"
+clip_4/stream = ExtResource("5_q8mjp")
+clip_4/auto_advance = 1
+clip_4/next_clip = 3
+_transitions = {
+Vector2i(0, -1): {
+"fade_beats": 1.0,
+"fade_mode": 0,
+"from_time": 3,
+"to_time": 1
+},
+Vector2i(1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 0,
+"from_time": 3,
+"to_time": 1
+},
+Vector2i(2, -1): {
+"fade_beats": 1.0,
+"fade_mode": 0,
+"from_time": 3,
+"to_time": 1
+},
+Vector2i(3, -1): {
+"fade_beats": 1.0,
+"fade_mode": 4,
+"from_time": 3,
+"to_time": 1
+},
+Vector2i(4, -1): {
+"fade_beats": 1.0,
+"fade_mode": 0,
+"from_time": 3,
+"to_time": 1
+}
+}
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource("1_hwd4i")
 
 [node name="Soundtrack" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("2_glms7")
+stream = SubResource("AudioStreamInteractive_q8mjp")
 autoplay = true
-parameters/looping = true
 
 [node name="BombTimer" type="Timer" parent="."]
 wait_time = 5.0
