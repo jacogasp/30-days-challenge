@@ -10,17 +10,21 @@ var _score: float = 0
 var _current_score: int = 0
 var _difficulty_growth_base: float = 0.11
 var _difficulty: int = 1
+var _difficulty_offset: int = 0
 var _hit_count_decrease_rate: float = 10
 var bomb_count: int = 0
 var power_level: int = 1
 var playback: AudioStreamPlaybackInteractive
 var music_enabled: bool = true
+var squid_alive: bool = false
 const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
 
 @onready var last_hit_timer: Timer = $LastHitTimer
 @onready var bomb_timer: Timer = $BombTimer
 @onready var audio_player: AudioStreamPlayer = $Soundtrack
+@onready var squid_enter_timer: Timer = $SquidEnterTimer
+@onready var squid_exit_timer: Timer = $SquidExitTimer
 
 
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
@@ -35,6 +39,8 @@ signal game_over
 signal bomb_deployed
 signal bomb_count_updated
 signal power_level_updated
+signal squid_entered
+signal squid_exited
 
 
 func _ready() -> void:
@@ -103,7 +109,7 @@ func hit_count() -> int:
 
 
 func _update_difficulty() -> void:
-	var difficulty: int = ceil(_difficulty_growth_base * sqrt(_score))
+	var difficulty: int = ceil(_difficulty_growth_base * sqrt(_score)) - _difficulty_offset
 	if difficulty > _difficulty:
 		_difficulty = difficulty
 		difficulty_changed.emit(current_difficulty())
@@ -237,3 +243,20 @@ func disable_music() -> void:
 func enable_music() -> void:
 	music_enabled = true
 	audio_player.play()
+
+
+func _on_squid_enter_timer_timeout() -> void:
+	squid_alive = true
+	squid_exit_timer.start()
+	squid_entered.emit()
+	print("squid entered")
+	
+
+func _on_squid_exit_timer_timeout() -> void:
+	squid_alive = false
+	squid_enter_timer.start()
+	squid_exited.emit()
+	_difficulty_offset += round(float(_difficulty) * 0.25)
+	_difficulty -= _difficulty_offset
+	difficulty_changed.emit(current_difficulty())
+	print("squid exited")
