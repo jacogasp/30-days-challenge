@@ -14,6 +14,7 @@ var _hit_count_decrease_rate: float = 10
 var bomb_count: int = 0
 var power_level: int = 1
 var playback: AudioStreamPlaybackInteractive
+var music_enabled: bool = true
 const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
 
@@ -58,12 +59,19 @@ func _process(delta: float) -> void:
 
 func start() -> void:
 	_game_is_running = true
-	playback.switch_to_clip_by_name("Soundtrack")
+	if music_enabled:
+		play_soundtrack()
 
 
 func stop() -> void:
 	_game_is_running = false
 	playback.switch_to_clip_by_name("Intro")
+
+
+func play_soundtrack() -> void:
+	var stream: AudioStreamInteractive = audio_player.stream
+	if stream.get_clip_name(playback.get_current_clip_index()) != "Soundtrack":
+			playback.switch_to_clip_by_name("Soundtrack")
 
 
 func reset() -> void:
@@ -221,9 +229,11 @@ func _game_over() -> void:
 	game_over.emit(is_new_high_score)
 
 
-func stop_music() -> void:
+func disable_music() -> void:
+	music_enabled = false
 	audio_player.stop()
 
 
-func play_music() -> void:
+func enable_music() -> void:
+	music_enabled = true
 	audio_player.play()

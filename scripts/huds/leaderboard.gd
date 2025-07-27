@@ -1,33 +1,29 @@
-extends Control
+extends Panel
 
 
 @export var score: int = 42
 
-@onready var score_label: Label = $Panel/MarginContainer/VBoxContainer/Score;
-@onready var entries_container: VBoxContainer = $Panel/MarginContainer/VBoxContainer/ScrollContainer/Entries;
-@onready var username: LineEdit = $Panel/MarginContainer/VBoxContainer/Username;
+@onready var score_label: Label = $MarginContainer/VBoxContainer/Score;
+@onready var entries: ItemList = $MarginContainer/VBoxContainer/ScrollContainer/Entries
 
 @onready var entry_label: PackedScene = preload("res://addons/talo/samples/leaderboards/entry.tscn")
+@onready var return_button: Button = $MarginContainer/VBoxContainer/ReturnButton
 
 var LEADERBOARD = "30 Days Challenge"
-
+signal return_pressed
 
 func _ready() -> void:
-	score_label.text = "Your score: %d" % score
+	score_label.text = "Your score: %d" % GameManager.current_score()
+	return_button.grab_focus()
 	await _load_entries()
 
-
 func _create_entry(entry: TaloLeaderboardEntry) -> void:
-	# var label = entry_label.instantiate();
-	var label = Label.new()
-	label.text = "%d. %s %d" % [entry.position, entry.player_alias.identifier, entry.score]
-	entries_container.add_child(label)
+	var item_text = "%d. %s %d" % [entry.position, entry.player_alias.identifier, entry.score]
+	entries.add_item(item_text)
 
 
 func _build_entries() -> void:
-	for child in entries_container.get_children():
-		child.queue_free()
-
+	entries.clear()
 	for entry in Talo.leaderboards.get_cached_entries(LEADERBOARD):
 		_create_entry(entry)
 
@@ -47,3 +43,7 @@ func _load_entries() -> void:
 			page += 1
 
 	_build_entries()
+
+
+func _on_return_button_pressed() -> void:
+	return_pressed.emit()

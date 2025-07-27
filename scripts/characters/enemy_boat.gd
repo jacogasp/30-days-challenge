@@ -6,8 +6,9 @@ extends Enemy
 @onready var barrel_emitter: Node2D = $BarrelEmitter
 @onready var barrel_timer: Timer = $BarrelTimer
 
-var barrel_primary_chance: float = 0.3
-var barrel_secondary_chance: float = 0.3
+var barrel_tnt_chance: float = 1
+var barrel_primary_chance: float = 0.4
+var barrel_secondary_chance: float = 0.4
 
 func _ready() -> void:
 	var enemy_color = Color.from_hsv(randf(), randf_range(0.5, 0.7), randf_range(0.8, 0.9))
@@ -27,6 +28,10 @@ func _ready() -> void:
 	_set_up_timer()
 
 func _physics_process(delta: float) -> void:
+	if is_sinking:
+		direction.x -= (Globals.world_speed * 0.5 * delta)
+		direction.x = max(direction.x, -Globals.world_speed * 0.5)
+
 	position += direction * delta
 
 	if not fully_visible and is_fully_visible():
@@ -35,13 +40,14 @@ func _physics_process(delta: float) -> void:
 		barrel_timer.start()
 
 func _on_barrel_timer_timeout() -> void:
-	if is_sinking or GameManager._game_is_running == false:
+	if is_sinking or GameManager._game_is_running == false or not fully_visible:
 		return
-	if randf() < barrel_primary_chance:
-		if randf() < barrel_secondary_chance:
-			barrel_emitter.drop_barrel_secondary()
-		else:
-			barrel_emitter.drop_barrel_primary()
-	else:
+	var total_chance = barrel_primary_chance + barrel_secondary_chance + barrel_tnt_chance
+	var random_roll: float = randf_range(0.0, total_chance)
+	if random_roll <= barrel_tnt_chance:
 		barrel_emitter.fire()
+	elif random_roll <= barrel_tnt_chance + barrel_primary_chance:
+		barrel_emitter.drop_barrel_primary()
+	else:
+		barrel_emitter.drop_barrel_secondary()
 	barrel_timer.wait_time = randf_range(barrel_emitter.min_fire_time, barrel_emitter.max_fire_time)

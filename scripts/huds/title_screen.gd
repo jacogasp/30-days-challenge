@@ -7,11 +7,15 @@ extends Control
 @onready var livrea_a: Sprite2D = %LivreaA
 @onready var livrea_b: Sprite2D = %LivreaB
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player_2: AnimationPlayer = $AnimationPlayer2
+@onready var v_box_container: VBoxContainer = $Control/Control/Panel/VBoxContainer
+@onready var leaderboard_panel: Panel = $LeaderboardPanel
 
 @export var main_path:String = "res://scenes/main.tscn"
 
 func _ready() -> void:
 	new_game_button.grab_focus()
+	leaderboard_panel.connect("return_pressed", _return_from_leaderboard)
 	update_subviewport()
 
 
@@ -19,10 +23,10 @@ func _on_music_button_toggled(toggled_on: bool) -> void:
 	Globals.music_enabled = toggled_on
 	if toggled_on:
 		music_button.text = "Music: ON"
-		GameManager.play_music()
+		GameManager.enable_music()
 	else:
 		music_button.text = "Music: OFF"
-		GameManager.stop_music()
+		GameManager.disable_music()
 
 
 func _on_sound_button_toggled(toggled_on: bool) -> void:
@@ -74,3 +78,20 @@ func _on_livrea_color_prev_button_pressed() -> void:
 func _on_livrea_color_next_button_pressed() -> void:
 	Globals.player_livreaColor = wrapi(Globals.player_livreaColor + 1, 0, Globals.colors.size())
 	update_subviewport()
+
+
+func _on_leaderboard_button_pressed() -> void:
+	v_box_container.process_mode = Node.PROCESS_MODE_DISABLED
+	animation_player.play_backwards("open")
+	animation_player_2.play("leaderboard_slidein")
+	await animation_player.animation_finished
+	leaderboard_panel.process_mode = Node.PROCESS_MODE_ALWAYS
+	leaderboard_panel.return_button.grab_focus()
+
+
+func _return_from_leaderboard() -> void:
+	leaderboard_panel.process_mode = Node.PROCESS_MODE_DISABLED
+	animation_player.play("open")
+	animation_player_2.play_backwards("leaderboard_slidein")
+	await animation_player.animation_finished
+	v_box_container.process_mode = Node.PROCESS_MODE_ALWAYS

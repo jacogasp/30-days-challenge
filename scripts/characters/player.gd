@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var max_speed: float = 500.0
 @export var sailor_scene: PackedScene
 @export var starting_sailor_count: int = 5
-@export var max_number_sailor: int = 30
+@export var max_number_sailor: int = 20
 @export var invulnerability_duration: float = 2.0 # Duration in seconds
 @export var blink_interval: float = 0.1 # How fast the blinking effect
 @export var flash_duration: float = 0.05 # Duration of white flash on hit

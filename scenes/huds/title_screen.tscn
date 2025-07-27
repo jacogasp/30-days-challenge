@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dma35pbfn8m8g"]
+[gd_scene load_steps=16 format=3 uid="uid://dma35pbfn8m8g"]
 
 [ext_resource type="Texture2D" uid="uid://2si6vfln8py2" path="res://assets/title_screen.jpeg" id="1_fgkus"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_mykxm"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://f7xqgymvgmag" path="res://assets/livrea/livrea_b1.png" id="6_tklts"]
 [ext_resource type="Texture2D" uid="uid://bebaitffrwg08" path="res://assets/boat-body.png" id="7_u26n3"]
 [ext_resource type="Texture2D" uid="uid://dmco0ljbr2oav" path="res://assets/game_title.png" id="8_cs5ya"]
+[ext_resource type="PackedScene" uid="uid://c4k74wivm11aa" path="res://scenes/huds/leaderboard.tscn" id="10_4jlpf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ib7db"]
 shader = ExtResource("3_3yumr")
@@ -51,6 +52,40 @@ tracks/2/keys = {
 "update": 0,
 "values": [-0.155865]
 }
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LeaderboardPanel:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-610, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LeaderboardPanel:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(110, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LeaderboardPanel:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.15708]
+}
 
 [sub_resource type="Animation" id="Animation_a4b44"]
 resource_name = "open"
@@ -63,7 +98,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "handle_modes": PackedInt32Array(0, 2),
-"points": PackedFloat32Array(1280, -0.25, 0, 0.160428, 105.794, 900, -0.140674, -99.5259, 0.0270942, 19.1689),
+"points": PackedFloat32Array(1280, -0.25, 0, 0.160428, 105.794, 890, -0.140674, -99.5259, 0.0270942, 19.1689),
 "times": PackedFloat32Array(0, 0.433333)
 }
 tracks/1/type = "bezier"
@@ -74,7 +109,7 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "handle_modes": PackedInt32Array(0, 0),
-"points": PackedFloat32Array(248, -0.25, 0, 0.25, 0, 248, -0.25, 0, 0.25, 0),
+"points": PackedFloat32Array(200, -0.25, 0, 0.25, 0, 200, -0.25, 0, 0.25, 0),
 "times": PackedFloat32Array(0, 0.5)
 }
 tracks/2/type = "value"
@@ -90,9 +125,48 @@ tracks/2/keys = {
 "values": [0.0, -0.155865]
 }
 
+[sub_resource type="Animation" id="Animation_7xci6"]
+resource_name = "leaderboard_slidein"
+length = 0.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LeaderboardPanel:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-610, -0.25, 0, 0.25, 0, 340, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LeaderboardPanel:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(110, -0.25, 0, 0.25, 0, 110, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.5)
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LeaderboardPanel:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.15708, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7xci6"]
 _data = {
 &"RESET": SubResource("Animation_4jlpf"),
+&"leaderboard_slidein": SubResource("Animation_7xci6"),
 &"open": SubResource("Animation_a4b44")
 }
 
@@ -121,16 +195,14 @@ layout_mode = 0
 offset_left = 900.0
 offset_top = 248.0
 offset_right = 1711.0
-offset_bottom = 748.0
+offset_bottom = 798.0
 rotation = -0.155865
 
 [node name="Control" type="Control" parent="Control"]
-layout_mode = 2
-anchors_preset = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 787.0
-offset_bottom = 476.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -142,10 +214,10 @@ anchor_bottom = 1.0
 offset_right = -418.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 24
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_top = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_bottom = 28
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/Control/Panel"]
 layout_mode = 2
@@ -153,7 +225,7 @@ layout_mode = 2
 [node name="NewGameButton" type="Button" parent="Control/Control/Panel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-focus_neighbor_top = NodePath("../CustomColorContainer/VBoxContainer2/LivreaColorNextButton")
+focus_neighbor_top = NodePath("../LeaderboardButton")
 focus_neighbor_bottom = NodePath("../MusicButton")
 theme_override_font_sizes/font_size = 64
 text = "New Game"
@@ -217,7 +289,7 @@ size_flags_horizontal = 4
 focus_neighbor_left = NodePath("../../VBoxContainer2/LivreaBNextButton")
 focus_neighbor_top = NodePath("../LivreaBPrevButton")
 focus_neighbor_right = NodePath("../../VBoxContainer2/LivreaColorNextButton")
-focus_neighbor_bottom = NodePath("../../../NewGameButton")
+focus_neighbor_bottom = NodePath("../../../LeaderboardButton")
 focus_next = NodePath("../../VBoxContainer2/LivreaColorNextButton")
 focus_previous = NodePath("../../VBoxContainer2/LivreaBNextButton")
 theme_override_font_sizes/font_size = 32
@@ -295,11 +367,19 @@ size_flags_horizontal = 4
 focus_neighbor_left = NodePath("../../VBoxContainer/LivreaColorPrevButton")
 focus_neighbor_top = NodePath("../LivreaBNextButton")
 focus_neighbor_right = NodePath("../../../NewGameButton")
-focus_neighbor_bottom = NodePath("../../../NewGameButton")
-focus_next = NodePath("../../../NewGameButton")
+focus_neighbor_bottom = NodePath("../../../LeaderboardButton")
+focus_next = NodePath("../../../LeaderboardButton")
 focus_previous = NodePath("../../VBoxContainer/LivreaColorPrevButton")
 theme_override_font_sizes/font_size = 32
 text = ">"
+
+[node name="LeaderboardButton" type="Button" parent="Control/Control/Panel/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../CustomColorContainer/VBoxContainer/LivreaColorPrevButton")
+focus_neighbor_bottom = NodePath("../NewGameButton")
+focus_next = NodePath("../NewGameButton")
+focus_previous = NodePath("../CustomColorContainer/VBoxContainer2/LivreaColorNextButton")
+text = "Leaderboard"
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 layout_mode = 0
@@ -309,7 +389,29 @@ offset_right = 1186.0
 offset_bottom = 155.0
 texture = ExtResource("8_cs5ya")
 
+[node name="LeaderboardPanel" parent="." instance=ExtResource("10_4jlpf")]
+process_mode = 4
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -610.0
+offset_top = 110.0
+offset_right = -10.0
+offset_bottom = 610.0
+grow_horizontal = 1
+grow_vertical = 1
+rotation = 0.15708
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_7xci6")
+}
+autoplay = "open"
+
+[node name="AnimationPlayer2" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_7xci6")
 }
@@ -324,3 +426,4 @@ autoplay = "open"
 [connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2/LivreaANextButton" to="." method="_on_livrea_a_next_button_pressed"]
 [connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2/LivreaBNextButton" to="." method="_on_livrea_b_next_button_pressed"]
 [connection signal="pressed" from="Control/Control/Panel/VBoxContainer/CustomColorContainer/VBoxContainer2/LivreaColorNextButton" to="." method="_on_livrea_color_next_button_pressed"]
+[connection signal="pressed" from="Control/Control/Panel/VBoxContainer/LeaderboardButton" to="." method="_on_leaderboard_button_pressed"]
