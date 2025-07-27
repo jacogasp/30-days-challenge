@@ -102,8 +102,8 @@ stream_0/stream = ExtResource("4_ex4mq")
 
 [node name="EnemyJetsky" type="Area2D" groups=["enemy"]]
 material = SubResource("ShaderMaterial_ovt1e")
-collision_layer = 320
-collision_mask = 272
+collision_layer = 64
+collision_mask = 80
 script = ExtResource("2_evihf")
 health_max = 20
 starting_sailors = 1

@@ -24,15 +24,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="1"
-     inkscape:cx="816"
-     inkscape:cy="358"
-     inkscape:window-width="2560"
-     inkscape:window-height="1363"
+     inkscape:zoom="4"
+     inkscape:cx="415.75"
+     inkscape:cy="70.5"
+     inkscape:window-width="1920"
+     inkscape:window-height="1115"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer6" />
+     inkscape:current-layer="svg1" />
   <defs
      id="defs1">
     <rect
@@ -186,6 +186,13 @@
          d="m 279.138,127.27854 c 0.89768,4.96212 -16.07363,6.71894 -18.12344,6.91275 l 0.59221,0.77928 c 0,0 9.1612,1.25677 16.47031,-1.81901 4.61131,-1.9405 2.93017,-4.35506 1.06092,-5.87302 z" />
     </g>
   </g>
+  <path
+     id="path37"
+     style="fill:#2effff;fill-opacity:0.498993;stroke-width:1.27346;stroke-linecap:round;stroke-linejoin:round"
+     d="m 128.11812,5.820833 a 7.2035315,13.659113 0 0 0 -7.20353,13.659115 7.2035315,13.659113 0 0 0 7.20353,13.659114 7.2035315,13.659113 0 0 0 0.80217,-0.08778 7.2035315,13.659113 0 0 1 -6.40492,-13.571335 7.2035315,13.659113 0 0 1 6.40492,-13.5713358 7.2035315,13.659113 0 0 0 -0.80217,-0.087778 z"
+     inkscape:export-filename="../assets/shield.png"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96" />
   <g
      inkscape:groupmode="layer"
      id="layer4"

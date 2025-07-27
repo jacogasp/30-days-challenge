@@ -1,9 +1,57 @@
-[gd_scene load_steps=14 format=3 uid="uid://xxfvjdu4w401"]
+[gd_scene load_steps=30 format=3 uid="uid://xxfvjdu4w401"]
 
-[ext_resource type="Script" uid="uid://ctrh5f2gosnw8" path="res://scripts/tentacle.gd" id="1_ft3dw"]
+[ext_resource type="Script" uid="uid://ctrh5f2gosnw8" path="res://scripts/characters/squid/tentacle.gd" id="1_ft3dw"]
 [ext_resource type="Texture2D" uid="uid://crdininywr1nk" path="res://assets/squid_tentacle.png" id="1_kh2li"]
 [ext_resource type="Shader" uid="uid://djuuerf104onu" path="res://shaders/wave.gdshader" id="2_nlkkr"]
+[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="2_qvuu3"]
+[ext_resource type="Texture2D" uid="uid://mdjv386vota2" path="res://assets/barrel_powerup.png" id="3_bk88m"]
+[ext_resource type="Script" uid="uid://bgdlmj3enealc" path="res://scripts/characters/squid/barrel_area.gd" id="3_klpos"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_myfbf"]
+[ext_resource type="AudioStream" uid="uid://dxsky5y5et7fl" path="res://assets/sounds/water-splash-02.mp3" id="5_klpos"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_klpos"]
+resource_local_to_scene = true
+shader = ExtResource("2_qvuu3")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yruek"]
+radius = 53.6004
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_yruek"]
+random_pitch = 1.2
+streams_count = 1
+stream_0/stream = ExtResource("5_klpos")
+
+[sub_resource type="Curve" id="Curve_6obsa"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.0492064), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_7kgum"]
+curve = SubResource("Curve_6obsa")
+
+[sub_resource type="Curve" id="Curve_10jpc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.95942, 0.228571), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_cthek"]
+curve = SubResource("Curve_10jpc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_t3xm7"]
+lifetime_randomness = 0.6
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(15, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 445.4
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 98, 0)
+scale_min = 0.2
+scale_max = 0.4
+scale_curve = SubResource("CurveTexture_cthek")
+alpha_curve = SubResource("CurveTexture_7kgum")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_go5yd"]
 shader = ExtResource("2_nlkkr")
@@ -45,8 +93,133 @@ hue_variation_curve = SubResource("CurveTexture_jgk6k")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ft3dw"]
 size = Vector2(79, 26)
 
+[sub_resource type="Animation" id="Animation_yruek"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:sprite_position_y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [540.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_klpos"]
+resource_name = "emerge"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:sprite_position_y")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [540.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.68, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_6obsa"]
+resource_name = "submerge"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:sprite_position_y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 540.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yruek"]
+_data = {
+&"RESET": SubResource("Animation_yruek"),
+&"emerge": SubResource("Animation_klpos"),
+&"submerge": SubResource("Animation_6obsa")
+}
+
 [node name="Tentacle" type="StaticBody2D"]
 script = ExtResource("1_ft3dw")
+sprite_position_y = 540.0
+
+[node name="BarrelArea" type="Area2D" parent="."]
+material = SubResource("ShaderMaterial_klpos")
+position = Vector2(-9, -187)
+collision_layer = 32
+collision_mask = 16
+script = ExtResource("3_klpos")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BarrelArea"]
+position = Vector2(12, 4)
+shape = SubResource("CircleShape2D_yruek")
+
+[node name="BarrelSprite" type="Sprite2D" parent="BarrelArea"]
+use_parent_material = true
+rotation = -0.245433
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_bk88m")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BarrelArea/BarrelSprite"]
+stream = SubResource("AudioStreamRandomizer_yruek")
+
+[node name="ExplosionParticles" type="GPUParticles2D" parent="BarrelArea"]
+z_index = 100
+position = Vector2(1, -14)
+emitting = false
+amount = 32
+texture = ExtResource("3_myfbf")
+lifetime = 2.0
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+local_coords = true
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_t3xm7")
 
 [node name="ClippingControl" type="Control" parent="."]
 clip_contents = true
@@ -67,7 +240,7 @@ offset = Vector2(-75, -300)
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_go5yd")
 position = Vector2(60, 0)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(1e-05, 1e-05)
 amount = 24
 texture = ExtResource("3_myfbf")
 lifetime = 4.0
@@ -79,3 +252,8 @@ process_material = SubResource("ParticleProcessMaterial_tgf1x")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, -11)
 shape = SubResource("RectangleShape2D_ft3dw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_yruek")
+}
