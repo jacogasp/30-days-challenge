@@ -25,7 +25,6 @@ func _process(delta: float) -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	# Interact only with player and its bullets
-	print("heloo")
 	if not exploding:
 		if area.has_method("hit"):
 			area.call("hit", damage)
