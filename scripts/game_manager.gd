@@ -35,7 +35,6 @@ var base_barrel_secondary_chance: float = 0.4
 @onready var bomb_timer: Timer = $BombTimer
 @onready var audio_player: AudioStreamPlayer = $Soundtrack
 @onready var squid_enter_timer: Timer = $SquidEnterTimer
-@onready var squid_exit_timer: Timer = $SquidExitTimer
 
 
 const POPUP_SCORE = preload("res://scenes/huds/popup_score.tscn")
@@ -294,16 +293,16 @@ func enable_music() -> void:
 
 func _on_squid_enter_timer_timeout() -> void:
 	squid_alive = true
-	squid_exit_timer.start()
 	squid_entered.emit()
 	print("squid entered")
 	
 
-func _on_squid_exit_timer_timeout() -> void:
+func squid_defeated() -> void:
 	squid_alive = false
-	squid_enter_timer.start()
+	print("squid exited")
 	squid_exited.emit()
 	_difficulty_offset += round(float(_difficulty) * 0.25)
 	_difficulty -= _difficulty_offset
 	difficulty_changed.emit(current_difficulty())
-	print("squid exited")
+	squid_enter_timer.wait_time = 90
+	squid_enter_timer.start()

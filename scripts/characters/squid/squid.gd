@@ -7,7 +7,7 @@ const TENTACLE = preload("res://scenes/characters/squid/tentacle.tscn")
 
 
 @export_range(1,8,1,"hide_slider") var difficulty: int = 2
-@export var health:int = 400
+@export var health:int = 200
 @export var tentacle_position:Array[Vector2]
 
 @export var tentacle_spawn_region: Rect2 = Rect2(Vector2(750, 170), Vector2(270, 460))  # Define the spawn region for tentacles
@@ -163,6 +163,7 @@ func die():
 	GameManager.spawn_enemy_defeated_score(global_position)
 	animation_player.play("submerge")
 	await animation_player.animation_finished
+	GameManager.squid_defeated()
 	queue_free()
 
 func fire():

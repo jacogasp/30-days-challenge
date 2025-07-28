@@ -77,13 +77,8 @@ wait_time = 3.0
 one_shot = true
 
 [node name="SquidEnterTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 90.0
 one_shot = true
 autostart = true
 
-[node name="SquidExitTimer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
 [connection signal="timeout" from="SquidEnterTimer" to="." method="_on_squid_enter_timer_timeout"]
-[connection signal="timeout" from="SquidExitTimer" to="." method="_on_squid_exit_timer_timeout"]

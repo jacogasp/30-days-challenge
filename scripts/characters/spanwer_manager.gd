@@ -1,17 +1,19 @@
 extends Node2D
 
+@onready var squid_spawn_marker: Marker2D = $SquidSpawnMarker
 @export var min_spawning_time: float = 1.0
 @export var max_spawning_time: float = 10.0
 @export_range(0., 1.) var variance_percentage: float = 0.1
 @export_range(0., 1) var difficulty_multiplier: float = 0.2
 @export var enemy_types: Array[EnemyType]
-
+@export var squid_scene:PackedScene
 @onready var timer: Timer = $Timer
 var spawners: Array[EnemySpawner] = []
 
 func _ready() -> void:
 	spawners.append($LeftSpawner)
 	spawners.append($RightSpawner)
+	GameManager.squid_entered.connect(spawn_squid)
 	timer.wait_time = random_time()
 	timer.start()
 
@@ -42,3 +44,8 @@ func random_time() -> float:
 	var variance = avg_t * variance_percentage
 	var t: float = randfn(avg_t, variance)
 	return clamp(t, min_spawning_time, max_spawning_time)
+
+func spawn_squid() -> void:
+	var squid = squid_scene.instantiate()
+	squid.global_position = squid_spawn_marker.global_position
+	add_child(squid)
