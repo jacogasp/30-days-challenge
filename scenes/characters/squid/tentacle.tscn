@@ -276,7 +276,7 @@ one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
 local_coords = true
-trail_enabled = true
+trail_enabled = false
 process_material = SubResource("ParticleProcessMaterial_t3xm7")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ClippingControl/Sprite2D/BarrelArea"]

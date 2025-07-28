@@ -125,7 +125,7 @@ one_shot = true
 speed_scale = 2.0
 explosiveness = 1.0
 local_coords = true
-trail_enabled = true
+trail_enabled = false
 process_material = SubResource("ParticleProcessMaterial_i0ll5")
 
 [node name="QueueFreeTimer" type="Timer" parent="."]
