@@ -154,8 +154,8 @@ func load_sailor(modulation_color: Color) -> void:
 		return
 	current_number_sailor += 1
 	GameManager.update_sailors_count(current_number_sailor)
-	GameManager.get_sailor_score()
-	GameManager.spawn_sailor_loaded_score(global_position)
+	var points = GameManager.get_sailor_score()
+	GameManager.spawn_popup(str(points), global_position)
 	var sailor := sailor_scene.instantiate()
 	var boat_half_length = 0.5 * boat_length
 	sailors.add_child(sailor)

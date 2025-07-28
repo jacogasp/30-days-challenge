@@ -74,8 +74,8 @@ func hit(damage: int) -> void:
 	drop_sailors(direction)
 	if (health <= 0):
 		sink()
-		GameManager.enemy_defeated()
-		GameManager.spawn_enemy_defeated_score(global_position)
+		var points = GameManager.enemy_defeated()
+		GameManager.spawn_popup(str(points), global_position)
 		sink_audio_streamer.play()
 	else:
 		hit_audio_streamer.play()

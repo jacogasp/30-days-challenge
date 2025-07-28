@@ -2,9 +2,9 @@ extends StaticBody2D
 const TENTACLE = preload("res://scenes/characters/squid/tentacle.tscn")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shield_effect: Sprite2D = $ClippingControl/Body/ShieldEffect
-@onready var debug_label: Label = $DEBUGLabel
 @onready var squid_gun: EnemyGun = $ClippingControl/Body/SquidGun
 @onready var body: Node2D = $ClippingControl/Body
+@onready var progress_bar: ProgressBar = $ProgressBar
 
 @export_range(1,8,1,"hide_slider") var difficulty: int = 2
 @export var health:int = 200
@@ -46,6 +46,9 @@ func _ready() -> void:
 		tentacles.append(tentacle)
 		add_sibling.call_deferred(tentacle)
 	health = health + (200 * difficulty)
+	progress_bar.max_value = health
+	progress_bar.value = health
+	progress_bar.visible = false
 	await animate_appear()
 	
 func _process(_delta: float) -> void:
@@ -146,7 +149,9 @@ func _on_area_hit(damage:int, pos:Vector2) -> void:
 	material.set_shader_parameter("flash_value", 1.0)
 	flash_timer.start()
 	health -= damage
-	debug_label.text = str(health)
+	progress_bar.value = health
+	if not progress_bar.visible:
+		progress_bar.visible = true
 	if (health <= 0):
 		die()
 
@@ -161,8 +166,8 @@ func die():
 	animation_player.play("RESET")
 	submerged = true
 	set_process(false)
-	GameManager.enemy_defeated(2 + difficulty)
-	GameManager.spawn_enemy_defeated_score(global_position)
+	var score = GameManager.enemy_defeated(2 + difficulty)
+	GameManager.spawn_popup(str(score), global_position)
 	animation_player.play("submerge")
 	await animation_player.animation_finished
 	GameManager.squid_defeated()
@@ -181,7 +186,7 @@ func _on_tentacle_hit(damage:int)->void:
 	material.set_shader_parameter("flash_value", 1.0)
 	flash_timer.start()
 	health -= damage
-	debug_label.text = str(health)
+	progress_bar.value = health
 	if (health <= 0):
 		die()
 	

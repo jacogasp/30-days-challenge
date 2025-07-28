@@ -153,17 +153,21 @@ func player_hit() -> void:
 	last_hit_timer.stop()
 
 
-func enemy_defeated(mult:int = Globals.sink_score_multiplier) -> void:
+func enemy_defeated(mult:int = Globals.sink_score_multiplier) -> int:
 	defeated_enemies += 1
 	_consecutive_kill_count += 1
-	_score += Globals.sink_score * mult * _consecutive_kill_count
+	var points: int  = Globals.sink_score * mult * _consecutive_kill_count
+	_score += points
 	score_updated.emit(current_score())
 	enemy_just_defeated.emit(defeated_enemies)
+	return points
 
 
-func get_sailor_score() -> void:
-	_score += Globals.sailor_score * Globals.sailor_score_multiplier
+func get_sailor_score() -> int:
+	var points: int = Globals.sailor_score * Globals.sailor_score_multiplier
+	_score += points
 	score_updated.emit(current_score())
+	return points
 
 
 func update_sailors_count(count: int) -> void:
@@ -185,21 +189,6 @@ func update_all_hud() -> void:
 	bomb_count_updated.emit(bomb_count)
 	power_level_updated.emit(power_level)
 
-
-func spawn_enemy_defeated_score(pos: Vector2) -> void:
-	var popup_score = POPUP_SCORE.instantiate()
-	popup_score.value = Globals.sink_score * Globals.sink_score_multiplier * _consecutive_kill_count
-	popup_score.global_position = pos
-	Globals.player.add_sibling(popup_score)
-
-
-func spawn_sailor_loaded_score(pos: Vector2) -> void:
-	var popup_score = POPUP_SCORE.instantiate()
-	popup_score.value = Globals.sailor_score * Globals.sailor_score_multiplier
-	popup_score.global_position = pos
-	Globals.player.add_sibling(popup_score)
-
-
 func spaw_pickup_label(pos: Vector2, text: String) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
 	popup_score.global_position = pos
@@ -207,7 +196,12 @@ func spaw_pickup_label(pos: Vector2, text: String) -> void:
 	popup_score.text = text
 	popup_score.add_theme_font_override("font", load("res://assets/fonts/Bungee-Regular.ttf"))
 
-
+func spawn_popup(text:String, pos:Vector2) -> void:
+	var popup_score = POPUP_SCORE.instantiate()
+	popup_score.global_position = pos
+	Globals.player.add_sibling(popup_score)
+	popup_score.text = text
+	
 func deploy_bomb() -> void:
 	if bomb_timer.time_left > 0:
 		return
