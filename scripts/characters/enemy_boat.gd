@@ -6,10 +6,6 @@ extends Enemy
 @onready var barrel_emitter: Node2D = $BarrelEmitter
 @onready var barrel_timer: Timer = $BarrelTimer
 
-var barrel_tnt_chance: float = 1
-var barrel_primary_chance: float = 0.4
-var barrel_secondary_chance: float = 0.4
-
 func _ready() -> void:
 	var enemy_color = Color.from_hsv(randf(), randf_range(0.5, 0.7), randf_range(0.8, 0.9))
 	livrea.modulate = enemy_color
@@ -23,8 +19,6 @@ func _ready() -> void:
 		sailor.position = sailor_offset
 		sailor.spawn_position = sailor.position
 		sailor.set_sprite_modulate(enemy_color)
-	barrel_secondary_chance = barrel_secondary_chance - (max(GameManager.bomb_count - 1, 0)) * 0.05
-	barrel_primary_chance = barrel_primary_chance - (max(GameManager.power_level - 1, 0)) * 0.05
 	_set_up_timer()
 
 func _physics_process(delta: float) -> void:
@@ -42,12 +36,14 @@ func _physics_process(delta: float) -> void:
 func _on_barrel_timer_timeout() -> void:
 	if is_sinking or GameManager._game_is_running == false or not fully_visible:
 		return
-	var total_chance = barrel_primary_chance + barrel_secondary_chance + barrel_tnt_chance
-	var random_roll: float = randf_range(0.0, total_chance)
-	if random_roll <= barrel_tnt_chance:
-		barrel_emitter.fire()
-	elif random_roll <= barrel_tnt_chance + barrel_primary_chance:
-		barrel_emitter.drop_barrel_primary()
-	else:
-		barrel_emitter.drop_barrel_secondary()
+	
+	var barrel_type = GameManager.get_random_barrel_type()
+	match barrel_type:
+		GameManager.BarrelType.TNT:
+			barrel_emitter.fire()
+		GameManager.BarrelType.PRIMARY:
+			barrel_emitter.drop_barrel_primary()
+		GameManager.BarrelType.SECONDARY:
+			barrel_emitter.drop_barrel_secondary()
+	
 	barrel_timer.wait_time = randf_range(barrel_emitter.min_fire_time, barrel_emitter.max_fire_time)

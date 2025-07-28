@@ -3,10 +3,11 @@ const TENTACLE = preload("res://scenes/characters/squid/tentacle.tscn")
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shield_effect: Sprite2D = $ClippingControl/Body/ShieldEffect
 @onready var debug_label: Label = $DEBUGLabel
+@onready var squid_gun: EnemyGun = $ClippingControl/Body/SquidGun
 
 
-@export var health:int = 1000
 @export_range(1,8,1,"hide_slider") var difficulty: int = 2
+@export var health:int = 400
 @export var tentacle_position:Array[Vector2]
 
 @export var tentacle_spawn_region: Rect2 = Rect2(Vector2(750, 170), Vector2(270, 460))  # Define the spawn region for tentacles
@@ -19,6 +20,7 @@ var emerged_count: int = 0
 var submerged_count: int = 0
 
 var submerged:bool = false
+var is_dying:bool = false
 var flash_timer: Timer
 @export var flash_duration: float = 0.1
 var last_body_position: Vector2 = Vector2.ZERO  # Track position changes
@@ -39,8 +41,10 @@ func _ready() -> void:
 		tentacle.global_position = tentacle_position[i]
 		tentacle.emerged.connect(_on_tentacle_emerged)
 		tentacle.submerged.connect(_on_tentacle_submerged)
+		tentacle.tentacle_hit.connect(_on_tentacle_hit)
 		tentacles.append(tentacle)
 		add_sibling.call_deferred(tentacle)
+	health = health + (200 * difficulty)
 	await animate_appear()
 	
 func _process(_delta: float) -> void:
@@ -76,7 +80,7 @@ func execute_phase1_loop() -> void:
 			if randf() < 0.5:
 				tentacle.attack(tentacle.AttackType.charge)
 			else:
-				tentacle.attack(tentacle.AttackType.charge)
+				tentacle.attack(tentacle.AttackType.barrel)
 		
 		# Wait for all attacks to finish
 		while _attacks_finished_count < tentacles.size():
@@ -85,9 +89,10 @@ func execute_phase1_loop() -> void:
 		print("All attacks finished!")
 		
 		animation_player.play_backwards("half_submerge")
-		await animation_player.animation_finished
 		submerged = false
-		fire()
+		await animation_player.animation_finished
+		for i in range(ceil(difficulty/2.)):
+			await fire()
 		animation_player.play("half_submerge")
 		await animation_player.animation_finished
 		submerged = true
@@ -108,14 +113,14 @@ func animate_appear() -> void:
 	for tentacle in tentacles:
 		await get_tree().create_timer(randf()).timeout
 		tentacle.min_position_y = randf_range(400,300)
-		tentacle.animation_player.play("emerge")
+		tentacle.emerge()
 	await animation_player.animation_finished
 	animate_start_phase1()
 
 func animate_start_phase1() -> void:
 	animation_player.play("half_submerge")
 	for tentacle in tentacles:
-		tentacle.animation_player.play("submerge")
+		tentacle.submerge()
 	await get_tree().create_timer(1).timeout
 	submerged = true
 
@@ -149,12 +154,31 @@ func show_shield_effect(pos:Vector2) -> void:
 	flash_timer.start()
 
 func die():
-	pass
+	if is_dying:
+		return
+	animation_player.play("RESET")
+	submerged = true
+	set_process(false)
+	GameManager.enemy_defeated(2 + difficulty)
+	GameManager.spawn_enemy_defeated_score(global_position)
+	animation_player.play("submerge")
+	await animation_player.animation_finished
+	queue_free()
 
 func fire():
-	print("fire")
-
+	animation_player.play("spit")
+	squid_gun.fire_spread(5, Globals.player.global_position - squid_gun.global_position, 60)
+	await animation_player.animation_finished
+	
 func _on_flash_timeout() -> void:
 	material.set_shader_parameter("flash_value", 0.0)
 	shield_effect.visible = false
+
+func _on_tentacle_hit(damage:int)->void:
+	material.set_shader_parameter("flash_value", 1.0)
+	flash_timer.start()
+	health -= damage
+	debug_label.text = str(health)
+	if (health <= 0):
+		die()
 	

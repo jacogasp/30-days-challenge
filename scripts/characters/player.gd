@@ -25,8 +25,6 @@ var speed := max_speed
 var particle_emitter_orig_pos: Vector2 = Vector2.ZERO
 var boat_length: float = 100
 var boat_height: float = 200
-var min_sea_limit: Vector2
-var max_sea_limit: Vector2
 var current_number_sailor: int = 5
 var is_sinking
 
@@ -47,8 +45,8 @@ func _ready() -> void:
 	livrea_a.texture = load("res://assets/livrea/livrea_a%d.png" % Globals.player_livreaA)
 	livrea_b.texture = load("res://assets/livrea/livrea_b%d.png" % Globals.player_livreaB)
 
-	min_sea_limit = get_viewport_rect().position + Vector2(0, 150)
-	max_sea_limit = get_viewport_rect().size - Vector2(0, 50)
+	Globals.min_sea_limit = get_viewport_rect().position + Vector2(0, 150)
+	Globals.max_sea_limit = get_viewport_rect().size - Vector2(0, 50)
 	Globals.player = self
 	particle_emitter_orig_pos = gpu_particles_2d.position
 
@@ -93,7 +91,7 @@ func _physics_process(delta: float) -> void:
 	var direction: Vector2 = Input.get_vector("left", "right", "up", "down")
 	velocity = direction * speed
 	move_and_slide()
-	position = position.clamp(min_sea_limit, max_sea_limit)
+	position = position.clamp(Globals.min_sea_limit, Globals.max_sea_limit)
 
 	# Boat Rotation Logic
 	var target_rotation: float = 0.0

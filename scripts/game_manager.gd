@@ -1,5 +1,11 @@
 extends Node2D
 
+enum BarrelType {
+	TNT,
+	PRIMARY,
+	SECONDARY
+}
+
 var spawned_enemies: int = 0
 var defeated_enemies: int = 0
 var _consecutive_kill_count: int = 0
@@ -12,13 +18,18 @@ var _difficulty_growth_base: float = 0.11
 var _difficulty: int = 1
 var _difficulty_offset: int = 0
 var _hit_count_decrease_rate: float = 10
-var bomb_count: int = 0
+var bomb_count: int = 1
 var power_level: int = 1
 var playback: AudioStreamPlaybackInteractive
 var music_enabled: bool = true
 var squid_alive: bool = false
 const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
+
+# Barrel drop chances for enemy boats
+var base_barrel_tnt_chance: float = 1.0
+var base_barrel_primary_chance: float = 0.4
+var base_barrel_secondary_chance: float = 0.4
 
 @onready var last_hit_timer: Timer = $LastHitTimer
 @onready var bomb_timer: Timer = $BombTimer
@@ -143,10 +154,10 @@ func player_hit() -> void:
 	last_hit_timer.stop()
 
 
-func enemy_defeated() -> void:
+func enemy_defeated(mult:int = Globals.sink_score_multiplier) -> void:
 	defeated_enemies += 1
 	_consecutive_kill_count += 1
-	_score += Globals.sink_score * Globals.sink_score_multiplier * _consecutive_kill_count
+	_score += Globals.sink_score * mult * _consecutive_kill_count
 	score_updated.emit(current_score())
 	enemy_just_defeated.emit(defeated_enemies)
 
@@ -224,6 +235,42 @@ func powerup() -> bool:
 		power_level_updated.emit(power_level)
 		return true
 	return false
+
+func get_barrel_tnt_chance() -> float:
+	return base_barrel_tnt_chance
+
+func get_barrel_primary_chance() -> float:
+	return base_barrel_primary_chance - (max(power_level - 1, 0)) * 0.05
+
+func get_barrel_secondary_chance() -> float:
+	return base_barrel_secondary_chance - (max(bomb_count - 1, 0)) * 0.05
+
+func get_random_barrel_type() -> BarrelType:
+	var barrel_tnt_chance = get_barrel_tnt_chance()
+	var barrel_primary_chance = get_barrel_primary_chance()
+	var barrel_secondary_chance = get_barrel_secondary_chance()
+	var total_chance = barrel_primary_chance + barrel_secondary_chance + barrel_tnt_chance
+	var random_roll: float = randf_range(0.0, total_chance)
+	if random_roll <= barrel_tnt_chance:
+		return BarrelType.TNT
+	elif random_roll <= barrel_tnt_chance + barrel_primary_chance:
+		return BarrelType.PRIMARY
+	else:
+		return BarrelType.SECONDARY
+
+func spawn_barrel_at_position(barrel_type: BarrelType, spawn_position: Vector2) -> void:
+	var barrel_scene: PackedScene
+	match barrel_type:
+		BarrelType.TNT:
+			barrel_scene = preload("res://scenes/weapons/barrel.tscn")
+		BarrelType.PRIMARY:
+			barrel_scene = preload("res://scenes/weapons/barrel_primary.tscn")
+		BarrelType.SECONDARY:
+			barrel_scene = preload("res://scenes/weapons/barrel_secondary.tscn")
+	var barrel: Barrel = barrel_scene.instantiate()
+	barrel.global_position = spawn_position
+	if Globals.player != null:
+		Globals.player.add_sibling(barrel)
 
 
 func _game_over() -> void:

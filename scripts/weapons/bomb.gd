@@ -11,9 +11,10 @@ func _expand_area() -> void:
 	tween.tween_property(self, "scale", Vector2(0,0), 0.2)
 
 func _on_area_entered(area: Area2D) -> void:
-	if area is Bullet:
+	print(area.collision_layer)
+	if area.collision_layer == 16 && area.has_method("disable"): #bullet
 		area.disable()
-	if area is Barrel:
-		area._explode(true)
-	if area is Enemy:
-		area.hit(50)
+	if area.collision_layer == 32 && area.has_method("explode"): #barrel
+		area.explode(true)
+	if area.collision_layer == 64 && area.has_method("hit"): #enemy
+		area.hit(75)

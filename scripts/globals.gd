@@ -24,6 +24,9 @@ var music_enabled: bool = true
 
 var api_key = ""
 
+var min_sea_limit: Vector2
+var max_sea_limit: Vector2
+
 func _ready() -> void:
 	load_env()
 	reset_score_multipliers()

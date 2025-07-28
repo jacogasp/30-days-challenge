@@ -9,7 +9,7 @@ func _on_area_entered(area: Area2D) -> void:
 		if success:
 			_pickup()
 		else:
-			_explode(area.is_in_group("bullet"))
+			explode(area.is_in_group("bullet"))
 
 func _pickup():
 	GameManager.spaw_pickup_label(global_position, "P")

@@ -28,15 +28,15 @@ func _on_area_entered(area: Area2D) -> void:
 	if not exploding:
 		if area.has_method("hit"):
 			area.call("hit", damage)
-		_explode(false)
+		explode(false)
 
 
 func hit(_damage: float) -> void:
 	if not exploding:
-		_explode(true)
+		explode(true)
 
 
-func _explode(by_bullet: bool) -> void:
+func explode(by_bullet: bool) -> void:
 	explosion_particles.emitting = true
 	wave_particles.visible = false
 	wave_particles.emitting = false

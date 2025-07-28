@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://xxfvjdu4w401"]
+[gd_scene load_steps=33 format=3 uid="uid://xxfvjdu4w401"]
 
 [ext_resource type="Script" uid="uid://ctrh5f2gosnw8" path="res://scripts/characters/squid/tentacle.gd" id="1_ft3dw"]
 [ext_resource type="Texture2D" uid="uid://crdininywr1nk" path="res://assets/squid_tentacle.png" id="1_kh2li"]
@@ -8,6 +8,11 @@
 [ext_resource type="Script" uid="uid://bgdlmj3enealc" path="res://scripts/characters/squid/barrel_area.gd" id="3_klpos"]
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_myfbf"]
 [ext_resource type="AudioStream" uid="uid://dxsky5y5et7fl" path="res://assets/sounds/water-splash-02.mp3" id="5_klpos"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cctv2"]
+shader = ExtResource("2_qvuu3")
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/flash_value = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_klpos"]
 resource_local_to_scene = true
@@ -119,6 +124,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:skew")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_klpos"]
 resource_name = "emerge"
@@ -146,20 +163,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(0.5, 0.5)]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"emerged"],
-"method": &"emit_signal"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_6obsa"]
@@ -189,56 +192,80 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
 }
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"submerged"],
-"method": &"emit_signal"
-}]
+
+[sub_resource type="Animation" id="Animation_10jpc"]
+resource_name = "toss"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:skew")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.19, 0.366667, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.139626, 0.139626, 0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yruek"]
 _data = {
 &"RESET": SubResource("Animation_yruek"),
 &"emerge": SubResource("Animation_klpos"),
-&"submerge": SubResource("Animation_6obsa")
+&"submerge": SubResource("Animation_6obsa"),
+&"toss": SubResource("Animation_10jpc")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_klpos"]
 size = Vector2(104, 111)
 
 [node name="Tentacle" type="StaticBody2D"]
+material = SubResource("ShaderMaterial_cctv2")
 script = ExtResource("1_ft3dw")
 sprite_position_y = 540.0
 
-[node name="BarrelArea" type="Area2D" parent="."]
+[node name="ClippingControl" type="Control" parent="."]
+use_parent_material = true
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -75.0
+offset_top = -300.0
+offset_right = 75.0
+pivot_offset = Vector2(75, 300)
+
+[node name="Sprite2D" type="Sprite2D" parent="ClippingControl"]
+use_parent_material = true
+position = Vector2(75, 300)
+scale = Vector2(0.785, 0.785)
+texture = ExtResource("1_kh2li")
+centered = false
+offset = Vector2(-75, -300)
+
+[node name="BarrelArea" type="Area2D" parent="ClippingControl/Sprite2D"]
 material = SubResource("ShaderMaterial_klpos")
-position = Vector2(-9, -187)
+position = Vector2(-11.465, -238.217)
+scale = Vector2(1.27389, 1.27389)
 collision_layer = 32
 collision_mask = 16
 script = ExtResource("3_klpos")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BarrelArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClippingControl/Sprite2D/BarrelArea"]
 position = Vector2(12, 4)
 shape = SubResource("CircleShape2D_yruek")
 
-[node name="BarrelSprite" type="Sprite2D" parent="BarrelArea"]
+[node name="BarrelSprite" type="Sprite2D" parent="ClippingControl/Sprite2D/BarrelArea"]
 use_parent_material = true
+position = Vector2(-2, -1.52588e-05)
 rotation = -0.245433
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_bk88m")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="BarrelArea/BarrelSprite"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="ClippingControl/Sprite2D/BarrelArea/BarrelSprite"]
 stream = SubResource("AudioStreamRandomizer_yruek")
 
-[node name="ExplosionParticles" type="GPUParticles2D" parent="BarrelArea"]
+[node name="ExplosionParticles" type="GPUParticles2D" parent="ClippingControl/Sprite2D/BarrelArea"]
 z_index = 100
 position = Vector2(1, -14)
 emitting = false
@@ -252,21 +279,14 @@ local_coords = true
 trail_enabled = true
 process_material = SubResource("ParticleProcessMaterial_t3xm7")
 
-[node name="ClippingControl" type="Control" parent="."]
-clip_contents = true
-layout_mode = 3
-anchors_preset = 0
-offset_left = -75.0
-offset_top = -300.0
-offset_right = 75.0
-pivot_offset = Vector2(75, 300)
-
-[node name="Sprite2D" type="Sprite2D" parent="ClippingControl"]
-position = Vector2(75, 300)
+[node name="Sprite2D2" type="Sprite2D" parent="ClippingControl/Sprite2D/BarrelArea"]
+position = Vector2(9, 187)
 scale = Vector2(0.785, 0.785)
 texture = ExtResource("1_kh2li")
 centered = false
 offset = Vector2(-75, -300)
+region_enabled = true
+region_rect = Rect2(0, 0, 146, 69)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_go5yd")
@@ -298,4 +318,5 @@ monitorable = false
 position = Vector2(-7, -56.5)
 shape = SubResource("RectangleShape2D_klpos")
 
+[connection signal="barrel_exploded" from="ClippingControl/Sprite2D/BarrelArea" to="." method="_on_barrel_exploded"]
 [connection signal="area_entered" from="HurtArea2D" to="." method="_on_hurt_area_entered"]

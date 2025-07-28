@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://clwtdf1o8lf3u"]
+[gd_scene load_steps=36 format=3 uid="uid://clwtdf1o8lf3u"]
 
 [ext_resource type="Script" uid="uid://0yqvf4jr75p3" path="res://scripts/characters/squid/squid.gd" id="1_4hv76"]
 [ext_resource type="Texture2D" uid="uid://q7hspp2s3e8c" path="res://assets/squid_body.png" id="1_xaj30"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dbq5sma5e8p0i" path="res://assets/bubble.png" id="3_5egnv"]
 [ext_resource type="Texture2D" uid="uid://c7qowwwk27ky1" path="res://assets/shield.png" id="4_gnmmx"]
 [ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="4_shield"]
+[ext_resource type="PackedScene" uid="uid://baxxi07n6ueq" path="res://scenes/weapons/enemy_gun.tscn" id="6_ffj6l"]
+[ext_resource type="PackedScene" uid="uid://ctqbdbnlunptv" path="res://scenes/characters/squid/ink_bullet.tscn" id="7_1f7mf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cctv2"]
 shader = ExtResource("4_shield")
@@ -188,6 +190,76 @@ tracks/11/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ClippingControl/Body:scale")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("GPUParticles2D2:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-12, 6)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("GPUParticles2D2:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("GPUParticles2D:scale")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/16/type = "bezier"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("ClippingControl/Body:position:x")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(150, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/17/type = "bezier"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("ClippingControl/Body:position:y")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(350, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_rbn36"]
@@ -521,11 +593,223 @@ tracks/11/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_1f7mf"]
+resource_name = "spit"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ClippingControl/Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0.8), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_op6vf"]
+resource_name = "submerge"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.45893),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-12, 6), Vector2(75.59, 6)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D2:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.46097, 1.90924),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.464575, 1.46097),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(92, -1), Vector2(53.285, -1), Vector2(75.405, -1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.46097, 1.90924),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.5, 0.5), Vector2(1e-05, 1e-05)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.77476),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D2:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.57304),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D3:disabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 1.35705),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D4:disabled")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.14921),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D5:disabled")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.953602),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D6:disabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.782443),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D7:disabled")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.603133),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D8:disabled")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 0.387146),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D9:disabled")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.195611),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("ClippingControl/Body/Area2D/CollisionShape2D10:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/14/type = "bezier"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("ClippingControl/Body:position:x")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+"points": PackedFloat32Array(150, -0.25, 0, 0.25, 0, 145, -0.25, 0, 0.25, 0, 150, -0.25, 0, 0.25, 0, 140, -0.25, 0, 0.25, 0, 145, -0.25, 0, 0.25, 0, 135, -0.25, 0, 0.25, 0, 140, -0.25, 0, 0.25, 0, 130, -0.25, 0, 0.25, 0, 135, -0.25, 0, 0.25, 0, 125, -0.25, 0, 0.25, 0, 130, -0.25, 0, 0.25, 0, 120, -0.25, 0, 0.25, 0, 125, -0.25, 0, 0.25, 0, 115, -0.25, 0, 0.25, 0, 120, -0.25, 0, 0.25, 0, 110, -0.25, 0, 0.25, 0, 115, -0.25, 0, 0.25, 0, 105, -0.25, 0, 0.25, 0, 110, -0.25, 0, 0.25, 0, 100, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9)
+}
+tracks/15/type = "bezier"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("ClippingControl/Body:position:y")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(350, -0.25, 0, 0.25, 0, 670, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 2)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_r5k3q"]
 _data = {
 &"RESET": SubResource("Animation_4hv76"),
 &"emerge": SubResource("Animation_rbn36"),
-&"half_submerge": SubResource("Animation_r5k3q")
+&"half_submerge": SubResource("Animation_r5k3q"),
+&"spit": SubResource("Animation_1f7mf"),
+&"submerge": SubResource("Animation_op6vf")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4hv76"]
@@ -655,6 +939,10 @@ offset = Vector2(-175, -385)
 visible = false
 position = Vector2(-50, 0)
 texture = ExtResource("4_gnmmx")
+
+[node name="SquidGun" parent="ClippingControl/Body" instance=ExtResource("6_ffj6l")]
+position = Vector2(-53, -35)
+bullet_scene = ExtResource("7_1f7mf")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
