@@ -133,10 +133,12 @@ wait_time = 4.0
 
 [node name="HitAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_cthek")
+bus = &"Effects"
 
 [node name="ExplodeAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(-2.85714, 0)
 stream = ExtResource("2_cthek")
+bus = &"Effects"
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="timeout" from="QueueFreeTimer" to="." method="_on_queue_free_timer_timeout"]

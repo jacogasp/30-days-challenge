@@ -72,6 +72,7 @@ script = ExtResource("1_hwd4i")
 [node name="Soundtrack" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_q8mjp")
 autoplay = true
+bus = &"Music"
 playback_type = 1
 
 [node name="BombTimer" type="Timer" parent="."]
