@@ -3,7 +3,6 @@ extends Node2D
 
 @export var bullet_scene: PackedScene
 @export var fire_rate: float = 4
-
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 enum FireMode {Single, Double, Triple}

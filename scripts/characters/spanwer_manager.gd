@@ -10,22 +10,40 @@ extends Node2D
 @onready var timer: Timer = $Timer
 var spawners: Array[EnemySpawner] = []
 
+var spawning: bool = true
+var first_spawn: bool = true
+var squid_difficulty: int = 2  # Track squid difficulty, starts at 2
+
 func _ready() -> void:
+	GameManager.squid_entered.connect(pause_spawning)
+	GameManager.squid_entered.connect(spawn_squid)
+	GameManager.squid_exited.connect(resume_spawning)
 	spawners.append($LeftSpawner)
 	spawners.append($RightSpawner)
-	GameManager.squid_entered.connect(spawn_squid)
-	timer.wait_time = random_time()
+	timer.wait_time = 0.1
 	timer.start()
 
 
 func spawn() -> void:
-	if GameManager._game_is_running == false:
+	if GameManager._game_is_running == false or not spawning:
 		return
-	var spawner = spawners[randi() % spawners.size()]
-	var enemy_type = choose_enemy_type_weighted()
-	if enemy_type:
-		spawner.spawn(enemy_type.scene)
+	
+	var spawn_count: int
+	if first_spawn:
+		spawn_count = 1
+		first_spawn = false
+	else:
+		var difficulty = GameManager.current_difficulty()
+		spawn_count = choose_spawn_count_weighted(difficulty)
+	
+	for i in range(spawn_count):
+		var spawner = spawners[randi() % spawners.size()]
+		var enemy_type = choose_enemy_type_weighted()
+		if enemy_type:
+			spawner.spawn(enemy_type.scene)
+	
 	timer.wait_time = random_time()
+	timer.start() 
 
 func choose_enemy_type_weighted() -> EnemyType:
 	var total_chance: float = 0.0
@@ -39,6 +57,23 @@ func choose_enemy_type_weighted() -> EnemyType:
 			return enemy_type
 	return enemy_types.back()
 
+func choose_spawn_count_weighted(difficulty: int) -> int:
+	var difficulty_factor = min(difficulty / 20.0, 1.0)  # Cap at difficulty 20
+	
+	var weight_1 = 0.9 - (difficulty_factor * 0.5)
+	var weight_2 = 0.08 + (difficulty_factor * 0.35)
+	var weight_3 = 0.02 + (difficulty_factor * 0.15)
+	
+	var weights = [weight_1, weight_2, weight_3]
+	var random_roll = randf()
+	var cumulative = 0.0
+	
+	for i in range(weights.size()):
+		cumulative += weights[i]
+		if random_roll <= cumulative:
+			return i + 1
+	return 1
+
 func random_time() -> float:
 	var avg_t = max_spawning_time / (GameManager.current_difficulty() * difficulty_multiplier)
 	var variance = avg_t * variance_percentage
@@ -47,5 +82,13 @@ func random_time() -> float:
 
 func spawn_squid() -> void:
 	var squid = squid_scene.instantiate()
+	squid.difficulty = squid_difficulty
+	squid_difficulty = min(squid_difficulty + 1, 8)
 	squid.global_position = squid_spawn_marker.global_position
 	add_child(squid)
+
+func pause_spawning() -> void:
+	spawning = false
+
+func resume_spawning() -> void:
+	spawning = true

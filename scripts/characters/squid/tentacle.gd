@@ -14,7 +14,7 @@ signal tentacle_hit
 @onready var barrel_area: Area2D = $ClippingControl/Sprite2D/BarrelArea
 @onready var barrel_sprite: Sprite2D = $ClippingControl/Sprite2D/BarrelArea/BarrelSprite
 
-@export var damage:int = 1
+@export var damage:int = 5
 @export var charge_duration:float = 1
 
 @export var min_position_y: float = 300
@@ -37,12 +37,13 @@ func _set_up_timer() -> void:
 	add_child(flash_timer)
 
 func _ready() -> void:
+	set_submerged()
 	_set_up_timer()
 	animation_player.play("RESET")
 	_disable_barrel()
 
 func set_submerged() -> void:
-	sprite_2d.position.y = 530
+	sprite_2d.position.y = 540
 	
 func emerge_with_barrel(barrel_type: GameManager.BarrelType) -> void:
 	barrel_area.barrel_type = barrel_type

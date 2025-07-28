@@ -27,9 +27,9 @@ const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
 
 # Barrel drop chances for enemy boats
-var base_barrel_tnt_chance: float = 1.0
+var base_barrel_tnt_chance: float = 1.1
 var base_barrel_primary_chance: float = 0.4
-var base_barrel_secondary_chance: float = 0.4
+var base_barrel_secondary_chance: float = 0.2
 
 @onready var last_hit_timer: Timer = $LastHitTimer
 @onready var bomb_timer: Timer = $BombTimer
@@ -301,7 +301,7 @@ func squid_defeated() -> void:
 	squid_alive = false
 	print("squid exited")
 	squid_exited.emit()
-	_difficulty_offset += round(float(_difficulty) * 0.25)
+	_difficulty_offset += round(float(_difficulty) * 0.15)
 	_difficulty -= _difficulty_offset
 	difficulty_changed.emit(current_difficulty())
 	squid_enter_timer.wait_time = 90

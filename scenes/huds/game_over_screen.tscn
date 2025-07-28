@@ -1,14 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bxy6q4nuudbeo"]
+[gd_scene load_steps=8 format=3 uid="uid://bxy6q4nuudbeo"]
 
 [ext_resource type="Script" uid="uid://5yb07q2hw4uj" path="res://scripts/huds/game_over_screen.gd" id="1_61w2s"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_jw6e5"]
-[ext_resource type="Shader" uid="uid://42q1gygpeqe0" path="res://shaders/blur.gdshader" id="2_jw6e5"]
 [ext_resource type="PackedScene" uid="uid://c4k74wivm11aa" path="res://scenes/huds/leaderboard.tscn" id="4_8xf4c"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8yp4"]
-shader = ExtResource("2_jw6e5")
-shader_parameter/strength = 3.3
-shader_parameter/mix_percentage = 0.3
 
 [sub_resource type="Animation" id="Animation_8xf4c"]
 length = 0.001
@@ -236,13 +230,13 @@ theme = ExtResource("1_jw6e5")
 script = ExtResource("1_61w2s")
 
 [node name="Blur" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_r8yp4")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 0.588235)
 
 [node name="GameOverPanel" type="Panel" parent="."]
 custom_minimum_size = Vector2(600, 500)

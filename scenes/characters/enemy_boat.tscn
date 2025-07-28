@@ -113,6 +113,8 @@ collision_mask = 80
 script = ExtResource("2_7mnuy")
 health_max = 75
 sailor_scene = ExtResource("3_7mnuy")
+min_fire_time = 0.5
+max_fire_time = 4.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-7, -74.5)
@@ -173,9 +175,8 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_f2e6v")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-visible = false
-position = Vector2(0.5, -12)
-scale = Vector2(6.65, 1)
+position = Vector2(0, -12)
+scale = Vector2(1.1, 1)
 
 [node name="DEBUGLabel" type="Label" parent="."]
 visible = false
@@ -203,6 +204,8 @@ script = ExtResource("11_f2dgg")
 barrel_scene = ExtResource("12_01qfx")
 barrel_primary_scene = ExtResource("13_xxx83")
 barrel_secondary_scene = ExtResource("14_m560j")
+min_fire_time = 3.0
+max_fire_time = 7.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

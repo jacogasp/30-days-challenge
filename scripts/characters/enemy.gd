@@ -26,7 +26,7 @@ var boat_length: int = 100
 var boat_height: int = 200
 
 var is_sinking = false
-var fully_visible := false
+var on_screen := false
 var screen_offset: int = 50
 var flash_timer: Timer
 
@@ -37,19 +37,14 @@ func _set_up_timer() -> void:
 	flash_timer.timeout.connect(_on_flash_timeout)
 	add_child(flash_timer)
 
-func is_fully_visible() -> bool:
-	if is_sinking:
-		return false
-	var is_in_left: bool = collision_shape_2d.global_position.x > screen_offset
-	var is_in_right: bool = collision_shape_2d.global_position.x + collision_shape_2d.shape.get_rect().size.x < get_viewport_rect().size.x - screen_offset
-	return is_in_left and is_in_right
-
-
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	on_screen = true
 	GameManager.enemy_spawned()
-
+	gun_timer.start()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
+	on_screen = false
+	await get_tree().create_timer(3).timeout
 	queue_free()
 
 
@@ -120,7 +115,8 @@ func _on_flash_timeout() -> void:
 	material.set_shader_parameter("flash_value", 0.0)
 
 func _on_gun_timer_timeout() -> void:
-	if is_sinking or GameManager._game_is_running == false:
+	if is_sinking or GameManager._game_is_running == false or not on_screen:
 		return
 	gun.fire_spread(3, Globals.player.global_position - global_position, 30)
 	gun_timer.wait_time = randf_range(min_fire_time, max_fire_time)
+	gun_timer.start()

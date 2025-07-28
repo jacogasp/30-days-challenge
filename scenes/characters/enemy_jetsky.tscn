@@ -18,7 +18,7 @@ shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/flash_value = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_21x0f"]
-size = Vector2(1.47727, 0.799289)
+size = Vector2(1.59091, 1.28774)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x5khh"]
 shader = ExtResource("9_ibc4h")
@@ -109,10 +109,10 @@ health_max = 20
 starting_sailors = 1
 sailor_scene = ExtResource("3_vrxba")
 min_fire_time = 0.3
-max_fire_time = 3.0
+max_fire_time = 2.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(4, -8)
+position = Vector2(4, -5.5)
 scale = Vector2(17.6, 22.52)
 shape = SubResource("RectangleShape2D_21x0f")
 
@@ -135,7 +135,7 @@ position = Vector2(3, -9)
 [node name="Body" type="Sprite2D" parent="ClippingContainer/Boat"]
 use_parent_material = true
 position = Vector2(1.4, -3)
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.45, 0.45)
 texture = ExtResource("4_520sm")
 
 [node name="Livrea" type="Sprite2D" parent="ClippingContainer/Boat"]
@@ -157,8 +157,8 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_f2e6v")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(2, -3)
-scale = Vector2(1.15, 0.35)
+position = Vector2(1.5, -5.25)
+scale = Vector2(0.65, 0.575)
 
 [node name="DEBUGLabel" type="Label" parent="."]
 visible = false

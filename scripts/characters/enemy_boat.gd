@@ -28,13 +28,12 @@ func _physics_process(delta: float) -> void:
 
 	position += direction * delta
 
-	if not fully_visible and is_fully_visible():
-		fully_visible = true
-		gun_timer.start()
-		barrel_timer.start()
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	super()
+	barrel_timer.start()
 
 func _on_barrel_timer_timeout() -> void:
-	if is_sinking or GameManager._game_is_running == false or not fully_visible:
+	if is_sinking or GameManager._game_is_running == false or not on_screen:
 		return
 	
 	var barrel_type = GameManager.get_random_barrel_type()
@@ -47,3 +46,4 @@ func _on_barrel_timer_timeout() -> void:
 			barrel_emitter.drop_barrel_secondary()
 	
 	barrel_timer.wait_time = randf_range(barrel_emitter.min_fire_time, barrel_emitter.max_fire_time)
+	barrel_timer.start()

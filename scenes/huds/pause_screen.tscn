@@ -1,13 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7n046c58mhcr"]
+[gd_scene load_steps=3 format=3 uid="uid://c7n046c58mhcr"]
 
-[ext_resource type="Shader" uid="uid://42q1gygpeqe0" path="res://shaders/blur.gdshader" id="1_f1d2v"]
 [ext_resource type="Theme" uid="uid://ck8mc8bdt2ucf" path="res://assets/game_theme.tres" id="1_hr2n2"]
 [ext_resource type="Script" uid="uid://b3uxvt26rrvc4" path="res://scripts/huds/pause_screen.gd" id="1_qeunj"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r8yp4"]
-shader = ExtResource("1_f1d2v")
-shader_parameter/strength = 3.3
-shader_parameter/mix_percentage = 0.3
 
 [node name="PauseScreen" type="Control"]
 process_mode = 3
@@ -21,13 +15,13 @@ theme = ExtResource("1_hr2n2")
 script = ExtResource("1_qeunj")
 
 [node name="Blur" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_r8yp4")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 0.588235)
 
 [node name="Panel" type="Panel" parent="."]
 custom_minimum_size = Vector2(600, 400)

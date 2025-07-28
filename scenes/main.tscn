@@ -70,6 +70,26 @@ max_speed = 1000.0
 
 [node name="TutorialContainer" parent="SpanwerManager/Player" instance=ExtResource("10_ya4ey")]
 
+[node name="Bomb" type="Area2D" parent="SpanwerManager/Player"]
+scale = Vector2(1e-05, 1e-05)
+collision_layer = 8
+collision_mask = 112
+monitoring = false
+monitorable = false
+script = ExtResource("10_choun")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpanwerManager/Player/Bomb"]
+shape = SubResource("CircleShape2D_85g3d")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="SpanwerManager/Player/Bomb"]
+scale = Vector2(10, 10)
+mesh = SubResource("SphereMesh_choun")
+texture = SubResource("GradientTexture2D_eb6dy")
+
+[node name="Timer" type="Timer" parent="SpanwerManager/Player/Bomb"]
+wait_time = 5.0
+one_shot = true
+
 [node name="SquidSpawnMarker" type="Marker2D" parent="SpanwerManager"]
 position = Vector2(1080, 420)
 
@@ -77,25 +97,6 @@ position = Vector2(1080, 420)
 stream = ExtResource("14_muem4")
 autoplay = true
 
-[node name="Bomb" type="Area2D" parent="."]
-position = Vector2(640, 360)
-scale = Vector2(1e-05, 1e-05)
-collision_layer = 8
-collision_mask = 112
-script = ExtResource("10_choun")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bomb"]
-shape = SubResource("CircleShape2D_85g3d")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="Bomb"]
-scale = Vector2(10, 10)
-mesh = SubResource("SphereMesh_choun")
-texture = SubResource("GradientTexture2D_eb6dy")
-
-[node name="Timer" type="Timer" parent="Bomb"]
-wait_time = 5.0
-one_shot = true
-
 [connection signal="timeout" from="SpanwerManager/Timer" to="SpanwerManager" method="spawn"]
 [connection signal="player_hit" from="SpanwerManager/Player" to="." method="_on_player_hit"]
-[connection signal="area_entered" from="Bomb" to="Bomb" method="_on_area_entered"]
+[connection signal="area_entered" from="SpanwerManager/Player/Bomb" to="SpanwerManager/Player/Bomb" method="_on_area_entered"]

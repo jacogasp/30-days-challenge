@@ -1,6 +1,7 @@
 class_name EnemyGun
 extends Gun
 
+@export var bullet_color: Color = Color.from_hsv(0,0,1,1)
 
 func _ready() -> void:
 	bullet_pool = EnemyBulletPool
@@ -67,5 +68,6 @@ func _setup_bullet(bullet: Bullet, origin: Vector2, direction: Vector2, bullet_r
 	bullet.speed = speed
 	bullet.rotation = bullet_rotation
 	bullet.damage = 1
+	bullet.sprite_2d.modulate = bullet_color
 	bullet.fire(origin, direction)
 	audio_player.play()

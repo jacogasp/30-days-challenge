@@ -4,7 +4,7 @@ const TENTACLE = preload("res://scenes/characters/squid/tentacle.tscn")
 @onready var shield_effect: Sprite2D = $ClippingControl/Body/ShieldEffect
 @onready var debug_label: Label = $DEBUGLabel
 @onready var squid_gun: EnemyGun = $ClippingControl/Body/SquidGun
-
+@onready var body: Node2D = $ClippingControl/Body
 
 @export_range(1,8,1,"hide_slider") var difficulty: int = 2
 @export var health:int = 200
@@ -36,6 +36,7 @@ func _set_up_timer() -> void:
 func _ready() -> void:
 	_set_up_timer()
 	current_state = Squid_State.spawning
+	body.position = Vector2(0, 750)
 	for i in range(difficulty):
 		var tentacle = TENTACLE.instantiate()
 		tentacle.global_position = tentacle_position[i]
@@ -53,7 +54,7 @@ func _process(_delta: float) -> void:
 			pass
 		Squid_State.phase1:
 			# Start phase1 loop only once
-			if not _phase1_running:
+			if not _phase1_running and not is_dying:
 				_phase1_running = true
 				execute_phase1_loop()
 		Squid_State.phase2:
@@ -92,7 +93,8 @@ func execute_phase1_loop() -> void:
 		submerged = false
 		await animation_player.animation_finished
 		for i in range(ceil(difficulty/2.)):
-			await fire()
+			if not is_dying:
+				await fire()
 		animation_player.play("half_submerge")
 		await animation_player.animation_finished
 		submerged = true
@@ -137,7 +139,7 @@ func _on_tentacle_submerged() -> void:
 		current_state = Squid_State.phase1
 
 func _on_area_hit(damage:int, pos:Vector2) -> void:
-	if submerged:
+	if submerged && damage < 10:
 		show_shield_effect(pos)
 		return
 	GameManager.enemy_hit()
@@ -168,7 +170,7 @@ func die():
 
 func fire():
 	animation_player.play("spit")
-	squid_gun.fire_spread(5, Globals.player.global_position - squid_gun.global_position, 60)
+	squid_gun.fire_spread(8, Globals.player.global_position - squid_gun.global_position, 55)
 	await animation_player.animation_finished
 	
 func _on_flash_timeout() -> void:
