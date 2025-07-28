@@ -50,7 +50,7 @@ func _ready() -> void:
 	progress_bar.value = health
 	progress_bar.visible = false
 	await animate_appear()
-	
+
 func _process(_delta: float) -> void:
 	match current_state:
 		Squid_State.spawning:
@@ -68,12 +68,12 @@ var _attacks_finished_count: int = 0
 func execute_phase1_loop() -> void:
 	while current_state == Squid_State.phase1:
 		_attacks_finished_count = 0
-		
+
 		# Connect all tentacles to the counter callback if not already connected
 		for tentacle in tentacles:
 			if not tentacle.attack_finished.is_connected(_on_tentacle_attack_finished):
 				tentacle.attack_finished.connect(_on_tentacle_attack_finished)
-		
+
 		# Start all attacks
 		for tentacle in tentacles:
 			tentacle.global_position = Vector2(
@@ -85,13 +85,13 @@ func execute_phase1_loop() -> void:
 				tentacle.attack(tentacle.AttackType.charge)
 			else:
 				tentacle.attack(tentacle.AttackType.barrel)
-		
+
 		# Wait for all attacks to finish
 		while _attacks_finished_count < tentacles.size():
 			await get_tree().process_frame
-		
+
 		print("All attacks finished!")
-		
+
 		animation_player.play_backwards("half_submerge")
 		submerged = false
 		await animation_player.animation_finished
@@ -101,10 +101,10 @@ func execute_phase1_loop() -> void:
 		animation_player.play("half_submerge")
 		await animation_player.animation_finished
 		submerged = true
-		
+
 		await get_tree().create_timer(1.0).timeout
-		
-	
+
+
 	_phase1_running = false
 
 func _on_tentacle_attack_finished() -> void:
@@ -177,7 +177,7 @@ func fire():
 	animation_player.play("spit")
 	squid_gun.fire_spread(8, Globals.player.global_position - squid_gun.global_position, 55)
 	await animation_player.animation_finished
-	
+
 func _on_flash_timeout() -> void:
 	material.set_shader_parameter("flash_value", 0.0)
 	shield_effect.visible = false
@@ -189,4 +189,3 @@ func _on_tentacle_hit(damage:int)->void:
 	progress_bar.value = health
 	if (health <= 0):
 		die()
-	

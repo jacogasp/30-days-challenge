@@ -1,7 +1,7 @@
 class_name Tentacle
 extends StaticBody2D
 
-enum AttackType{barrel,charge}
+enum AttackType {barrel, charge}
 @onready var hurt_area_2d: Area2D = $HurtArea2D
 
 @onready var sprite_2d: Sprite2D = $ClippingControl/Sprite2D
@@ -14,15 +14,15 @@ signal tentacle_hit
 @onready var barrel_area: Area2D = $ClippingControl/Sprite2D/BarrelArea
 @onready var barrel_sprite: Sprite2D = $ClippingControl/Sprite2D/BarrelArea/BarrelSprite
 
-@export var damage:int = 5
-@export var charge_duration:float = 1
+@export var damage: int = 5
+@export var charge_duration: float = 1
 
 @export var min_position_y: float = 300
 
 var flash_timer: Timer
 @export var flash_duration: float = 0.1
 
-@export var sprite_position_y: float :
+@export var sprite_position_y: float:
 	get:
 		return sprite_2d.position.y
 	set(value):
@@ -44,7 +44,7 @@ func _ready() -> void:
 
 func set_submerged() -> void:
 	sprite_2d.position.y = 540
-	
+
 func emerge_with_barrel(barrel_type: GameManager.BarrelType) -> void:
 	barrel_area.barrel_type = barrel_type
 	match barrel_type:
@@ -85,7 +85,7 @@ func toss() -> void:
 		return
 	animation_player.play("toss")
 	await animation_player.animation_finished
-	if barrel_area.is_exploging:
+	if barrel_area.is_exploding:
 		return
 	var tmp_barrel_sprite = barrel_sprite.duplicate()
 	var start_position = barrel_sprite.global_position
@@ -103,7 +103,7 @@ func toss() -> void:
 	# Horizontal movement (linear)
 	tween.tween_property(tmp_barrel_sprite, "position:x", target_position.x, toss_duration).set_ease(Tween.EASE_OUT)
 	# Vertical movement (parabolic arc)
-	var arc_height = -150 
+	var arc_height = -150
 	var mid_y = start_position.y + arc_height
 	tween.tween_method(_update_barrel_y_position.bind(start_position.y, mid_y, target_position.y, tmp_barrel_sprite), 0.0, 1.0, toss_duration).set_ease(Tween.EASE_IN_OUT)
 	# Rotation
@@ -115,7 +115,7 @@ func toss() -> void:
 	tmp_barrel_sprite.queue_free()
 
 
-func attack(attack_type:AttackType):
+func attack(attack_type: AttackType):
 	match attack_type:
 		AttackType.barrel:
 			var barrel_type = GameManager.get_random_barrel_type()
