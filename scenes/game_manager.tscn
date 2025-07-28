@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c73hg2hv4xcav"]
+[gd_scene load_steps=6 format=3 uid="uid://cgqlw5alswue2"]
 
 [ext_resource type="Script" uid="uid://dpxvg3lhg3jry" path="res://scripts/game_manager.gd" id="1_hwd4i"]
 [ext_resource type="AudioStream" uid="uid://3ufgpojuwaq6" path="res://assets/sounds/intro.wav" id="2_eaq8r"]
@@ -72,7 +72,7 @@ script = ExtResource("1_hwd4i")
 [node name="Soundtrack" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamInteractive_q8mjp")
 autoplay = true
-bus = &"Music"
+playback_type = 1
 
 [node name="BombTimer" type="Timer" parent="."]
 wait_time = 5.0
