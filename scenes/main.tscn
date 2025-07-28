@@ -15,7 +15,7 @@
 [ext_resource type="Resource" uid="uid://bqvlmkuhdniph" path="res://resources/boat.tres" id="10_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://dtoj7nquclhut" path="res://scenes/huds/tutorial_container.tscn" id="10_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://bhoyouxleboe5" path="res://scenes/characters/enemy_jetsky.tscn" id="12_trceg"]
-[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="13_a8y0u"]
+[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="13_a8y0u"]
 [ext_resource type="AudioStream" uid="uid://bigheqb1lnvu1" path="res://assets/sounds/waves.mp3" id="14_muem4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_85g3d"]

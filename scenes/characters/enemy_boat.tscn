@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=3 uid="uid://cmuh1ipmewjvf"]
 
-[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="1_g8b3q"]
+[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="1_g8b3q"]
 [ext_resource type="Script" uid="uid://ccyugayk801rd" path="res://scripts/characters/enemy_boat.gd" id="2_7mnuy"]
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="3_7mnuy"]
 [ext_resource type="Texture2D" uid="uid://b1ocihbu04sdc" path="res://assets/boat-sail.png" id="3_eqdhx"]
@@ -213,12 +213,10 @@ autoplay = "idle"
 [node name="HitAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, -1)
 stream = SubResource("AudioStreamRandomizer_eqdhx")
-bus = &"Effects"
 
 [node name="SinkAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(0, -1)
 stream = ExtResource("16_eqdhx")
-bus = &"Effects"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://bhoyouxleboe5"]
 
-[ext_resource type="Shader" uid="uid://c7jfxmax12t2i" path="res://shaders/hurt.gdshader" id="1_gp8bm"]
+[ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="1_gp8bm"]
 [ext_resource type="Script" uid="uid://ch1pwdx0r0oif" path="res://scripts/characters/enemy_jetsky.gd" id="2_evihf"]
 [ext_resource type="PackedScene" uid="uid://co0wsux68yvdp" path="res://scenes/characters/sailor.tscn" id="3_vrxba"]
 [ext_resource type="Texture2D" uid="uid://bbommvrw07r16" path="res://assets/jetsky-body.png" id="4_520sm"]
