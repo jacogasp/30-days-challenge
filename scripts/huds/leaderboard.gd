@@ -21,7 +21,7 @@ func _ready() -> void:
 	await _load_entries()
 
 func _create_entry(entry: TaloLeaderboardEntry) -> void:
-	var item_text = "%d. %s %d" % [entry.position, entry.player_alias.identifier, entry.score]
+	var item_text = "%d. %s %d" % [entry.position + 1, entry.player_alias.identifier, entry.score]
 	entries.add_item(item_text)
 
 
@@ -29,6 +29,8 @@ func _build_entries() -> void:
 	entries.clear()
 	for entry in Talo.leaderboards.get_cached_entries(LEADERBOARD):
 		_create_entry(entry)
+	for i in range(0,entries.get_item_count()):
+		entries.set_item_tooltip_enabled(i,false)
 
 
 func _load_entries() -> void:
