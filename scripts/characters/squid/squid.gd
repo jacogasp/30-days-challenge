@@ -5,6 +5,7 @@ const TENTACLE = preload("res://scenes/characters/squid/tentacle.tscn")
 @onready var squid_gun: EnemyGun = $ClippingControl/Body/SquidGun
 @onready var body: Node2D = $ClippingControl/Body
 @onready var progress_bar: ProgressBar = $ProgressBar
+@onready var roars_audio_player: AudioStreamPlayer2D = $RoarsAudioStreamPlayer2D
 
 @export_range(1,8,1,"hide_slider") var difficulty: int = 2
 @export var health:int = 200
@@ -93,7 +94,7 @@ func execute_phase1_loop() -> void:
 			await get_tree().process_frame
 
 		print("All attacks finished!")
-
+		roars_audio_player.play()
 		animation_player.play_backwards("half_submerge")
 		submerged = false
 		await animation_player.animation_finished

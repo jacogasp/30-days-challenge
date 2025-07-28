@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://clwtdf1o8lf3u"]
+[gd_scene load_steps=41 format=3 uid="uid://clwtdf1o8lf3u"]
 
 [ext_resource type="Script" uid="uid://0yqvf4jr75p3" path="res://scripts/characters/squid/squid.gd" id="1_4hv76"]
 [ext_resource type="Texture2D" uid="uid://q7hspp2s3e8c" path="res://assets/squid_body.png" id="1_xaj30"]
@@ -9,6 +9,8 @@
 [ext_resource type="Shader" uid="uid://ctxb6wxr1n42h" path="res://shaders/hurt.gdshader" id="4_shield"]
 [ext_resource type="PackedScene" uid="uid://baxxi07n6ueq" path="res://scenes/weapons/enemy_gun.tscn" id="6_ffj6l"]
 [ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="7_1f7mf"]
+[ext_resource type="AudioStream" uid="uid://d2eiey6ptbcwn" path="res://assets/sounds/squid-roar-01.mp3" id="10_op6vf"]
+[ext_resource type="AudioStream" uid="uid://b2vs7ticu1ubf" path="res://assets/sounds/squid-roar-02.wav" id="11_auepq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cctv2"]
 shader = ExtResource("4_shield")
@@ -858,6 +860,12 @@ bg_color = Color(0.16, 0.16, 0.16, 0.588235)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_op6vf"]
 bg_color = Color(1, 1, 1, 1)
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_auepq"]
+random_pitch = 1.5
+streams_count = 2
+stream_0/stream = ExtResource("10_op6vf")
+stream_1/stream = ExtResource("11_auepq")
+
 [node name="Squid" type="StaticBody2D"]
 material = SubResource("ShaderMaterial_cctv2")
 collision_layer = 4
@@ -1001,5 +1009,9 @@ theme_override_styles/background = SubResource("StyleBoxFlat_1f7mf")
 theme_override_styles/fill = SubResource("StyleBoxFlat_op6vf")
 value = 63.73
 show_percentage = false
+
+[node name="RoarsAudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_auepq")
+autoplay = true
 
 [connection signal="area_hit" from="ClippingControl/Body/Area2D" to="." method="_on_area_hit"]
