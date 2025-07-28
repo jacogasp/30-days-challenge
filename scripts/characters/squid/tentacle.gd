@@ -85,6 +85,8 @@ func toss() -> void:
 		return
 	animation_player.play("toss")
 	await animation_player.animation_finished
+	if barrel_area.is_exploging:
+		return
 	var tmp_barrel_sprite = barrel_sprite.duplicate()
 	var start_position = barrel_sprite.global_position
 	var toss_duration = 1.0

@@ -10,6 +10,7 @@ extends Control
 @onready var animation_player_2: AnimationPlayer = $AnimationPlayer2
 @onready var v_box_container: VBoxContainer = $Control/Control/Panel/VBoxContainer
 @onready var leaderboard_panel: Panel = $LeaderboardPanel
+@onready var leaderboard_button: Button = $Control/Control/Panel/VBoxContainer/LeaderboardButton
 
 @export var main_path:String = "res://scenes/main.tscn"
 
@@ -99,3 +100,4 @@ func _return_from_leaderboard() -> void:
 	animation_player_2.play_backwards("leaderboard_slidein")
 	await animation_player.animation_finished
 	v_box_container.process_mode = Node.PROCESS_MODE_ALWAYS
+	leaderboard_button.grab_focus()

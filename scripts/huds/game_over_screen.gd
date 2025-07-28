@@ -10,9 +10,10 @@ extends Control
 @onready var v_box_container: VBoxContainer = $GameOverPanel/MarginContainer/VBoxContainer
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var leaderboard_panel: Panel = $LeaderboardPanel
+@onready var leaderboard_button: Button = %LeaderboardButton
 
 var LEADERBOARD = "30 Days Challenge"
-var is_new_high_score: bool
+var is_new_high_score: bool = false
 
 
 func update_labels() -> void:
@@ -78,3 +79,4 @@ func _return_from_leaderboard() -> void:
 	animation_player.play_backwards("swap_to_leaderboard")
 	await animation_player.animation_finished
 	v_box_container.process_mode = Node.PROCESS_MODE_ALWAYS
+	leaderboard_button.grab_focus()

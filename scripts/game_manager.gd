@@ -104,6 +104,7 @@ func reset() -> void:
 	_current_score = 0
 	_score = 0
 	_difficulty = 1
+	_difficulty_offset = 0
 
 
 func current_score() -> int:
