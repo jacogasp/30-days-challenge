@@ -88,6 +88,8 @@ func execute_phase1_loop() -> void:
 
 		# Wait for all attacks to finish
 		while _attacks_finished_count < tentacles.size():
+			if not is_inside_tree():
+				return
 			await get_tree().process_frame
 
 		print("All attacks finished!")
