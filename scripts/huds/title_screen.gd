@@ -23,17 +23,21 @@ func _on_music_button_toggled(toggled_on: bool) -> void:
 	Globals.music_enabled = toggled_on
 	if toggled_on:
 		music_button.text = "Music: ON"
-		GameManager.enable_music()
+		AudioServer.set_bus_mute(2,false)
 	else:
 		music_button.text = "Music: OFF"
-		GameManager.disable_music()
+		AudioServer.set_bus_mute(2,true)
+		
 
 
 func _on_sound_button_toggled(toggled_on: bool) -> void:
 	if toggled_on:
 		sound_button.text = "Sound: ON"
+		AudioServer.set_bus_mute(1,false)
 	else:
 		sound_button.text = "Sound: OFF"
+		AudioServer.set_bus_mute(1,true)
+		
 
 
 func _on_new_game_button_pressed() -> void:
