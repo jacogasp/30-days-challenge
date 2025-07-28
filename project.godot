@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="30 Days Challenge"
-run/main_scene="uid://biw6an5ra3srp"
+run/main_scene="uid://dma35pbfn8m8g"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
