@@ -75,6 +75,9 @@ func _process(delta: float) -> void:
 
 func start() -> void:
 	_game_is_running = true
+	if squid_enter_timer.is_stopped():
+		print("Starting squid timer - game started")
+		squid_enter_timer.start()
 	if music_enabled:
 		play_soundtrack()
 
@@ -95,6 +98,9 @@ func reset() -> void:
 		for node in Globals.player.get_parent().get_children():
 			if node is Sailor or node is Barrel:
 				node.queue_free()
+			if node.get_script() != null and "squid" in str(node.get_script().get_path()).to_lower():
+				print("Cleaning up existing squid during reset")
+				node.queue_free()
 	Globals.reset_score_multipliers()
 	last_hit_timer.stop()
 	spawned_enemies = 0
@@ -105,6 +111,11 @@ func reset() -> void:
 	_score = 0
 	_difficulty = 1
 	_difficulty_offset = 0
+	squid_alive = false
+	squid_enter_timer.stop()
+	squid_enter_timer.wait_time = 60.0
+	if _game_is_running:
+		squid_enter_timer.start()
 
 
 func current_score() -> int:
@@ -287,9 +298,33 @@ func enable_music() -> void:
 
 
 func _on_squid_enter_timer_timeout() -> void:
-	squid_alive = true
+	if not _game_is_running:
+		print("Squid timer expired but game not running - restarting timer")
+		squid_enter_timer.start()
+		return
+	
+	if squid_alive:
+		print("Squid timer expired but squid already alive - restarting timer")
+		squid_enter_timer.start()
+		return
+	
 	squid_entered.emit()
-	print("squid entered")
+	print("squid entered - attempting spawn")
+	
+	await get_tree().create_timer(5.0).timeout
+	if not squid_alive:
+		print("Squid spawn timeout - no confirmation received, restarting timer")
+		squid_enter_timer.start()
+
+
+func confirm_squid_spawned() -> void:
+	squid_alive = true
+	print("Squid spawn confirmed")
+
+
+func squid_spawn_failed() -> void:
+	print("Squid spawn failed - restarting timer")
+	squid_enter_timer.start()
 	
 
 func squid_defeated() -> void:

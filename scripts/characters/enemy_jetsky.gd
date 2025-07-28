@@ -47,15 +47,12 @@ func _fire_bullets_with_delay(bullet_count: int, direction_to_player: Vector2) -
 		await get_tree().create_timer(0.1).timeout
 
 func _on_gun_timer_timeout() -> void:
-	print("Jetsky gun timer timeout called")
 	if is_sinking or GameManager._game_is_running == false or not on_screen:
-		print("Jetsky can't fire: sinking=", is_sinking, " game_running=", GameManager._game_is_running, " on_screen=", on_screen)
 		return
 	
 	var bullet_count = _get_bullet_count_by_difficulty(GameManager.current_difficulty())
 	var direction_to_player = Globals.player.global_position - global_position
 	
-	print("Jetsky firing ", bullet_count, " bullets")
 	_fire_bullets_with_delay(bullet_count, direction_to_player)
 	
 	gun_timer.wait_time = randf_range(min_fire_time, max_fire_time)

@@ -22,6 +22,7 @@ func _ready() -> void:
 	spawners.append($RightSpawner)
 	timer.wait_time = 0.1
 	timer.start()
+	print("SpawnerManager ready - squid scene: ", squid_scene)
 
 
 func spawn() -> void:
@@ -81,11 +82,34 @@ func random_time() -> float:
 	return clamp(t, min_spawning_time, max_spawning_time)
 
 func spawn_squid() -> void:
+	if not GameManager._game_is_running:
+		print("Cannot spawn squid - game not running")
+		GameManager.squid_spawn_failed()
+		return
+	
+	if squid_scene == null:
+		print("Cannot spawn squid - squid_scene is null")
+		GameManager.squid_spawn_failed()
+		return
+	
+	if GameManager.squid_alive:
+		print("Cannot spawn squid - squid already alive")
+		GameManager.squid_spawn_failed()
+		return
+	
+	print("Spawning squid at position: ", squid_spawn_marker.global_position)
 	var squid = squid_scene.instantiate()
+	if squid == null:
+		print("Failed to instantiate squid scene")
+		GameManager.squid_spawn_failed()
+		return
+	
 	squid.difficulty = squid_difficulty
 	squid_difficulty = min(squid_difficulty + 1, 8)
 	squid.global_position = squid_spawn_marker.global_position
 	add_child(squid)
+	GameManager.confirm_squid_spawned()
+	print("Squid spawned successfully")
 
 func pause_spawning() -> void:
 	spawning = false

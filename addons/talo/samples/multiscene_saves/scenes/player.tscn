@@ -1,12 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://b3b4ek8meeflf"]
 
-[ext_resource type="Texture2D" uid="uid://b3naludt1ank2" path="res://icon.png" id="1_rswej"]
 [ext_resource type="Script" uid="uid://pjwribovgraj" path="res://addons/talo/samples/multiscene_saves/scripts/loadable_player.gd" id="1_t5o6r"]
 [ext_resource type="Script" uid="uid://cbm1re05xae6k" path="res://addons/talo/samples/multiscene_saves/scripts/player_controller.gd" id="2_bg0gd"]
 [ext_resource type="Script" uid="uid://yc4mmrcvitc2" path="res://addons/talo/samples/multiscene_saves/scripts/new_game_button.gd" id="4_y324y"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mdugq"]
 radius = 450.0
+
+[sub_resource type="Resource" id="Resource_x2bcn"]
+metadata/__load_path__ = "res://icon.png"
 
 [node name="Player" type="CharacterBody2D"]
 scale = Vector2(0.05, 0.05)
@@ -19,7 +21,7 @@ script = ExtResource("1_t5o6r")
 shape = SubResource("CircleShape2D_mdugq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_rswej")
+texture = SubResource("Resource_x2bcn")
 
 [node name="Camera" type="Camera2D" parent="."]
 unique_name_in_owner = true

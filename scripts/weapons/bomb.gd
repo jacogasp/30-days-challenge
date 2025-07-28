@@ -13,7 +13,6 @@ func _expand_area() -> void:
 	monitoring = false
 
 func _on_area_entered(area: Area2D) -> void:
-	print(area.collision_layer)
 	if area.collision_layer == 16 && area.has_method("disable"): #bullet
 		area.disable()
 	if area.collision_layer == 32 && area.has_method("explode"): #barrel

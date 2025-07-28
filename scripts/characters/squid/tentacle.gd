@@ -145,7 +145,6 @@ func _enable_barrel() -> void:
 	barrel_area.monitoring = true
 
 func _on_hurt_area_entered(area: Area2D) -> void:
-	print(area)
 	if area.has_method("hit"):
 		area.call("hit", damage)
 
