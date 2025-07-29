@@ -52,6 +52,12 @@ signal power_level_updated
 signal squid_entered
 signal squid_exited
 
+@export_group("Squid Timer")
+@export var squid_first_shot_wait_time:float = 60 :
+	set(value):
+		squid_enter_timer.wait_time = value
+
+@export var squid_wait_time:float = 90
 
 func _ready() -> void:
 	playback = audio_player.get_stream_playback()
@@ -113,7 +119,7 @@ func reset() -> void:
 	_difficulty_offset = 0
 	squid_alive = false
 	squid_enter_timer.stop()
-	squid_enter_timer.wait_time = 60.0
+	squid_enter_timer.wait_time = squid_first_shot_wait_time
 	if _game_is_running:
 		squid_enter_timer.start()
 
@@ -334,5 +340,5 @@ func squid_defeated() -> void:
 	_difficulty_offset += round(float(_difficulty) * 0.15)
 	_difficulty -= _difficulty_offset
 	difficulty_changed.emit(current_difficulty())
-	squid_enter_timer.wait_time = 90
+	squid_enter_timer.wait_time = squid_wait_time
 	squid_enter_timer.start()
