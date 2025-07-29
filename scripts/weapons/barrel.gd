@@ -6,7 +6,6 @@ extends Area2D
 @onready var sprite = $ClippingContainer/Sprite2D
 @onready var wave_particles = $WaveParticles
 @onready var explosion_particles = $ExplosionParticles
-@onready var queue_free_timer = $QueueFreeTimer
 @onready var hit_audio_player = $HitAudioStreamPlayer2D
 @onready var explode_audio_player = $ExplodeAudioStreamPlayer2D
 
@@ -19,8 +18,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	position += Globals.world_speed * Vector2.LEFT * delta * 0.5
-	if global_position.x < 0:
-		queue_free_timer.start()
+	if global_position.x < -250:
+		queue_free()
 
 
 func _on_area_entered(area: Area2D) -> void:
@@ -37,6 +36,7 @@ func hit(_damage: float) -> void:
 
 
 func explode(by_bullet: bool) -> void:
+	exploding = true
 	explosion_particles.emitting = true
 	wave_particles.visible = false
 	wave_particles.emitting = false
@@ -49,8 +49,5 @@ func explode(by_bullet: bool) -> void:
 		hit_audio_player.play()
 	else:
 		explode_audio_player.play()
-	queue_free_timer.start()
-	exploding = true
-
-func _on_queue_free_timer_timeout() -> void:
+	await get_tree().create_timer(3).timeout
 	queue_free()

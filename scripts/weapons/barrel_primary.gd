@@ -21,5 +21,6 @@ func _pickup():
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
 	hit_audio_player.play()
-	queue_free_timer.start()
 	exploding = true
+	await get_tree().create_timer(3).timeout
+	queue_free()
