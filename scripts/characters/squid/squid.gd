@@ -81,7 +81,7 @@ func execute_phase1_loop() -> void:
 				randf_range(tentacle_spawn_region.position.x, tentacle_spawn_region.position.x + tentacle_spawn_region.size.x),
 				randf_range(tentacle_spawn_region.position.y, tentacle_spawn_region.position.y + tentacle_spawn_region.size.y)
 			)
-			print(tentacle.global_position)
+
 			if randf() < 0.5:
 				tentacle.attack(tentacle.AttackType.charge)
 			else:
