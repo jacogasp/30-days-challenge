@@ -6,17 +6,17 @@ extends Node2D
 @export_range(0., 1.) var variance_percentage: float = 0.1
 @export_range(0., 1) var difficulty_multiplier: float = 0.2
 @export var enemy_types: Array[EnemyType]
-@export var squid_scene:PackedScene
+@export var squid_scene: PackedScene
 @onready var timer: Timer = $Timer
 var spawners: Array[EnemySpawner] = []
 
 var spawning: bool = true
 var first_spawn: bool = true
-var squid_difficulty: int = 2  # Track squid difficulty, starts at 2
+var squid_difficulty: int = 2 # Track squid difficulty, starts at 2
 
 func _ready() -> void:
-	GameManager.squid_entered.connect(pause_spawning)
-	GameManager.squid_entered.connect(spawn_squid)
+	GameManager.squid_submitted.connect(pause_spawning)
+	GameManager.squid_spawn.connect(spawn_squid)
 	GameManager.squid_exited.connect(resume_spawning)
 	spawners.append($LeftSpawner)
 	spawners.append($RightSpawner)
@@ -28,7 +28,7 @@ func _ready() -> void:
 func spawn() -> void:
 	if GameManager._game_is_running == false or not spawning:
 		return
-	
+
 	var spawn_count: int
 	if first_spawn:
 		spawn_count = 1
@@ -36,15 +36,15 @@ func spawn() -> void:
 	else:
 		var difficulty = GameManager.current_difficulty()
 		spawn_count = choose_spawn_count_weighted(difficulty)
-	
+
 	for i in range(spawn_count):
 		var spawner = spawners[randi() % spawners.size()]
 		var enemy_type = choose_enemy_type_weighted()
 		if enemy_type:
 			spawner.spawn(enemy_type.scene)
-	
+
 	timer.wait_time = random_time()
-	timer.start() 
+	timer.start()
 
 func choose_enemy_type_weighted() -> EnemyType:
 	var total_chance: float = 0.0
@@ -59,16 +59,16 @@ func choose_enemy_type_weighted() -> EnemyType:
 	return enemy_types.back()
 
 func choose_spawn_count_weighted(difficulty: int) -> int:
-	var difficulty_factor = min(difficulty / 20.0, 1.0)  # Cap at difficulty 20
-	
+	var difficulty_factor = min(difficulty / 20.0, 1.0) # Cap at difficulty 20
+
 	var weight_1 = 0.9 - (difficulty_factor * 0.5)
 	var weight_2 = 0.08 + (difficulty_factor * 0.35)
 	var weight_3 = 0.02 + (difficulty_factor * 0.15)
-	
+
 	var weights = [weight_1, weight_2, weight_3]
 	var random_roll = randf()
 	var cumulative = 0.0
-	
+
 	for i in range(weights.size()):
 		cumulative += weights[i]
 		if random_roll <= cumulative:
@@ -86,24 +86,23 @@ func spawn_squid() -> void:
 		print("Cannot spawn squid - game not running")
 		GameManager.squid_spawn_failed()
 		return
-	
+
 	if squid_scene == null:
 		print("Cannot spawn squid - squid_scene is null")
 		GameManager.squid_spawn_failed()
 		return
-	
-	if GameManager.squid_alive:
-		print("Cannot spawn squid - squid already alive")
-		GameManager.squid_spawn_failed()
+
+	if GameManager._squid_state == GameManager.SquidState.alive:
+		print("Cannot spawn squid - squid already alive, skip")
 		return
-	
+
 	print("Spawning squid at position: ", squid_spawn_marker.global_position)
 	var squid = squid_scene.instantiate()
 	if squid == null:
 		print("Failed to instantiate squid scene")
 		GameManager.squid_spawn_failed()
 		return
-	
+
 	squid.difficulty = squid_difficulty
 	squid_difficulty = min(squid_difficulty + 1, 8)
 	squid.global_position = squid_spawn_marker.global_position
@@ -112,7 +111,9 @@ func spawn_squid() -> void:
 	print("Squid spawned successfully")
 
 func pause_spawning() -> void:
+	print("Enemy spawning paused")
 	spawning = false
 
 func resume_spawning() -> void:
+	print("Enemy spawning resumed")
 	spawning = true

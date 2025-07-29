@@ -22,8 +22,7 @@ var _hit_count_decrease_rate: float = 10
 var bomb_count: int = 1
 var power_level: int = 1
 var playback: AudioStreamPlaybackInteractive
-var _squid_pending: bool = false
-var squid_alive: bool = false
+
 const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
 
@@ -31,6 +30,9 @@ const MAX_POWER_LEVEL: int = 4
 var base_barrel_tnt_chance: float = 1.1
 var base_barrel_primary_chance: float = 0.4
 var base_barrel_secondary_chance: float = 0.2
+
+enum SquidState {hidden, submitted, pending, alive, failed}
+var _squid_state: SquidState = SquidState.hidden
 
 @onready var last_hit_timer: Timer = $LastHitTimer
 @onready var bomb_timer: Timer = $BombTimer
@@ -50,17 +52,18 @@ signal game_over
 signal bomb_deployed
 signal bomb_count_updated
 signal power_level_updated
-signal squid_pending
-signal squid_entered
+signal squid_submitted
+signal squid_spawn
 signal squid_exited
 
 @export_group("Squid Timer")
 @export var squid_first_shot_wait_time: float = 60
 @export var squid_wait_time: float = 90
 
+var t: float = 0
+
 func _ready() -> void:
 	playback = audio_player.get_stream_playback()
-
 
 func _process(delta: float) -> void:
 	if not _game_is_running:
@@ -77,12 +80,17 @@ func _process(delta: float) -> void:
 		score_updated.emit(current_score())
 		_update_difficulty()
 	
-	if visible_enemies == 0 && _squid_pending:
+	t += delta
+	if t > 2:
+		print("Visible enemies %d" % visible_enemies)
+		t = 0
+	if _squid_state == SquidState.submitted && visible_enemies == 0:
 		spawn_squid()
 
 
 func start() -> void:
 	_game_is_running = true
+	_squid_state = SquidState.hidden
 	if squid_enter_timer.is_stopped():
 		print("Starting squid timer - game started")
 		squid_enter_timer.start()
@@ -92,6 +100,8 @@ func start() -> void:
 func stop() -> void:
 	_game_is_running = false
 	playback.switch_to_clip_by_name("Intro")
+	squid_enter_timer.stop()
+	print("Squid timer stopped")
 
 
 func play_soundtrack() -> void:
@@ -118,7 +128,7 @@ func reset() -> void:
 	_score = 0
 	_difficulty = 1
 	_difficulty_offset = 0
-	squid_alive = false
+	_squid_state = SquidState.hidden
 	squid_enter_timer.stop()
 	squid_enter_timer.wait_time = squid_first_shot_wait_time
 	if _game_is_running:
@@ -179,7 +189,6 @@ func player_hit() -> void:
 
 func enemy_defeated(mult: int = Globals.sink_score_multiplier) -> int:
 	defeated_enemies += 1
-	visible_enemies = max(0, visible_enemies - 1)
 	_consecutive_kill_count += 1
 	var points: int = Globals.sink_score * mult * _consecutive_kill_count
 	_score += points
@@ -302,44 +311,45 @@ func _game_over() -> void:
 
 func _on_squid_enter_timer_timeout() -> void:
 	# wait until all enemies exit the screen
-	_squid_pending = true
-	squid_pending.emit()
+	print("Squid timer fired, state: %d" % _squid_state)
+	match _squid_state:
+		SquidState.hidden, SquidState.failed:
+			print("Squid submitted - attempting spawn")
+			squid_submitted.emit()
+			_squid_state = SquidState.submitted
+		SquidState.alive:
+			print("Squid already alive - skip")
 
 
 func spawn_squid() -> void:
-	_squid_pending = false
-	if not _game_is_running:
-		print("Squid timer expired but game not running - restarting timer")
-		squid_enter_timer.start()
+	if _squid_state != SquidState.submitted:
+		squid_spawn_failed()
 		return
-	
-	if squid_alive:
-		print("Squid timer expired but squid already alive - restarting timer")
-		squid_enter_timer.start()
-		return
-	
-	squid_entered.emit()
-	print("squid entered - attempting spawn")
-	
+
+	_squid_state = SquidState.pending
+	print("Squid spawn pending")
+	squid_spawn.emit()
+
 	await get_tree().create_timer(5.0).timeout
-	if not squid_alive:
+	if _squid_state != SquidState.alive:
 		print("Squid spawn timeout - no confirmation received, restarting timer")
-		squid_enter_timer.start()
+		squid_spawn_failed()
 
 
 func confirm_squid_spawned() -> void:
-	squid_alive = true
+	_squid_state = SquidState.alive
 	print("Squid spawn confirmed")
 
 
 func squid_spawn_failed() -> void:
 	print("Squid spawn failed - restarting timer")
+	_squid_state = SquidState.failed
 	squid_enter_timer.start()
 	
 
 func squid_defeated() -> void:
-	squid_alive = false
-	print("squid exited")
+	_squid_state = SquidState.hidden
+	print("Squid exited")
 	squid_exited.emit()
 	_difficulty_offset += round(float(_difficulty) * 0.15)
 	_difficulty -= _difficulty_offset

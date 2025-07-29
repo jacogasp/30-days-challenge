@@ -110,6 +110,7 @@ func sink() -> void:
 	tween.tween_property(boat, "position:y", 2 * boat_height, 2.0)
 	tween.tween_property(gpu_particles_2d, "scale", Vector2(0, 0), 2)
 	await tween.finished
+	GameManager.enemy_screen_exited()
 	queue_free()
 
 func _on_flash_timeout() -> void:
