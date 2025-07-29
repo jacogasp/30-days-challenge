@@ -8,6 +8,7 @@ enum BarrelType {
 
 var spawned_enemies: int = 0
 var defeated_enemies: int = 0
+var visible_enemies: int = 0
 var _consecutive_kill_count: int = 0
 var _hit_count: float = 0
 var _game_is_running: bool = false
@@ -22,6 +23,7 @@ var bomb_count: int = 1
 var power_level: int = 1
 var playback: AudioStreamPlaybackInteractive
 var music_enabled: bool = true
+var _squid_pending: bool = false
 var squid_alive: bool = false
 const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
@@ -49,6 +51,7 @@ signal game_over
 signal bomb_deployed
 signal bomb_count_updated
 signal power_level_updated
+signal squid_pending
 signal squid_entered
 signal squid_exited
 
@@ -74,6 +77,9 @@ func _process(delta: float) -> void:
 		_current_score = score
 		score_updated.emit(current_score())
 		_update_difficulty()
+	
+	if visible_enemies == 0 && _squid_pending:
+		spawn_squid()
 
 
 func start() -> void:
@@ -146,7 +152,12 @@ func current_difficulty() -> int:
 
 func enemy_spawned() -> void:
 	spawned_enemies += 1
+	visible_enemies += 1
 	enemy_just_spawned.emit(spawned_enemies)
+
+
+func enemy_screen_exited() -> void:
+	visible_enemies = max(0, visible_enemies - 1)
 
 
 func enemy_hit() -> void:
@@ -170,6 +181,7 @@ func player_hit() -> void:
 
 func enemy_defeated(mult: int = Globals.sink_score_multiplier) -> int:
 	defeated_enemies += 1
+	visible_enemies = max(0, visible_enemies - 1)
 	_consecutive_kill_count += 1
 	var points: int = Globals.sink_score * mult * _consecutive_kill_count
 	_score += points
@@ -301,6 +313,13 @@ func enable_music() -> void:
 
 
 func _on_squid_enter_timer_timeout() -> void:
+	# wait until all enemies exit the screen
+	_squid_pending = true
+	squid_pending.emit()
+
+
+func spawn_squid() -> void:
+	_squid_pending = false
 	if not _game_is_running:
 		print("Squid timer expired but game not running - restarting timer")
 		squid_enter_timer.start()
