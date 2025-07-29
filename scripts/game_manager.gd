@@ -22,7 +22,6 @@ var _hit_count_decrease_rate: float = 10
 var bomb_count: int = 1
 var power_level: int = 1
 var playback: AudioStreamPlaybackInteractive
-var music_enabled: bool = true
 var _squid_pending: bool = false
 var squid_alive: bool = false
 const MAX_BOMB_COUNT: int = 5
@@ -87,7 +86,6 @@ func start() -> void:
 	if squid_enter_timer.is_stopped():
 		print("Starting squid timer - game started")
 		squid_enter_timer.start()
-	if music_enabled:
 		play_soundtrack()
 
 
@@ -300,16 +298,6 @@ func _game_over() -> void:
 		_high_score = current_score()
 		is_new_high_score = true
 	game_over.emit(is_new_high_score)
-
-
-func disable_music() -> void:
-	music_enabled = false
-	audio_player.stop()
-
-
-func enable_music() -> void:
-	music_enabled = true
-	audio_player.play()
 
 
 func _on_squid_enter_timer_timeout() -> void:

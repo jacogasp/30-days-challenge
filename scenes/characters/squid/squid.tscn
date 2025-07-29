@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://baxxi07n6ueq" path="res://scenes/weapons/enemy_gun.tscn" id="6_ffj6l"]
 [ext_resource type="PackedScene" uid="uid://dm8cg5tcgnanr" path="res://scenes/weapons/bullet.tscn" id="7_1f7mf"]
 [ext_resource type="AudioStream" uid="uid://d2eiey6ptbcwn" path="res://assets/sounds/squid-roar-01.mp3" id="10_op6vf"]
-[ext_resource type="AudioStream" uid="uid://b2vs7ticu1ubf" path="res://assets/sounds/squid-roar-02.wav" id="11_auepq"]
+[ext_resource type="AudioStream" uid="uid://dunj3b11j17cm" path="res://assets/sounds/squid-roar-02.ogg" id="11_auepq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cctv2"]
 shader = ExtResource("4_shield")
