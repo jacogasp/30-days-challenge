@@ -53,11 +53,8 @@ signal squid_entered
 signal squid_exited
 
 @export_group("Squid Timer")
-@export var squid_first_shot_wait_time:float = 60 :
-	set(value):
-		squid_enter_timer.wait_time = value
-
-@export var squid_wait_time:float = 90
+@export var squid_first_shot_wait_time: float = 60
+@export var squid_wait_time: float = 90
 
 func _ready() -> void:
 	playback = audio_player.get_stream_playback()
@@ -171,10 +168,10 @@ func player_hit() -> void:
 	last_hit_timer.stop()
 
 
-func enemy_defeated(mult:int = Globals.sink_score_multiplier) -> int:
+func enemy_defeated(mult: int = Globals.sink_score_multiplier) -> int:
 	defeated_enemies += 1
 	_consecutive_kill_count += 1
-	var points: int  = Globals.sink_score * mult * _consecutive_kill_count
+	var points: int = Globals.sink_score * mult * _consecutive_kill_count
 	_score += points
 	score_updated.emit(current_score())
 	enemy_just_defeated.emit(defeated_enemies)
@@ -214,7 +211,7 @@ func spaw_pickup_label(pos: Vector2, text: String) -> void:
 	popup_score.text = text
 	popup_score.add_theme_font_override("font", load("res://assets/fonts/Bungee-Regular.ttf"))
 
-func spawn_popup(text:String, pos:Vector2) -> void:
+func spawn_popup(text: String, pos: Vector2) -> void:
 	var popup_score = POPUP_SCORE.instantiate()
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
