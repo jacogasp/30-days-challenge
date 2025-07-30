@@ -25,6 +25,10 @@ var playback: AudioStreamPlaybackInteractive
 
 const MAX_BOMB_COUNT: int = 5
 const MAX_POWER_LEVEL: int = 4
+const MAX_OVERBOARD_SAILORS: int = 10
+
+# Track overboard sailors to limit them
+var overboard_sailors: Array[Sailor] = []
 
 # Barrel drop chances for enemy boats
 var base_barrel_tnt_chance: float = 1.1
@@ -118,6 +122,10 @@ func reset() -> void:
 			if node.get_script() != null and "squid" in str(node.get_script().get_path()).to_lower():
 				print("Cleaning up existing squid during reset")
 				node.queue_free()
+	
+	# Clear overboard sailors tracking
+	overboard_sailors.clear()
+	
 	Globals.reset_score_multipliers()
 	last_hit_timer.stop()
 	spawned_enemies = 0
@@ -211,9 +219,24 @@ func update_sailors_count(count: int) -> void:
 
 
 func overboard_sailor(sailor: Sailor, sailor_position: Vector2) -> void:
+	# Remove oldest sailor if we've reached the limit
+	if overboard_sailors.size() >= MAX_OVERBOARD_SAILORS:
+		var oldest_sailor = overboard_sailors[0]
+		if is_instance_valid(oldest_sailor):
+			oldest_sailor.queue_free()
+		overboard_sailors.remove_at(0)
+	
+	# Add the new sailor
 	Globals.player.add_sibling(sailor)
 	sailor.set_overboard()
 	sailor.global_position = sailor_position
+	overboard_sailors.append(sailor)
+
+
+func remove_overboard_sailor(sailor: Sailor) -> void:
+	var index = overboard_sailors.find(sailor)
+	if index != -1:
+		overboard_sailors.remove_at(index)
 
 
 func update_all_hud() -> void:

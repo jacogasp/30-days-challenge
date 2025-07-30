@@ -123,23 +123,6 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("secondary_fire"):
 		GameManager.deploy_bomb()
 
-	if OS.is_debug_build():
-		if Input.is_action_just_pressed("DEBUG_add_sailor"):
-			var sailor := sailor_scene.instantiate()
-			var boat_half_length = 0.5 * boat_length
-			sailors.add_child(sailor)
-			current_number_sailor += 1
-			sailor.spawn_position = Vector2(randf_range(-boat_half_length, boat_half_length), 0)
-			sailor.position = sailor.spawn_position + Vector2(0, -100)
-			sailor.set_sprite_modulate(Color(randf(), randf(), randf()))
-			sailor.spawn()
-		if Input.is_action_just_pressed("DEBUG_remove_sailor"):
-			var sailor = get_random_sailor()
-			if sailor:
-				current_number_sailor -= 1
-				await sailor.jump_out(direction)
-				sailor.queue_free()
-
 func get_random_sailor() -> Sailor:
 	var sailors_list: Array[Sailor] = []
 	for sailor in sailors.get_children():

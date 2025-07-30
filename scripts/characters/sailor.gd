@@ -19,6 +19,8 @@ func _process(delta: float) -> void:
 	if overboard:
 		position.x -= delta * Globals.world_speed * 0.5
 		if global_position.x < -100:
+			# Notify game manager that this sailor is being removed
+			GameManager.remove_overboard_sailor(self)
 			queue_free()
 
 func set_sprite_modulate(new_color:Color)->void:
@@ -90,5 +92,7 @@ func set_overboard() -> void:
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	var modulation_color = sprite.modulate
 	if area.get_parent() is Player:
+		# Notify game manager that this sailor is being removed
+		GameManager.remove_overboard_sailor(self)
 		Globals.player.call_deferred("load_sailor", modulation_color)
 		queue_free()
