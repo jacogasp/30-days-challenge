@@ -174,10 +174,6 @@ visibility_rect = Rect2(-500, -500, 1000, 1000)
 local_coords = true
 process_material = SubResource("ParticleProcessMaterial_f2e6v")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, -12)
-scale = Vector2(1.1, 1)
-
 [node name="DEBUGLabel" type="Label" parent="."]
 visible = false
 offset_left = -73.0
@@ -223,7 +219,5 @@ position = Vector2(0, -1)
 stream = ExtResource("16_eqdhx")
 bus = &"Effects"
 
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="GunTimer" to="." method="_on_gun_timer_timeout"]
 [connection signal="timeout" from="BarrelTimer" to="." method="_on_barrel_timer_timeout"]

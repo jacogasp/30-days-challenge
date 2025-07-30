@@ -16,3 +16,4 @@ func spawn(enemy_scene: PackedScene = default_enemy_scene) -> void:
 	var speed = randf_range(enemy_speed * (1 - speed_randomness), enemy_speed * (1 + speed_randomness))
 	enemy.direction = Vector2(speed, 0)
 	add_sibling(enemy)
+	GameManager.enemy_spawned()

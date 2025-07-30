@@ -28,14 +28,14 @@ func _physics_process(delta: float) -> void:
 
 	position += direction * delta
 
-func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
-	super()
-	barrel_timer.start()
+# func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+# 	super()
+# 	barrel_timer.start()
 
 func _on_barrel_timer_timeout() -> void:
 	if is_sinking or GameManager._game_is_running == false or not on_screen:
 		return
-	
+
 	var barrel_type = GameManager.get_random_barrel_type()
 	match barrel_type:
 		GameManager.BarrelType.TNT:
@@ -44,6 +44,6 @@ func _on_barrel_timer_timeout() -> void:
 			barrel_emitter.drop_barrel_primary()
 		GameManager.BarrelType.SECONDARY:
 			barrel_emitter.drop_barrel_secondary()
-	
+
 	barrel_timer.wait_time = randf_range(barrel_emitter.min_fire_time, barrel_emitter.max_fire_time)
 	barrel_timer.start()

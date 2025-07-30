@@ -30,6 +30,11 @@ var on_screen := false
 var screen_offset: int = 50
 var flash_timer: Timer
 
+
+func _process(_delta: float) -> void:
+	check_visibility()
+
+
 func _set_up_timer() -> void:
 	flash_timer = Timer.new()
 	flash_timer.wait_time = flash_duration
@@ -37,16 +42,29 @@ func _set_up_timer() -> void:
 	flash_timer.timeout.connect(_on_flash_timeout)
 	add_child(flash_timer)
 
-func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+
+func screen_entered() -> void:
 	on_screen = true
-	GameManager.enemy_spawned()
 	gun_timer.start()
 
-func _on_visible_on_screen_notifier_2d_screen_exited():
+
+func screen_exited():
 	on_screen = false
 	await get_tree().create_timer(3).timeout
 	GameManager.enemy_screen_exited()
 	queue_free()
+
+
+func check_visibility() -> void:
+	var viewport_rect = get_viewport().get_visible_rect()
+	var min_x: float = viewport_rect.position.x - 10
+	var max_x: float = viewport_rect.position.x + viewport_rect.size.x + 220
+	var inside_viewport = global_position.x > min_x && global_position.x < max_x
+	if on_screen and not inside_viewport:
+		screen_exited()
+		return
+	if not on_screen and inside_viewport:
+		screen_entered()
 
 
 func drop_sailors(drop_direction: Vector2) -> void:
