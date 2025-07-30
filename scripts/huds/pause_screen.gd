@@ -34,7 +34,7 @@ func _on_restart_button_pressed() -> void:
 	EnemyBulletPool.reset()
 	PlayerBulletPool.reset()
 	GameManager.reset()
-	Globals.reset_score()
+	Globals.reset_score_multipliers()
 	GameManager.start()
 	get_tree().reload_current_scene()
 
