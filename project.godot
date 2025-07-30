@@ -37,6 +37,7 @@ enabled=PackedStringArray("res://addons/talo/plugin.cfg")
 
 enemy=""
 player=""
+boat=""
 
 [input]
 

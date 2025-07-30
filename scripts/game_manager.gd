@@ -8,7 +8,6 @@ enum BarrelType {
 
 var spawned_enemies: int = 0
 var defeated_enemies: int = 0
-var visible_enemies: int = 0
 var _consecutive_kill_count: int = 0
 var _hit_count: float = 0
 var _game_is_running: bool = false
@@ -83,13 +82,15 @@ func _process(delta: float) -> void:
 		_current_score = score
 		score_updated.emit(current_score())
 		_update_difficulty()
-	
-	t += delta
+
 	if t > 2:
-		print("Visible enemies %d" % visible_enemies)
+		var boats = get_tree().get_nodes_in_group("boat")
+		var n_boats = len(boats)
+		print("Visible enemies %d" % n_boats)
+		if _squid_state == SquidState.submitted && n_boats == 0:
+			spawn_squid()
 		t = 0
-	if _squid_state == SquidState.submitted && visible_enemies == 0:
-		spawn_squid()
+	t += delta
 
 
 func start() -> void:
@@ -122,10 +123,10 @@ func reset() -> void:
 			if node.get_script() != null and "squid" in str(node.get_script().get_path()).to_lower():
 				print("Cleaning up existing squid during reset")
 				node.queue_free()
-	
+
 	# Clear overboard sailors tracking
 	overboard_sailors.clear()
-	
+
 	Globals.reset_score_multipliers()
 	last_hit_timer.stop()
 	spawned_enemies = 0
@@ -168,12 +169,7 @@ func current_difficulty() -> int:
 
 func enemy_spawned() -> void:
 	spawned_enemies += 1
-	visible_enemies += 1
 	enemy_just_spawned.emit(spawned_enemies)
-
-
-func enemy_screen_exited() -> void:
-	visible_enemies = max(0, visible_enemies - 1)
 
 
 func enemy_hit() -> void:
@@ -225,7 +221,7 @@ func overboard_sailor(sailor: Sailor, sailor_position: Vector2) -> void:
 		if is_instance_valid(oldest_sailor):
 			oldest_sailor.queue_free()
 		overboard_sailors.remove_at(0)
-	
+
 	# Add the new sailor
 	Globals.player.add_sibling(sailor)
 	sailor.set_overboard()
@@ -258,7 +254,7 @@ func spawn_popup(text: String, pos: Vector2) -> void:
 	popup_score.global_position = pos
 	Globals.player.add_sibling(popup_score)
 	popup_score.text = text
-	
+
 func deploy_bomb() -> void:
 	if bomb_timer.time_left > 0:
 		return
@@ -368,7 +364,7 @@ func squid_spawn_failed() -> void:
 	print("Squid spawn failed - restarting timer")
 	_squid_state = SquidState.failed
 	squid_enter_timer.start()
-	
+
 
 func squid_defeated() -> void:
 	_squid_state = SquidState.hidden

@@ -100,7 +100,7 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("4_ex4mq")
 
-[node name="EnemyJetsky" type="Area2D" groups=["enemy"]]
+[node name="EnemyJetsky" type="Area2D" groups=["boat", "enemy"]]
 material = SubResource("ShaderMaterial_ovt1e")
 collision_layer = 64
 collision_mask = 80
@@ -188,4 +188,8 @@ position = Vector2(0, 1)
 stream = ExtResource("10_vjctw")
 bus = &"Effects"
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="timeout" from="GunTimer" to="." method="_on_gun_timer_timeout"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="screen_exited"]

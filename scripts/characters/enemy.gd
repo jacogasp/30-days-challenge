@@ -20,6 +20,7 @@ extends Area2D
 @onready var gun_timer: Timer = $GunTimer
 @onready var hit_audio_streamer: AudioStreamPlayer2D = $HitAudioStreamPlayer2D
 @onready var sink_audio_streamer: AudioStreamPlayer2D = $SinkAudioStreamPlayer2D
+@onready var visible_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 var sailors_count: int
 var boat_length: int = 100
@@ -29,10 +30,6 @@ var is_sinking = false
 var on_screen := false
 var screen_offset: int = 50
 var flash_timer: Timer
-
-
-func _process(_delta: float) -> void:
-	check_visibility()
 
 
 func _set_up_timer() -> void:
@@ -50,21 +47,8 @@ func screen_entered() -> void:
 
 func screen_exited():
 	on_screen = false
-	await get_tree().create_timer(3).timeout
-	GameManager.enemy_screen_exited()
+	await get_tree().create_timer(1).timeout
 	queue_free()
-
-
-func check_visibility() -> void:
-	var viewport_rect = get_viewport().get_visible_rect()
-	var min_x: float = viewport_rect.position.x - 10
-	var max_x: float = viewport_rect.position.x + viewport_rect.size.x + 220
-	var inside_viewport = global_position.x > min_x && global_position.x < max_x
-	if on_screen and not inside_viewport:
-		screen_exited()
-		return
-	if not on_screen and inside_viewport:
-		screen_entered()
 
 
 func drop_sailors(drop_direction: Vector2) -> void:
@@ -128,7 +112,6 @@ func sink() -> void:
 	tween.tween_property(boat, "position:y", 2 * boat_height, 2.0)
 	tween.tween_property(gpu_particles_2d, "scale", Vector2(0, 0), 2)
 	await tween.finished
-	GameManager.enemy_screen_exited()
 	queue_free()
 
 func _on_flash_timeout() -> void:
